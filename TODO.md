@@ -22,7 +22,7 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 - [x] Verifica: sito pubblicato raggiungibile (controllato dal job «controlla» di `pubblica.yml`, perché la sessione di Claude non raggiunge `github.io`), app funzionante a 360 px e desktop, chiaro e scuro, console senza errori (`test/prova-app.js`); workflow Pubblica, Migrazioni e Continuità verdi.
 - [x] Revisione di fine passo.
 
-### [ ] 2. Schema del database
+### [~] 2. Schema del database (iniziato il 25/10/2026 alle 16:58 UTC)
 - [ ] Tabelle: profili (nome visualizzato, predefinito «Anonimo», ruolo), ricette (con categoria, autore nullable = generica, eliminata_il/eliminata_da per il cestino, ultima modifica e autore della modifica), commenti (max 500), archivio personale, settimana personale (giorno, pasto, ricetta, dosi, avanzo_di), spesa personale.
 - [ ] Policy RLS secondo `REQUISITI.md` §3–§5 (settimane leggibili da tutti gli autenticati, modificabili solo dal proprietario; spesa e archivio solo del proprietario; ricette con autore modificabili solo dall'autore, generiche da tutti).
 - [ ] Trigger: profilo creato alla creazione dell'utente **e** profili per gli utenti già esistenti; aggiornamento automatico di ultima modifica.
