@@ -1,6 +1,8 @@
-# Ricettario Vegetale
+# Ricettario di famiglia
 
-PWA con guida all'alimentazione vegana, ricettario condiviso e lista della spesa.
-Frontend statico, backend e database su Supabase (regione UE).
+PWA per un gruppo di amici: guida alimentare, ricettario condiviso (niente carne), settimana e lista della spesa personali.
+Frontend statico in `app/` pubblicato su GitHub Pages (https://jinkanzaki90.github.io/pwa-ricettario/), dati su Supabase (regione UE).
 
-Stato: impostazione del progetto. Requisiti e piano di lavoro in arrivo.
+- Requisiti: `REQUISITI.md` · Stato dei lavori: `TODO.md` · Istruzioni per Claude: `CLAUDE.md`
+- Workflow: `pubblica.yml` (sito), `migrazioni.yml` (schema del database), `continuita.yml` (chiamata giornaliera)
+- Prova locale: `python3 -m http.server 8123 --bind 127.0.0.1 -d app`, poi `node test/prova-app.js`

@@ -35,7 +35,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - uses: supabase/setup-cli@v1
+      - uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1.7.3, fissata a un commit: questa azione vede i segreti
         with:
           version: 2.120.0
 
