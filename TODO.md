@@ -32,12 +32,14 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 - [x] Verifica: workflow Migrazioni verde; con la sola chiave publishable tutte le tabelle e le funzioni rispondono «permesso negato» (401/42501), controllato sia dalla sessione sia dal nuovo passo del workflow (`supabase/strumenti/verifica-anonimo.sh`). Regole di accesso provate su PostgreSQL locale con imitazione di Supabase (`test/db/prova-db.sh`: anon, utenti diversi, cestino, svuotamento, cancellazione di un account). App invariata: `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita.
 - [x] Revisione di fine passo.
 
-### [~] 3. Accesso e impostazioni (iniziato il 25/10/2026 alle 18:58 UTC)
-- [ ] Schermata di accesso (email + password), sessione persistente, uscita.
-- [ ] Primo accesso: scelta del nome visualizzato, invito a cambiare password.
-- [ ] Impostazioni (ingranaggio in alto a destra): password, nome, tema, ingredienti da evitare, cancellazione account (funzione con privilegi elevati, §5.9), collegamento alla privacy.
-- [ ] Verifica e revisione di fine passo.
-- [ ] **Punto di controllo**: segnare questo passo `[!]` e fermarsi. Si riprende solo quando Angelo, dopo la prova congiunta, cambia lo stato in `[x]`.
+### [!] 3. Accesso e impostazioni (pronto per la prova congiunta il 25/10/2026)
+- [x] Schermata di accesso (email + password), sessione persistente (supabase-js, chiave `rv-accesso` sul dispositivo), uscita solo da questo dispositivo. Errori in italiano (credenziali sbagliate, troppi tentativi, account bloccato, rete assente). Senza rete all'avvio la sessione non si perde: messaggio e «Riprova».
+- [x] Primo accesso: nome visualizzato obbligatorio («Anonimo» riservato, anche nel database), cambio password facoltativo.
+- [x] Impostazioni (ingranaggio in alto a destra, la barra resta a 5 voci): nome, password (con verifica di quella attuale), tema (spostato qui dall'intestazione), ingredienti da evitare (tabella `preferenze`, visibile solo al proprietario; ricette segnalate con «Contiene: …» e filtro «Senza ingredienti da evitare»), privacy, cancellazione account (password + casella; funzione `cancella_account()` security definer, solo sull'utente che chiama). Migrazione `20261025190000_accesso_impostazioni.sql`.
+- [x] Pagina `privacy.html` (prima versione; da rivedere al passo 9).
+- [x] Verifica: migrazione verde; con la sola chiave publishable `preferenze` e `rpc/cancella_account` rispondono 401 (anche nel workflow); registrazione libera disattivata (`signup_disabled`); prove locali del database superate (preferenze altrui, nome riservato, cancellazione del proprio account); `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita, con Supabase imitato più una prova reale di credenziali sbagliate.
+- [x] Revisione di fine passo.
+- [!] **Punto di controllo**: prova congiunta con Angelo (istruzioni in «Richieste per Angelo»). Si riprende solo quando Angelo cambia lo stato in `[x]`.
 
 ### [ ] 4. Ricettario collegato al database
 Lettura, ricerca, filtri (categoria, autore), inserimento e modifica con categoria e blocco della carne, eliminazione con avviso sulle settimane coinvolte, cestino, archivio personale.
@@ -83,6 +85,27 @@ Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare
    - le ricette di partenza ora esistono due volte (`app/data/ricette.json` e database). Azione (passo 4): quando il ricettario legge dal database, togliere il JSON dal frontend;
    - `ruolo` per ora non serve a nulla (sono tutti «membro»): usarlo solo se arriva una funzione per l'amministratore, altrimenti toglierlo più avanti.
 
+### Passo 3 (25/10/2026)
+1. **Malintenzionato.** Nomi e ingredienti da evitare finiscono nella pagina solo tramite `esc()` o `textContent`. La cancellazione dell'account non ha parametri: agisce solo su chi chiama e senza accesso risponde 401. Le preferenze sono in una tabella separata dai profili (che tutti leggono) perché possono rivelare intolleranze. Corretto durante il passo: un avvio senza rete faceva uscire l'utente (ora la sessione resta). Rischi rimasti:
+   - la richiesta di password prima di cancellare l'account o cambiare la password è controllata dall'app, non dal server: chi rubasse una sessione aperta potrebbe chiamare `cancella_account` direttamente. Accettabile per un gruppo di amici; azione (passo 9): valutare con Angelo l'opzione «Secure password change» di Supabase e, se serve, una verifica lato server;
+   - la sessione sta nel `localStorage`: un difetto XSS la esporrebbe. Azione (passo 4, già annotata): Content Security Policy in `index.html`;
+   - la lunghezza minima della password (8) è imposta dall'app; il server accetta il minimo impostato nel progetto (predefinito 6). Vedi richiesta ad Angelo.
+2. **Utente.** Accesso, primo accesso e impostazioni funzionano da telefono e da computer nei due temi; errori chiari, nessun vicolo cieco (dal primo accesso si esce solo scegliendo un nome, per scelta). Restano:
+   - azione (passo 4): dopo le Impostazioni la scheda Ricette torna alla vista in cui era (per esempio il modulo); valutare se riportarla all'elenco;
+   - azione (passo 4): togliere dal modulo l'esclusione fissa di fave, piselli e tartufo e dalla Guida i chip «Escluso dalle ricette», ora sostituiti dagli ingredienti da evitare personali;
+   - azione (passo 5): all'uscita i dati locali (ricette personali, spesa) restano sul browser; quando passeranno al database, svuotare i dati dell'utente all'uscita.
+3. **Revisore esterno.** La prova automatica usa un Supabase imitato: il flusso vero con un utente reale non è ancora stato provato (serve la prova congiunta). supabase-js (circa 220 KB) ora si carica all'avvio, perché senza sessione non si vede nulla: l'azione del passo 1 di caricarlo dopo l'accesso decade; resta da metterlo in cache col service worker (passo 8). Il confronto degli ingredienti da evitare è per sottostringa («ceci» trova anche «farina di ceci», ma «pera» troverebbe «peperoni»): azione (passo 4) confrontare per parola intera. Rimosse dal repository le schermate di prova finite lì per errore al passo 1 (ora in `schermate/`, esclusa da git).
+
 ## Richieste per Angelo
 
 - **Backup cifrato (passo 1, non bloccante):** per attivare il backup settimanale serve un segreto `BACKUP_PASSPHRASE` (una frase lunga e casuale, da conservare anche fuori da GitHub: senza di essa il backup non si apre) in GitHub → Settings → Secrets and variables → Actions. Finché manca, «Continuità» fa solo la chiamata giornaliera.
+
+- **Prova congiunta del passo 3 (bloccante):** l'app è pronta su https://jinkanzaki90.github.io/pwa-ricettario/ .
+  1. Dalla dashboard Supabase (Authentication → Users → Add user) crea il tuo utente con email e password, spuntando «Auto Confirm User»; creane anche un secondo di prova (servirà per il punto 6).
+  2. Apri l'app dal telefono: deve comparire solo «Accedi». Prova una password sbagliata (messaggio «Email o password non corretti»), poi quella giusta.
+  3. Al primo accesso scegli il nome e, se vuoi, una nuova password; poi chiudi e riapri l'app: devi restare dentro.
+  4. Ingranaggio in alto a destra: cambia nome, password e tema; aggiungi un ingrediente da evitare (per esempio «ceci») e controlla in Ricette la segnalazione e il filtro «Senza ingredienti da evitare».
+  5. «Esci da questo dispositivo» e rientra con la nuova password.
+  6. Con l'utente di prova: accedi, poi Impostazioni → «Cancella il mio account…» (password + casella). L'utente deve sparire dall'elenco della dashboard. Se la cancellazione dà errore, scrivilo qui.
+  7. Se tutto va bene, cambia lo stato del passo 3 in `[x]`; altrimenti annota qui cosa non va.
+- **Password minima (consigliato, non bloccante):** dashboard Supabase → Authentication → Sign In / Providers → Email → «Minimum password length» a 8, così il server chiede lo stesso minimo dell'app.
