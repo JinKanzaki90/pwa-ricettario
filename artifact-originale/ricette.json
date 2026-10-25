@@ -1,0 +1,1782 @@
+{
+ "versione_schema": 2,
+ "aggiornato_il": "2026-10-21",
+ "ricette": [
+  {
+   "id": "porridge-mela-cannella-noci",
+   "titolo": "Porridge di avena con mela, cannella e noci",
+   "pasto": "colazione",
+   "tempo_min": 10,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Fiocchi d'avena",
+     "qta": 80,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Bevanda di soia con calcio",
+     "qta": 400,
+     "unita": "ml",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Mela",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Noci sgusciate",
+     "qta": 20,
+     "unita": "g",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Cannella in polvere",
+     "qta": 1,
+     "unita": "cucchiaino",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Taglia la mela a cubetti piccoli, tenendo la buccia se è biologica.",
+    "In un pentolino metti fiocchi, bevanda di soia, metà della mela, la cannella e un pizzico di sale.",
+    "Cuoci a fuoco medio-basso per 5-6 minuti mescolando, finché diventa cremoso. Se si addensa troppo aggiungi un goccio di bevanda.",
+    "Versa nelle ciotole e completa con la mela rimasta e le noci spezzettate."
+   ],
+   "note_nutrizionali": "La bevanda di soia arricchita con calcio porta proteine e calcio; le noci sono una delle fonti vegetali di omega-3 indicate nella guida.",
+   "tag": [
+    "avena",
+    "senza zuccheri aggiunti"
+   ]
+  },
+  {
+   "id": "yogurt-soia-melagrana-granola",
+   "titolo": "Yogurt di soia con melagrana, granola e semi di lino",
+   "pasto": "colazione",
+   "tempo_min": 5,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Yogurt di soia bianco",
+     "qta": 250,
+     "unita": "g",
+     "reparto": "frigo"
+    },
+    {
+     "nome": "Melagrana",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Granola senza miele",
+     "qta": 40,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Semi di lino",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    }
+   ],
+   "passi": [
+    "Sgrana la melagrana: tagliala a metà e batti la buccia con il dorso di un cucchiaio sopra una ciotola.",
+    "Dividi lo yogurt in due ciotole.",
+    "Aggiungi i chicchi di melagrana, la granola e i semi di lino macinati appena prima di mangiare."
+   ],
+   "note_nutrizionali": "Controlla l'etichetta della granola: molte contengono miele. Scegli uno yogurt di soia arricchito con calcio. I semi di lino vanno macinati per assorbirne gli omega-3.",
+   "tag": [
+    "senza cottura",
+    "veloce"
+   ]
+  },
+  {
+   "id": "avena-in-ammollo-fichi-pera",
+   "titolo": "Avena in ammollo con fichi secchi, pera e mandorle",
+   "pasto": "colazione",
+   "tempo_min": 10,
+   "riposo": "una notte in frigo",
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Fiocchi d'avena",
+     "qta": 80,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Bevanda di soia con calcio",
+     "qta": 300,
+     "unita": "ml",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Semi di chia",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Fichi secchi",
+     "qta": 4,
+     "unita": "pz",
+     "reparto": "dispensa",
+     "calabrese": {
+      "prodotto": "Fichi di Cosenza DOP",
+      "marca": "per esempio Colavolpe (Belmonte Calabro)",
+      "dove": "botteghe di prodotti tipici e vendita online; nella grande distribuzione la presenza varia"
+     }
+    },
+    {
+     "nome": "Pera",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Mandorle",
+     "qta": 20,
+     "unita": "g",
+     "reparto": "dispensa"
+    }
+   ],
+   "passi": [
+    "La sera prima taglia i fichi secchi a pezzetti.",
+    "In due barattoli o ciotole unisci avena, semi di chia, bevanda di soia e fichi; mescola bene.",
+    "Copri e lascia in frigo per tutta la notte.",
+    "Al mattino mescola, aggiungi la pera a fettine e le mandorle tritate grossolanamente. Si mangia fredda."
+   ],
+   "note_nutrizionali": "Fichi secchi e mandorle contribuiscono al calcio; avena e mandorle portano anche ferro e zinco. I fichi addolciscono senza zucchero aggiunto.",
+   "tag": [
+    "da preparare la sera",
+    "senza cottura"
+   ]
+  },
+  {
+   "id": "pane-crema-arachidi-banana",
+   "titolo": "Pane integrale con crema di arachidi e banana",
+   "pasto": "colazione",
+   "tempo_min": 5,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": "tutto_anno",
+   "ingredienti": [
+    {
+     "nome": "Pane integrale",
+     "qta": 4,
+     "unita": "fetta",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Crema di arachidi 100%",
+     "qta": 3,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Banana",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Cannella in polvere",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Tosta le fette di pane.",
+    "Spalma la crema di arachidi e copri con la banana a rondelle.",
+    "Completa con una spolverata di cannella."
+   ],
+   "note_nutrizionali": "Scegli una crema di sole arachidi, senza zucchero né oli aggiunti. Pane integrale e arachidi insieme danno un buon apporto di proteine per una colazione veloce.",
+   "tag": [
+    "veloce",
+    "dispensa"
+   ]
+  },
+  {
+   "id": "pancake-integrali-composta-pere",
+   "titolo": "Pancake integrali con composta di pere",
+   "pasto": "colazione",
+   "tempo_min": 25,
+   "difficolta": "media",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Farina integrale",
+     "qta": 120,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Bevanda di soia con calcio",
+     "qta": 200,
+     "unita": "ml",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Lievito per dolci",
+     "qta": 1,
+     "unita": "cucchiaino",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Zucchero di canna",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Pera",
+     "qta": 2,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Limone",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Cannella in polvere",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Composta: taglia le pere a cubetti e cuocile in un pentolino con il succo del limone, un cucchiaio d'acqua e la cannella per 8-10 minuti, finché sono morbide.",
+    "Pastella: in una ciotola mescola farina, lievito, zucchero e un pizzico di sale; aggiungi la bevanda di soia e l'olio e frusta fino a togliere i grumi. Lascia riposare 5 minuti.",
+    "Scalda una padella antiaderente appena unta. Versa un mestolino di pastella per volta e cuoci 2 minuti, finché in superficie compaiono le bolle; gira e cuoci un altro minuto.",
+    "Servi i pancake caldi con la composta di pere sopra."
+   ],
+   "note_nutrizionali": "Una colazione da weekend. La farina integrale aggiunge fibre e minerali rispetto alla 00; la bevanda di soia con calcio rende l'impasto morbido senza uova né latte.",
+   "tag": [
+    "weekend",
+    "dolce"
+   ]
+  },
+  {
+   "id": "pasta-lenticchie-rosse",
+   "titolo": "Pasta e lenticchie rosse con cipolla di Tropea",
+   "pasto": "pranzo",
+   "tempo_min": 25,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Lenticchie rosse decorticate",
+     "qta": 120,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Ditalini",
+     "qta": 140,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Cipolla rossa di Tropea",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Cipolla Rossa di Tropea Calabria IGP",
+      "marca": "per esempio Sapori & Dintorni Conad",
+      "dove": "Conad, Lidl ed Esselunga nel reparto ortofrutta; disponibilità variabile"
+     }
+    },
+    {
+     "nome": "Carota",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Sedano",
+     "qta": 1,
+     "unita": "costa",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Concentrato di pomodoro",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Rosmarino",
+     "qta": 1,
+     "unita": "rametto",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Peperoncino",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Sciacqua le lenticchie rosse in un colino finché l'acqua esce limpida (non serve l'ammollo).",
+    "Trita cipolla, carota e la costa di sedano e falli appassire 5 minuti in una pentola con l'olio e il rosmarino.",
+    "Aggiungi lenticchie, concentrato di pomodoro e 900 ml di acqua calda; sala e cuoci 10 minuti: le lenticchie si sfaldano e fanno da crema.",
+    "Togli il rosmarino, butta i ditalini direttamente nella pentola e cuocili nel tempo indicato, mescolando spesso; se serve aggiungi acqua calda.",
+    "Servi con peperoncino e un filo d'olio a crudo."
+   ],
+   "note_nutrizionali": "Le lenticchie rosse decorticate sono le più digeribili, utili se stai aumentando i legumi gradualmente. Per assorbire meglio il ferro accompagna con una fonte di vitamina C, per esempio un'arancia o un kiwi a fine pasto.",
+   "tag": [
+    "una pentola",
+    "veloce"
+   ]
+  },
+  {
+   "id": "farro-ceci-zucca-rucola",
+   "titolo": "Farro tiepido con ceci, zucca arrosto e rucola",
+   "pasto": "pranzo",
+   "tempo_min": 40,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Farro perlato",
+     "qta": 140,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Ceci in barattolo",
+     "qta": 240,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Zucca pulita",
+     "qta": 400,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Rucola",
+     "qta": 50,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Semi di zucca",
+     "qta": 20,
+     "unita": "g",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Limone",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Rosmarino",
+     "qta": 1,
+     "unita": "rametto",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 3,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Pepe nero",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Accendi il forno a 200 °C. Taglia la zucca a cubetti di 2 cm, condiscila con un cucchiaio d'olio, sale e rosmarino e cuocila su una teglia con carta forno per 25-30 minuti.",
+    "Intanto cuoci il farro in acqua salata per il tempo indicato sulla confezione (di solito 20-25 minuti) e scolalo.",
+    "Sciacqua e sgocciola i ceci; negli ultimi 10 minuti mettili in forno insieme alla zucca perché diventino un po' croccanti.",
+    "Prepara il condimento con il succo di mezzo limone, l'olio rimasto, sale e pepe.",
+    "Unisci farro, zucca, ceci e rucola, condisci e completa con i semi di zucca tostati in padella un minuto."
+   ],
+   "note_nutrizionali": "Ceci, farro e semi di zucca insieme danno un buon apporto di proteine, ferro e zinco; il limone aiuta l'assorbimento del ferro. Si porta bene in ufficio e si mangia anche a temperatura ambiente.",
+   "tag": [
+    "da portare via",
+    "forno"
+   ]
+  },
+  {
+   "id": "riso-tofu-broccoli-tahina",
+   "titolo": "Riso basmati con tofu croccante, broccoli e salsa di tahina",
+   "pasto": "pranzo",
+   "tempo_min": 25,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Riso basmati",
+     "qta": 140,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Tofu al naturale",
+     "qta": 200,
+     "unita": "g",
+     "reparto": "frigo"
+    },
+    {
+     "nome": "Broccoli",
+     "qta": 350,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Aglio",
+     "qta": 1,
+     "unita": "spicchio",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Tahina",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Limone",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Semi di sesamo",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Peperoncino",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Cuoci il riso basmati in acqua salata per circa 10-12 minuti e scolalo.",
+    "Intanto dividi i broccoli in cimette piccole e sbollentale 4 minuti in acqua salata; scolale.",
+    "Asciuga bene il tofu con un canovaccio, taglialo a cubetti e rosolalo in padella con un cucchiaio d'olio a fuoco vivace per 6-8 minuti, girandolo, finché è dorato su tutti i lati. Sala.",
+    "Nella stessa padella salta i broccoli 2-3 minuti con l'olio rimasto, l'aglio schiacciato e un po' di peperoncino.",
+    "Salsa: mescola la tahina con il succo di mezzo limone, un pizzico di sale e 3-4 cucchiai d'acqua fino a ottenere una crema fluida.",
+    "Componi i piatti con riso, broccoli e tofu, versa la salsa e completa con il sesamo."
+   ],
+   "note_nutrizionali": "Tofu (meglio se preparato con sali di calcio, lo trovi in etichetta), broccoli, tahina e sesamo sono tutte fonti di calcio citate nella guida. Broccoli e limone portano vitamina C, che aiuta l'assorbimento del ferro del tofu.",
+   "tag": [
+    "veloce",
+    "soia"
+   ]
+  },
+  {
+   "id": "pasta-fagioli-borlotti",
+   "titolo": "Pasta e fagioli borlotti con patate della Sila",
+   "pasto": "pranzo",
+   "tempo_min": 30,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Fagioli borlotti in barattolo",
+     "qta": 240,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Pasta mista corta",
+     "qta": 140,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Patata",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Patata della Sila IGP",
+      "marca": "per esempio Sapori & Dintorni Conad (varietà Marabel, sacco da 1,5 kg)",
+      "dove": "Conad; raccolta da metà settembre, si conserva bene per tutto l'inverno"
+     }
+    },
+    {
+     "nome": "Cipolla rossa di Tropea",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Cipolla Rossa di Tropea Calabria IGP",
+      "marca": "per esempio Sapori & Dintorni Conad",
+      "dove": "Conad, Lidl ed Esselunga nel reparto ortofrutta; disponibilità variabile"
+     }
+    },
+    {
+     "nome": "Carota",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Sedano",
+     "qta": 1,
+     "unita": "costa",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Passata di pomodoro",
+     "qta": 100,
+     "unita": "g",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Rosmarino",
+     "qta": 1,
+     "unita": "rametto",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Pepe nero",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Trita cipolla, carota e sedano; sbuccia la patata e tagliala a cubetti piccoli.",
+    "Fai appassire il trito con l'olio e il rosmarino per 5 minuti, poi aggiungi patata, passata e i fagioli sciacquati.",
+    "Copri con 700 ml di acqua calda, sala e cuoci 10 minuti. Togli il rosmarino e frulla con il frullatore a immersione circa un terzo della minestra, per renderla cremosa.",
+    "Porta a bollore, aggiungi la pasta e cuocila nella minestra mescolando; aggiungi acqua calda se si asciuga troppo.",
+    "Lascia riposare 2 minuti fuori dal fuoco e servi con pepe e olio a crudo."
+   ],
+   "note_nutrizionali": "Il classico piatto unico italiano già vegano: pasta e legumi insieme coprono bene il fabbisogno proteico del pasto. Con i fagioli in barattolo è pronto in mezz'ora; se usi quelli secchi, ammollo di una notte e un'ora e mezza di cottura.",
+   "tag": [
+    "piatto unico",
+    "tradizionale"
+   ]
+  },
+  {
+   "id": "minestra-orzo-cannellini-cavolo-nero",
+   "titolo": "Minestra d'orzo con cannellini, patate e cavolo nero",
+   "pasto": "pranzo",
+   "tempo_min": 45,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Orzo perlato",
+     "qta": 120,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Fagioli cannellini in barattolo",
+     "qta": 240,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Cavolo nero",
+     "qta": 200,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Patata",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Patata della Sila IGP",
+      "marca": "per esempio Sapori & Dintorni Conad (varietà Marabel, sacco da 1,5 kg)",
+      "dove": "Conad; raccolta da metà settembre, si conserva bene per tutto l'inverno"
+     }
+    },
+    {
+     "nome": "Cipolla rossa di Tropea",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Cipolla Rossa di Tropea Calabria IGP",
+      "marca": "per esempio Sapori & Dintorni Conad",
+      "dove": "Conad, Lidl ed Esselunga nel reparto ortofrutta; disponibilità variabile"
+     }
+    },
+    {
+     "nome": "Carota",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Aglio",
+     "qta": 1,
+     "unita": "spicchio",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Peperoncino",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Sciacqua l'orzo. Trita cipolla e carota, taglia la patata a cubetti.",
+    "In una pentola fai appassire cipolla, carota e aglio con l'olio per 5 minuti.",
+    "Aggiungi orzo, patata e 1 litro di acqua calda; sala e cuoci a fuoco medio per 20 minuti con il coperchio socchiuso.",
+    "Togli la costa centrale alle foglie di cavolo nero, tagliale a striscioline e aggiungile alla minestra con i cannellini sciacquati.",
+    "Cuoci altri 15 minuti, finché l'orzo è morbido; aggiusta di sale e servi con peperoncino e olio a crudo."
+   ],
+   "note_nutrizionali": "Il cavolo nero è una delle verdure più ricche di calcio ben assorbibile e porta vitamina C, che aiuta ad assorbire il ferro dei cannellini. Ne viene volentieri il doppio: si conserva in frigo 2-3 giorni.",
+   "tag": [
+    "minestra",
+    "si conserva"
+   ]
+  },
+  {
+   "id": "tempeh-verza-tropea",
+   "titolo": "Tempeh in padella con verza, cipolla di Tropea e sesamo",
+   "pasto": "cena",
+   "tempo_min": 25,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Tempeh",
+     "qta": 200,
+     "unita": "g",
+     "reparto": "frigo"
+    },
+    {
+     "nome": "Verza",
+     "qta": 400,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Cipolla rossa di Tropea",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Cipolla Rossa di Tropea Calabria IGP",
+      "marca": "per esempio Sapori & Dintorni Conad",
+      "dove": "Conad, Lidl ed Esselunga nel reparto ortofrutta; disponibilità variabile"
+     }
+    },
+    {
+     "nome": "Carota",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Aglio",
+     "qta": 1,
+     "unita": "spicchio",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Limone",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Semi di sesamo",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Salsa di soia",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Paprika dolce",
+     "qta": 1,
+     "unita": "cucchiaino",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 3,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Pane integrale",
+     "qta": 4,
+     "unita": "fetta",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Taglia il tempeh a fettine sottili di mezzo centimetro e cuocilo 3 minuti in acqua bollente: diventa più morbido e perde il retrogusto amarognolo.",
+    "Affetta la cipolla, taglia la carota a bastoncini e la verza a striscioline, eliminando la costa centrale più dura.",
+    "In una padella larga rosola il tempeh con un cucchiaio d'olio e la paprika, 3-4 minuti per lato, finché è dorato. Bagna con la salsa di soia, lasciala ridurre 30 secondi, spruzza con metà del succo di limone e tieni da parte.",
+    "Nella stessa padella fai appassire cipolla, carota e aglio con l'olio rimasto per 3 minuti, poi aggiungi la verza, sala e cuoci 8-10 minuti con il coperchio, mescolando ogni tanto; deve restare un po' croccante.",
+    "Rimetti il tempeh in padella, completa con il limone rimasto e il sesamo tostato e servi con il pane integrale tostato."
+   ],
+   "note_nutrizionali": "Il tempeh è soia fermentata: porta proteine complete, ferro e zinco. Verza e limone forniscono vitamina C, che aiuta ad assorbire il ferro; verza e sesamo contribuiscono al calcio. La salsa di soia è già salata: assaggia prima di aggiungere sale.",
+   "tag": [
+    "soia",
+    "veloce",
+    "padella"
+   ]
+  },
+  {
+   "id": "spezzatino-seitan-funghi-patate",
+   "titolo": "Spezzatino di seitan con funghi e patate della Sila",
+   "pasto": "cena",
+   "tempo_min": 40,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Seitan al naturale",
+     "qta": 250,
+     "unita": "g",
+     "reparto": "frigo"
+    },
+    {
+     "nome": "Funghi champignon",
+     "qta": 300,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Patata",
+     "qta": 2,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Patata della Sila IGP",
+      "marca": "per esempio Sapori & Dintorni Conad (varietà Marabel, sacco da 1,5 kg)",
+      "dove": "Conad; raccolta da metà settembre, si conserva bene per tutto l'inverno"
+     }
+    },
+    {
+     "nome": "Cipolla rossa di Tropea",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Cipolla Rossa di Tropea Calabria IGP",
+      "marca": "per esempio Sapori & Dintorni Conad",
+      "dove": "Conad, Lidl ed Esselunga nel reparto ortofrutta; disponibilità variabile"
+     }
+    },
+    {
+     "nome": "Carota",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Sedano",
+     "qta": 1,
+     "unita": "costa",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Vino rosso",
+     "qta": 100,
+     "unita": "ml",
+     "reparto": "dispensa",
+     "calabrese": {
+      "prodotto": "Cirò rosso DOC",
+      "marca": "per esempio Librandi (Cirò Marina)",
+      "dove": "reparto vini di molti supermercati ed enoteche; controlla in etichetta che sia dichiarato vegano"
+     }
+    },
+    {
+     "nome": "Concentrato di pomodoro",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Farina 0",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Rosmarino",
+     "qta": 1,
+     "unita": "rametto",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Alloro",
+     "qta": 2,
+     "unita": "pz",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 3,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Pepe nero",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Taglia il seitan a bocconcini, asciugalo e passalo nella farina. Pulisci i funghi con un panno umido e tagliali a spicchi; sbuccia le patate e tagliale a cubetti di 2 cm.",
+    "Trita cipolla, carota e sedano e falli appassire 5 minuti in una casseruola con due cucchiai d'olio, il rosmarino e l'alloro.",
+    "Alza la fiamma, aggiungi il seitan e rosolalo 4-5 minuti finché è dorato. Unisci i funghi, cuoci altri 3 minuti, poi sfuma con il vino rosso e lascia evaporare 2 minuti.",
+    "Aggiungi patate, concentrato di pomodoro sciolto in 400 ml di acqua calda, sale e pepe. Copri e cuoci a fuoco dolce per 20-25 minuti, finché le patate sono tenere e il fondo è denso.",
+    "Togli rosmarino e alloro e servi con un filo d'olio a crudo."
+   ],
+   "note_nutrizionali": "Il seitan è glutine di frumento: molto proteico ma povero di lisina, per questo nella stessa giornata conviene un pasto con legumi. Scegli un vino con dicitura vegana in etichetta: alcuni vini sono chiarificati con albume, caseina o colla di pesce.",
+   "tag": [
+    "piatto unico",
+    "umido",
+    "con vino"
+   ],
+   "alcolici": true
+  },
+  {
+   "id": "zuppa-lenticchie-castagne-porri",
+   "titolo": "Zuppa di lenticchie e castagne con porri",
+   "pasto": "cena",
+   "tempo_min": 45,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Lenticchie secche",
+     "qta": 140,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Castagne precotte",
+     "qta": 150,
+     "unita": "g",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Porro",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Carota",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Sedano",
+     "qta": 1,
+     "unita": "costa",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Concentrato di pomodoro",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Rosmarino",
+     "qta": 1,
+     "unita": "rametto",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Alloro",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Pane integrale",
+     "qta": 2,
+     "unita": "fetta",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Pepe nero",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Sciacqua le lenticchie: quelle piccole non hanno bisogno di ammollo. Affetta il porro a rondelle sottili e trita carota e sedano.",
+    "In una pentola fai appassire porro, carota e sedano con l'olio, il rosmarino e l'alloro per 5 minuti.",
+    "Aggiungi lenticchie, concentrato e 1 litro di acqua calda. Cuoci con il coperchio socchiuso per 25 minuti.",
+    "Spezzetta metà delle castagne e aggiungile, con quelle intere, alla zuppa; sala e cuoci altri 10 minuti, finché le lenticchie sono morbide. Se serve aggiungi acqua calda.",
+    "Togli rosmarino e alloro, servi con pepe, olio a crudo e il pane integrale tostato a cubetti."
+   ],
+   "note_nutrizionali": "Lenticchie e castagne insieme danno proteine, fibre e ferro; per assorbirlo meglio chiudi il pasto con due clementine, di stagione a ottobre. Con le castagne fresche: incidile, lessale 40 minuti e sbucciale ancora calde.",
+   "tag": [
+    "minestra",
+    "si conserva"
+   ]
+  },
+  {
+   "id": "farinata-ceci-radicchio-tropea",
+   "titolo": "Farinata di ceci con radicchio al vino rosso e cipolla di Tropea",
+   "pasto": "cena",
+   "tempo_min": 35,
+   "riposo": "almeno 2 ore per la pastella",
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Farina di ceci",
+     "qta": 150,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Radicchio",
+     "qta": 200,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Vino rosso",
+     "qta": 40,
+     "unita": "ml",
+     "reparto": "dispensa",
+     "calabrese": {
+      "prodotto": "Cirò rosso DOC",
+      "marca": "per esempio Librandi (Cirò Marina)",
+      "dove": "reparto vini di molti supermercati ed enoteche; controlla in etichetta che sia dichiarato vegano"
+     }
+    },
+    {
+     "nome": "Cipolla rossa di Tropea",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Cipolla Rossa di Tropea Calabria IGP",
+      "marca": "per esempio Sapori & Dintorni Conad",
+      "dove": "Conad, Lidl ed Esselunga nel reparto ortofrutta; disponibilità variabile"
+     }
+    },
+    {
+     "nome": "Finocchio",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Limone",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Rosmarino",
+     "qta": 1,
+     "unita": "rametto",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 4,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Pepe nero",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "In una ciotola versa la farina di ceci e aggiungi a filo 450 ml di acqua fredda, frustando per non fare grumi. Copri e lascia riposare almeno 2 ore a temperatura ambiente; togli la schiuma che si forma in superficie.",
+    "Accendi il forno a 230 °C, statico. Affetta sottile la cipolla e taglia il radicchio a listarelle; saltali 3 minuti in padella con un cucchiaio d'olio e un pizzico di sale, bagna con il vino rosso e lascia evaporare a fuoco vivace 2 minuti.",
+    "Ungi bene una teglia di 28-30 cm con due cucchiai d'olio e scaldala in forno per 3 minuti. Mescola nella pastella un cucchiaino di sale, versala nella teglia calda e distribuisci sopra radicchio, cipolla e aghi di rosmarino.",
+    "Cuoci 20-25 minuti nel ripiano alto, finché la superficie è dorata e i bordi croccanti.",
+    "Intanto affetta sottile il finocchio e condiscilo con l'olio rimasto, il succo del limone e sale. Servi la farinata calda con pepe macinato e l'insalata di finocchio."
+   ],
+   "note_nutrizionali": "La farina di ceci è un legume a tutti gli effetti: la farinata vale come fonte proteica del pasto. Il limone dell'insalata porta vitamina C, utile per il ferro dei ceci. Scegli un vino con dicitura vegana in etichetta: alcuni vini sono chiarificati con albume, caseina o colla di pesce.",
+   "tag": [
+    "forno",
+    "da preparare prima",
+    "tradizionale",
+    "con vino"
+   ],
+   "alcolici": true
+  },
+  {
+   "id": "polpette-cannellini-spinaci-cavolfiore",
+   "titolo": "Polpette di cannellini e spinaci con cavolfiore al forno",
+   "pasto": "cena",
+   "tempo_min": 45,
+   "difficolta": "media",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Fagioli cannellini in barattolo",
+     "qta": 240,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Spinaci freschi",
+     "qta": 150,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Pangrattato",
+     "qta": 60,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Cavolfiore",
+     "qta": 500,
+     "unita": "g",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Aglio",
+     "qta": 1,
+     "unita": "spicchio",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Limone",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Prezzemolo",
+     "qta": 1,
+     "unita": "rametto",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Noce moscata",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Curcuma in polvere",
+     "qta": 1,
+     "unita": "cucchiaino",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 4,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Pepe nero",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Accendi il forno a 200 °C. Dividi il cavolfiore in cimette, condiscile su una teglia con carta forno con due cucchiai d'olio, la curcuma, sale e pepe.",
+    "Cuoci gli spinaci in padella 2-3 minuti con l'aglio e un filo d'olio, finché appassiscono; strizzali bene e tritali.",
+    "Sciacqua e sgocciola i cannellini e schiacciali con una forchetta. Unisci spinaci, scorza grattugiata del limone, prezzemolo tritato, noce moscata, sale e 40 g di pangrattato: l'impasto deve stare insieme senza appiccicare.",
+    "Forma 10-12 polpette, passale nel pangrattato rimasto e disponile su un'altra teglia con carta forno, spennellate con l'olio rimasto.",
+    "Inforna polpette e cavolfiore insieme per 20-25 minuti, girando le polpette a metà cottura. Servi con una spruzzata di succo di limone."
+   ],
+   "note_nutrizionali": "Controlla l'etichetta del pangrattato: alcuni contengono latte. Gli spinaci contengono calcio ma lo cedono poco; il cavolfiore e il limone portano vitamina C per il ferro dei fagioli.",
+   "tag": [
+    "forno",
+    "si conserva"
+   ]
+  },
+  {
+   "id": "ceci-croccanti-paprika",
+   "titolo": "Ceci croccanti al forno con paprika",
+   "pasto": "spuntino",
+   "tempo_min": 40,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": "tutto_anno",
+   "ingredienti": [
+    {
+     "nome": "Ceci in barattolo",
+     "qta": 240,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Paprika dolce",
+     "qta": 1,
+     "unita": "cucchiaino",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Accendi il forno a 200 °C statico.",
+    "Scola e sciacqua i ceci, poi asciugali bene con un canovaccio: più sono asciutti, più diventano croccanti. Elimina le pellicine che si staccano.",
+    "Stendili in un solo strato su una teglia con carta forno e cuoci 30-35 minuti, scuotendo la teglia a metà cottura.",
+    "Appena sfornati condiscili in una ciotola con olio, paprika e un pizzico di sale. Si mangiano tiepidi o freddi; restano croccanti per un giorno in un barattolo aperto."
+   ],
+   "note_nutrizionali": "Uno spuntino salato con proteine e fibre, alternativa a patatine e crackers. Se vuoi una versione piccante sostituisci parte della paprika con peperoncino.",
+   "tag": [
+    "al forno",
+    "salato"
+   ]
+  },
+  {
+   "id": "barrette-avena-fichi-mandorle",
+   "titolo": "Barrette senza cottura di avena, fichi secchi e mandorle",
+   "pasto": "spuntino",
+   "tempo_min": 15,
+   "riposo": "1 ora in frigo",
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": "tutto_anno",
+   "ingredienti": [
+    {
+     "nome": "Fichi secchi",
+     "qta": 6,
+     "unita": "pz",
+     "reparto": "dispensa",
+     "calabrese": {
+      "prodotto": "Fichi di Cosenza DOP",
+      "marca": "per esempio Colavolpe (Belmonte Calabro)",
+      "dove": "botteghe di prodotti tipici e vendita online; nella grande distribuzione la presenza varia"
+     }
+    },
+    {
+     "nome": "Mandorle",
+     "qta": 30,
+     "unita": "g",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Fiocchi d'avena",
+     "qta": 50,
+     "unita": "g",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Crema di arachidi 100%",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Cacao amaro in polvere",
+     "qta": 1,
+     "unita": "cucchiaino",
+     "reparto": "dispensa"
+    }
+   ],
+   "passi": [
+    "Togli il picciolo ai fichi e tagliali a pezzi.",
+    "Trita le mandorle nel mixer a pezzetti grossolani, poi aggiungi fichi, avena, crema di arachidi e cacao e frulla a impulsi finché l'impasto si compatta tra le dita; se è troppo asciutto aggiungi un cucchiaio d'acqua.",
+    "Pressa l'impasto in uno stampino rettangolare foderato di carta forno, alto circa 1,5 cm.",
+    "Lascialo in frigo un'ora e taglialo in 4 barrette. Si conservano in frigo, in un contenitore chiuso, per alcuni giorni."
+   ],
+   "note_nutrizionali": "Fichi secchi e mandorle portano calcio e ferro; la dolcezza viene solo dalla frutta, senza zucchero aggiunto.",
+   "tag": [
+    "senza cottura",
+    "dolce",
+    "da portare via"
+   ]
+  },
+  {
+   "id": "mele-al-forno-noci-uvetta",
+   "titolo": "Mele al forno con cannella, noci e uvetta",
+   "pasto": "spuntino",
+   "tempo_min": 40,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Mela",
+     "qta": 2,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Noci sgusciate",
+     "qta": 20,
+     "unita": "g",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Uvetta",
+     "qta": 20,
+     "unita": "g",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Cannella in polvere",
+     "qta": 1,
+     "unita": "cucchiaino",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Zucchero di canna",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Limone",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    }
+   ],
+   "passi": [
+    "Accendi il forno a 180 °C. Ammolla l'uvetta 10 minuti in acqua tiepida (non nel liquore) e strizzala.",
+    "Lava le mele (Renetta o Fuji) e togli il torsolo con un levatorsoli o un coltellino, senza bucare il fondo.",
+    "Mescola noci tritate, uvetta, cannella e zucchero e riempi le mele; spremi sopra un po' di limone.",
+    "Mettile in una pirofila con due dita d'acqua sul fondo e cuoci 30-35 minuti, finché la buccia si raggrinzisce. Servile tiepide con il loro sughetto."
+   ],
+   "note_nutrizionali": "Le noci sono tra le fonti vegetali di omega-3 indicate nella guida. Lo zucchero si può togliere: mela e uvetta sono già dolci.",
+   "tag": [
+    "al forno",
+    "dolce"
+   ]
+  },
+  {
+   "id": "crostini-hummus-verdure",
+   "titolo": "Crostini integrali con hummus e verdure croccanti",
+   "pasto": "spuntino",
+   "tempo_min": 10,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": [
+    "autunno",
+    "inverno"
+   ],
+   "ingredienti": [
+    {
+     "nome": "Pane integrale",
+     "qta": 2,
+     "unita": "fetta",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Hummus di ceci",
+     "qta": 100,
+     "unita": "g",
+     "reparto": "frigo"
+    },
+    {
+     "nome": "Carota",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Finocchio",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Semi di sesamo",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    }
+   ],
+   "passi": [
+    "Tosta il pane e taglia ogni fetta a metà.",
+    "Taglia la carota a bastoncini e il finocchio a fettine sottili.",
+    "Spalma l'hummus (fatto in casa con la ricetta di base, oppure confezionato: controlla che sia senza latte e yogurt) e cospargi di sesamo.",
+    "Servi i crostini con le verdure crude da intingere nell'hummus avanzato."
+   ],
+   "note_nutrizionali": "Ceci e pane integrale insieme danno proteine, ferro e zinco; la verdura cruda aggiunge vitamina C, che aiuta ad assorbire il ferro.",
+   "tag": [
+    "senza cottura",
+    "salato",
+    "veloce"
+   ]
+  },
+  {
+   "id": "hummus-di-ceci",
+   "titolo": "Hummus di ceci",
+   "pasto": "base",
+   "tempo_min": 10,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": "tutto_anno",
+   "ingredienti": [
+    {
+     "nome": "Ceci in barattolo",
+     "qta": 240,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Tahina",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Limone",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Aglio",
+     "qta": 0.5,
+     "unita": "spicchio",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Cumino in polvere",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Scola i ceci tenendo da parte un po' del liquido di governo, e sciacquali.",
+    "Frulla ceci, tahina, succo di limone, aglio, cumino e un pizzico di sale.",
+    "Con il frullatore acceso aggiungi a filo l'olio e 3-4 cucchiai di acqua fredda (o del liquido dei ceci) fino a una crema liscia.",
+    "Assaggia e regola di sale e limone. Si conserva in frigo, coperto da un filo d'olio, per 3 giorni."
+   ],
+   "note_nutrizionali": "Al posto dei formaggi spalmabili, come suggerisce la guida: la tahina porta calcio, i ceci proteine e ferro. Con i ceci cotti in casa (ricetta di base) viene ancora più cremoso.",
+   "tag": [
+    "senza cottura",
+    "da spalmare",
+    "si conserva"
+   ]
+  },
+  {
+   "id": "ragu-di-lenticchie",
+   "titolo": "Ragù di lenticchie",
+   "pasto": "base",
+   "tempo_min": 50,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": "tutto_anno",
+   "ingredienti": [
+    {
+     "nome": "Lenticchie secche",
+     "qta": 100,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Cipolla rossa di Tropea",
+     "qta": 0.5,
+     "unita": "pz",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Cipolla Rossa di Tropea Calabria IGP",
+      "marca": "per esempio Sapori & Dintorni Conad",
+      "dove": "Conad, Lidl ed Esselunga nel reparto ortofrutta; disponibilità variabile"
+     }
+    },
+    {
+     "nome": "Carota",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Sedano",
+     "qta": 1,
+     "unita": "costa",
+     "reparto": "ortofrutta"
+    },
+    {
+     "nome": "Passata di pomodoro",
+     "qta": 400,
+     "unita": "g",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Concentrato di pomodoro",
+     "qta": 1,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Vino rosso",
+     "qta": 60,
+     "unita": "ml",
+     "reparto": "dispensa",
+     "calabrese": {
+      "prodotto": "Cirò rosso DOC",
+      "marca": "per esempio Librandi (Cirò Marina)",
+      "dove": "reparto vini di molti supermercati ed enoteche; controlla in etichetta che sia dichiarato vegano"
+     }
+    },
+    {
+     "nome": "Alloro",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Pepe nero",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Sciacqua le lenticchie (quelle piccole non hanno bisogno di ammollo).",
+    "Trita finemente cipolla, carota e sedano e falli soffriggere 8 minuti a fuoco dolce con l'olio.",
+    "Aggiungi le lenticchie e il concentrato e tosta un minuto mescolando, poi sfuma con il vino rosso e lascia evaporare 2 minuti.",
+    "Unisci passata, alloro e 300 ml di acqua calda; cuoci coperto a fuoco basso 35-40 minuti, mescolando ogni tanto e aggiungendo acqua se si asciuga troppo. Le lenticchie devono essere tenere e il sugo denso.",
+    "Togli l'alloro, regola di sale e pepe. Basta per 160-180 g di pasta; si conserva in frigo 3 giorni e si congela bene."
+   ],
+   "note_nutrizionali": "Il sostituto più semplice del ragù di carne, utile nella fase in cui riduci la carne. Lenticchie e pomodoro insieme: ferro più vitamina C nello stesso piatto. Scegli un vino con dicitura vegana in etichetta: alcuni vini sono chiarificati con albume, caseina o colla di pesce.",
+   "tag": [
+    "sugo",
+    "si conserva",
+    "si congela",
+    "con vino"
+   ],
+   "alcolici": true
+  },
+  {
+   "id": "besciamella-vegetale",
+   "titolo": "Besciamella vegetale all'olio",
+   "pasto": "base",
+   "tempo_min": 10,
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": "tutto_anno",
+   "ingredienti": [
+    {
+     "nome": "Bevanda di soia con calcio",
+     "qta": 250,
+     "unita": "ml",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Farina 0",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Olio extravergine d'oliva",
+     "qta": 2,
+     "unita": "cucchiaio",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Noce moscata",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "Usa una bevanda di soia senza zuccheri aggiunti e scaldala senza farla bollire.",
+    "In un pentolino scalda l'olio a fuoco basso, aggiungi la farina e mescola con una frusta un minuto, senza farla colorire.",
+    "Versa la bevanda calda poco per volta continuando a mescolare, per evitare grumi.",
+    "Cuoci 3-5 minuti a fuoco basso finché si addensa; regola di sale e noce moscata. Si addensa ancora raffreddando: se serve allungala con un goccio di bevanda."
+   ],
+   "note_nutrizionali": "Al posto della besciamella con burro e latte, per lasagne, gratin di verdure e cannelloni. La bevanda fortificata porta il calcio che altrimenti verrebbe dal latte.",
+   "tag": [
+    "salsa",
+    "veloce"
+   ]
+  },
+  {
+   "id": "ceci-secchi-cotti",
+   "titolo": "Ceci secchi cotti in anticipo",
+   "pasto": "base",
+   "tempo_min": 120,
+   "riposo": "ammollo 12 ore",
+   "difficolta": "facile",
+   "porzioni_base": 2,
+   "stagioni": "tutto_anno",
+   "ingredienti": [
+    {
+     "nome": "Ceci secchi",
+     "qta": 160,
+     "unita": "g",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Alloro",
+     "qta": 1,
+     "unita": "pz",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Rosmarino",
+     "qta": 1,
+     "unita": "rametto",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Sale iodato",
+     "qta": null,
+     "unita": "q.b.",
+     "reparto": "spezie"
+    }
+   ],
+   "passi": [
+    "La sera prima metti i ceci in una ciotola con abbondante acqua fredda (almeno tre volte il loro volume) e lasciali in ammollo 12 ore.",
+    "Scola e sciacqua i ceci, buttando l'acqua dell'ammollo: aiuta a renderli più digeribili.",
+    "Mettili in pentola con acqua fredda abbondante, alloro e rosmarino; porta a bollore, schiuma e cuoci a fuoco basso coperto per circa 2 ore (35-40 minuti in pentola a pressione), finché si schiacciano facilmente.",
+    "Sala solo a fine cottura e lasciali intiepidire nella loro acqua. Rendono circa due volte e mezzo il peso secco.",
+    "Conservali in frigo coperti dall'acqua di cottura per 2-3 giorni, oppure congelali in porzioni da usare in hummus, minestre e insalate."
+   ],
+   "note_nutrizionali": "Ammollo lungo con cambio dell'acqua è uno degli accorgimenti della guida per assorbire meglio ferro e zinco e digerire meglio i legumi. Lo stesso metodo vale per fagioli borlotti e cannellini, con tempi un po' più brevi.",
+   "tag": [
+    "da preparare prima",
+    "si congela",
+    "si conserva"
+   ]
+  }
+ ],
+ "nota_schema": "Campo facoltativo 'alcolici': true per le ricette con vino, birra o superalcolici (aceto e salsa di soia esclusi). Campi facoltativi 'tempo_prep' e 'tempo_cottura' in minuti; tempo_min resta il tempo totale."
+}

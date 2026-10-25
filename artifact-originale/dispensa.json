@@ -1,0 +1,262 @@
+{
+ "versione_schema": 1,
+ "aggiornato_il": "2026-10-21",
+ "gruppi": [
+  {
+   "id": "legumi",
+   "titolo": "Legumi",
+   "nota": "La base proteica: tieni sia i secchi sia quelli in barattolo per le sere di fretta.",
+   "voci": [
+    {
+     "nome": "Lenticchie rosse decorticate",
+     "reparto": "legumi",
+     "nota": "cuociono in 15 minuti senza ammollo"
+    },
+    {
+     "nome": "Ceci secchi",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Ceci in barattolo",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Fagioli cannellini in barattolo",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Fagioli borlotti in barattolo",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Lenticchie secche",
+     "reparto": "legumi"
+    },
+    {
+     "nome": "Farina di ceci",
+     "reparto": "legumi",
+     "nota": "per farinate e frittate senza uova"
+    }
+   ]
+  },
+  {
+   "id": "cereali",
+   "titolo": "Cereali e pane",
+   "nota": "Meglio integrali; alterna pasta, riso, farro e orzo.",
+   "voci": [
+    {
+     "nome": "Pasta integrale",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Riso integrale o basmati",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Farro perlato",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Orzo perlato",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Fiocchi d'avena",
+     "reparto": "cereali"
+    },
+    {
+     "nome": "Pane integrale",
+     "reparto": "cereali",
+     "nota": "meglio a lievitazione naturale; si congela a fette"
+    }
+   ]
+  },
+  {
+   "id": "semi",
+   "titolo": "Frutta secca e semi",
+   "nota": "Grassi buoni, omega-3, calcio e zinco in piccole quantità.",
+   "voci": [
+    {
+     "nome": "Noci sgusciate",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Mandorle",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Semi di lino",
+     "reparto": "dispensa",
+     "nota": "da macinare al momento"
+    },
+    {
+     "nome": "Semi di zucca",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Tahina",
+     "reparto": "dispensa",
+     "nota": "crema di sesamo, fonte di calcio"
+    },
+    {
+     "nome": "Crema di arachidi 100%",
+     "reparto": "dispensa",
+     "nota": "senza zuccheri né oli aggiunti"
+    }
+   ]
+  },
+  {
+   "id": "frigo",
+   "titolo": "Frigo",
+   "nota": "Leggi le etichette: calcio aggiunto nelle bevande e negli yogurt, sali di calcio nel tofu.",
+   "voci": [
+    {
+     "nome": "Bevanda di soia con calcio",
+     "reparto": "dispensa",
+     "nota": "a lunga conservazione, in frigo dopo l'apertura"
+    },
+    {
+     "nome": "Yogurt di soia con calcio",
+     "reparto": "frigo"
+    },
+    {
+     "nome": "Tofu al naturale",
+     "reparto": "frigo",
+     "nota": "meglio se coagulato con sali di calcio"
+    },
+    {
+     "nome": "Tempeh",
+     "reparto": "frigo"
+    },
+    {
+     "nome": "Seitan",
+     "reparto": "frigo",
+     "nota": "leggi l'etichetta: alcuni contengono più sale di quanto serve"
+    }
+   ]
+  },
+  {
+   "id": "surgelati",
+   "titolo": "Surgelati",
+   "nota": "Verdura già pulita per i giorni pieni.",
+   "voci": [
+    {
+     "nome": "Spinaci surgelati",
+     "reparto": "surgelati"
+    },
+    {
+     "nome": "Broccoli surgelati",
+     "reparto": "surgelati"
+    },
+    {
+     "nome": "Minestrone surgelato senza piselli e fave",
+     "reparto": "surgelati",
+     "nota": "molti minestroni li contengono: controlla l'elenco ingredienti"
+    }
+   ]
+  },
+  {
+   "id": "condimenti",
+   "titolo": "Condimenti e spezie",
+   "nota": "Sale sempre iodato, con moderazione.",
+   "voci": [
+    {
+     "nome": "Olio extravergine d'oliva",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Sale iodato",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Passata di pomodoro",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Concentrato di pomodoro",
+     "reparto": "dispensa"
+    },
+    {
+     "nome": "Dado vegetale",
+     "reparto": "dispensa",
+     "nota": "scegli quelli senza grassi animali né estratti di carne"
+    },
+    {
+     "nome": "Salsa di soia",
+     "reparto": "dispensa",
+     "nota": "molto salata: usane poca e riduci il sale"
+    },
+    {
+     "nome": "Cumino in polvere",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Paprika dolce",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Cannella in polvere",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Alloro",
+     "reparto": "spezie"
+    },
+    {
+     "nome": "Vino rosso",
+     "reparto": "dispensa",
+     "nota": "per sfumare; scegli un vino con dicitura vegana",
+     "calabrese": {
+      "prodotto": "Cirò rosso DOC",
+      "marca": "per esempio Librandi (Cirò Marina)",
+      "dove": "reparto vini di molti supermercati ed enoteche; controlla in etichetta che sia dichiarato vegano"
+     }
+    }
+   ]
+  },
+  {
+   "id": "calabria",
+   "titolo": "Dalla Calabria",
+   "nota": "Prodotti tipici calabresi vegani, con un esempio di marca e dove trovarli. La disponibilità nei punti vendita cambia.",
+   "voci": [
+    {
+     "nome": "Cipolla rossa di Tropea",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Cipolla Rossa di Tropea Calabria IGP",
+      "marca": "per esempio Sapori & Dintorni Conad",
+      "dove": "Conad, Lidl ed Esselunga nel reparto ortofrutta; disponibilità variabile"
+     }
+    },
+    {
+     "nome": "Patata",
+     "reparto": "ortofrutta",
+     "calabrese": {
+      "prodotto": "Patata della Sila IGP",
+      "marca": "per esempio Sapori & Dintorni Conad (varietà Marabel, sacco da 1,5 kg)",
+      "dove": "Conad; raccolta da metà settembre, si conserva bene per tutto l'inverno"
+     }
+    },
+    {
+     "nome": "Fichi secchi",
+     "reparto": "dispensa",
+     "calabrese": {
+      "prodotto": "Fichi di Cosenza DOP",
+      "marca": "per esempio Colavolpe (Belmonte Calabro)",
+      "dove": "botteghe di prodotti tipici e vendita online; nella grande distribuzione la presenza varia"
+     }
+    },
+    {
+     "nome": "Liquirizia pura",
+     "reparto": "dispensa",
+     "nota": "con moderazione: in eccesso può alzare la pressione",
+     "calabrese": {
+      "prodotto": "Liquirizia pura spezzata",
+      "marca": "per esempio Amarelli (Rossano)",
+      "dove": "farmacie, erboristerie e vendita online; nei supermercati la presenza varia"
+     }
+    }
+   ]
+  }
+ ]
+}

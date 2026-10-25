@@ -1,0 +1,934 @@
+{
+ "versione_schema": 1,
+ "aggiornato_il": "2026-10-19",
+ "fonte": {
+  "titolo": "Calendario di frutta e verdura di stagione, campagna «Sai quel che mangi» del Ministero delle politiche agricole (MiPAAF), pubblicato dal SIAN dell'ASL VCO",
+  "url": "https://www.aslvco.it/wp-content/uploads/2026/01/6.CALENDARIO-FRUTTA-E-VERDURA-DI-STAGIONE.pdf"
+ },
+ "nota_integrazioni": "Porri, cime di rapa, cavolini di Bruxelles e topinambur non sono nel calendario ministeriale: mesi da calendari divulgativi italiani, da considerare indicativi. Cipolle e funghi champignon si trovano tutto l'anno.",
+ "prodotti": [
+  {
+   "nome": "Albicocche",
+   "tipo": "frutta",
+   "mesi": [
+    6,
+    7
+   ],
+   "alias": [
+    "albicocc"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Amarene",
+   "tipo": "frutta",
+   "mesi": [
+    6,
+    7
+   ],
+   "alias": [
+    "amaren"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Anguria",
+   "tipo": "frutta",
+   "mesi": [
+    7,
+    8
+   ],
+   "alias": [
+    "anguria",
+    "cocomero"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Arance",
+   "tipo": "frutta",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    11,
+    12
+   ],
+   "alias": [
+    "arancia",
+    "arance"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Cachi",
+   "tipo": "frutta",
+   "mesi": [
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "cachi",
+    "kaki"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Castagne",
+   "tipo": "frutta",
+   "mesi": [
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "castagn"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Ciliegie",
+   "tipo": "frutta",
+   "mesi": [
+    5,
+    6,
+    7
+   ],
+   "alias": [
+    "ciliegi"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Clementine",
+   "tipo": "frutta",
+   "mesi": [
+    1,
+    2,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "clementin"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Fichi",
+   "tipo": "frutta",
+   "mesi": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "fichi freschi",
+    "fico fresco"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Fragole",
+   "tipo": "frutta",
+   "mesi": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "alias": [
+    "fragol"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Kiwi",
+   "tipo": "frutta",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    11,
+    12
+   ],
+   "alias": [
+    "kiwi"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Lamponi",
+   "tipo": "frutta",
+   "mesi": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "alias": [
+    "lampon"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Limoni",
+   "tipo": "frutta",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "limon"
+   ],
+   "fonte": "mipaaf",
+   "aromatico": true
+  },
+  {
+   "nome": "Mandarini",
+   "tipo": "frutta",
+   "mesi": [
+    1,
+    2,
+    11,
+    12
+   ],
+   "alias": [
+    "mandarin"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Mele",
+   "tipo": "frutta",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "mela",
+    "mele"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Melagrane",
+   "tipo": "frutta",
+   "mesi": [
+    9,
+    10,
+    11
+   ],
+   "alias": [
+    "melagran",
+    "melograno"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Meloni",
+   "tipo": "frutta",
+   "mesi": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "melone",
+    "meloni"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Mirtilli",
+   "tipo": "frutta",
+   "mesi": [
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "mirtill"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Nespole",
+   "tipo": "frutta",
+   "mesi": [
+    4,
+    5
+   ],
+   "alias": [
+    "nespol"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Pere",
+   "tipo": "frutta",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "pera",
+    "pere"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Pesche",
+   "tipo": "frutta",
+   "mesi": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "pesca",
+    "pesche"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Pompelmi",
+   "tipo": "frutta",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    11,
+    12
+   ],
+   "alias": [
+    "pompelm"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Prugne e susine",
+   "tipo": "frutta",
+   "mesi": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "prugn",
+    "susin"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Uva",
+   "tipo": "frutta",
+   "mesi": [
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "uva fresca",
+    "uva "
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Aglio",
+   "tipo": "verdura",
+   "mesi": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "alias": [
+    "aglio"
+   ],
+   "fonte": "mipaaf",
+   "aromatico": true
+  },
+  {
+   "nome": "Asparagi",
+   "tipo": "verdura",
+   "mesi": [
+    3,
+    4,
+    5,
+    6
+   ],
+   "alias": [
+    "asparag"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Bietole da coste",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "biet",
+    "coste"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Broccoli",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "broccol"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Carciofi",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "alias": [
+    "carciof"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Carote",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "carot"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Cavolfiori",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "cavolfior"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Cavoli (verza, cappuccio, cavolo nero)",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "verza",
+    "cavolo nero",
+    "cavolo cappuccio",
+    "cavolo"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Cetrioli",
+   "tipo": "verdura",
+   "mesi": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "cetriol"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Cicoria",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "cicori"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Cipolline",
+   "tipo": "verdura",
+   "mesi": [
+    3,
+    4,
+    5
+   ],
+   "alias": [
+    "cipollin"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Fagiolini",
+   "tipo": "verdura",
+   "mesi": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "fagiolin"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Finocchi",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "finocch"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Insalate (lattuga, rucola)",
+   "tipo": "verdura",
+   "mesi": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "lattug",
+    "rucola",
+    "insalat",
+    "valerian"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Melanzane",
+   "tipo": "verdura",
+   "mesi": [
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "alias": [
+    "melanzan"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Patate",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "patat"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Peperoni",
+   "tipo": "verdura",
+   "mesi": [
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "alias": [
+    "peperon"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Pomodori",
+   "tipo": "verdura",
+   "mesi": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "pomodor"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Radicchio",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "radicchi"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Rape",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "rapa",
+    "rape"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Ravanelli",
+   "tipo": "verdura",
+   "mesi": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "alias": [
+    "ravanell"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Sedano",
+   "tipo": "verdura",
+   "mesi": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "alias": [
+    "sedano"
+   ],
+   "fonte": "mipaaf",
+   "aromatico": true
+  },
+  {
+   "nome": "Spinaci",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "spinac"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Zucchine",
+   "tipo": "verdura",
+   "mesi": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "alias": [
+    "zucchin"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Zucca",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "zucca",
+    "zucche"
+   ],
+   "fonte": "mipaaf"
+  },
+  {
+   "nome": "Porri",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "porr"
+   ],
+   "fonte": "integrazione"
+  },
+  {
+   "nome": "Cime di rapa",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "cime di rapa"
+   ],
+   "fonte": "integrazione"
+  },
+  {
+   "nome": "Cavolini di Bruxelles",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    11,
+    12
+   ],
+   "alias": [
+    "cavolini"
+   ],
+   "fonte": "integrazione"
+  },
+  {
+   "nome": "Topinambur",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    11,
+    12
+   ],
+   "alias": [
+    "topinambur"
+   ],
+   "fonte": "integrazione"
+  },
+  {
+   "nome": "Cipolle",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "cipolla",
+    "cipolle"
+   ],
+   "fonte": "conservazione",
+   "nota": "si conservano e si trovano tutto l'anno"
+  },
+  {
+   "nome": "Funghi champignon",
+   "tipo": "verdura",
+   "mesi": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "alias": [
+    "champignon"
+   ],
+   "fonte": "conservazione",
+   "nota": "coltivati, disponibili tutto l'anno"
+  }
+ ],
+ "nota_stagionalita": "Nel simbolo «Di stagione» non contano i prodotti disponibili tutto l'anno né aglio, limone e sedano usati come aromi."
+}

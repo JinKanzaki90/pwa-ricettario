@@ -1,0 +1,184 @@
+{
+ "versione_schema": 1,
+ "aggiornato_il": "2026-10-19",
+ "titolo": "Una settimana d'autunno",
+ "nota": "14 pranzi e cene, ognuno con una fonte proteica vegetale (legumi, tofu, tempeh o seitan) e verdura di stagione. Tre cene si cucinano in doppia dose e diventano il pranzo del giorno dopo.",
+ "consigli": [
+  "La domenica o il lunedì prepara i ceci croccanti e, se vuoi, l'hummus con la ricetta base: si conservano in frigo per alcuni giorni.",
+  "Gli avanzi non entrano di nuovo nella spesa: le dosi doppie sono già calcolate nel giorno in cui cucini.",
+  "Le colazioni si possono scambiare tra loro liberamente; per pranzi e cene mantieni un legume o un derivato della soia in ogni pasto.",
+  "Mercoledì e sabato il piano non ha una fonte di omega-3: aggiungi allo spuntino una manciata di noci o un cucchiaio di semi di lino macinati.",
+  "Ricordati l'integratore di vitamina B12 concordato con il medico: il piano non lo sostituisce."
+ ],
+ "giorni": [
+  {
+   "id": "lun",
+   "nome": "Lunedì",
+   "pasti": [
+    {
+     "slot": "colazione",
+     "id": "porridge-mela-cannella-noci"
+    },
+    {
+     "slot": "pranzo",
+     "id": "pasta-lenticchie-rosse"
+    },
+    {
+     "slot": "cena",
+     "id": "tempeh-verza-tropea"
+    },
+    {
+     "slot": "spuntino",
+     "id": "mele-al-forno-noci-uvetta"
+    }
+   ]
+  },
+  {
+   "id": "mar",
+   "nome": "Martedì",
+   "pasti": [
+    {
+     "slot": "colazione",
+     "id": "yogurt-soia-melagrana-granola"
+    },
+    {
+     "slot": "pranzo",
+     "id": "riso-tofu-broccoli-tahina"
+    },
+    {
+     "slot": "cena",
+     "id": "zuppa-lenticchie-castagne-porri",
+     "dosi": 2,
+     "nota": "cucina doppia dose: metà è il pranzo di mercoledì"
+    },
+    {
+     "slot": "spuntino",
+     "id": "ceci-croccanti-paprika"
+    }
+   ]
+  },
+  {
+   "id": "mer",
+   "nome": "Mercoledì",
+   "pasti": [
+    {
+     "slot": "colazione",
+     "id": "pane-crema-arachidi-banana"
+    },
+    {
+     "slot": "pranzo",
+     "id": "zuppa-lenticchie-castagne-porri",
+     "avanzo_di": "mar"
+    },
+    {
+     "slot": "cena",
+     "id": "polpette-cannellini-spinaci-cavolfiore"
+    },
+    {
+     "slot": "spuntino",
+     "id": "crostini-hummus-verdure",
+     "nota": "la sera prepara l'avena in ammollo per domattina"
+    }
+   ]
+  },
+  {
+   "id": "gio",
+   "nome": "Giovedì",
+   "pasti": [
+    {
+     "slot": "colazione",
+     "id": "avena-in-ammollo-fichi-pera"
+    },
+    {
+     "slot": "pranzo",
+     "id": "farro-ceci-zucca-rucola"
+    },
+    {
+     "slot": "cena",
+     "id": "spezzatino-seitan-funghi-patate",
+     "dosi": 2,
+     "nota": "cucina doppia dose: metà è il pranzo di venerdì"
+    },
+    {
+     "slot": "spuntino",
+     "id": "barrette-avena-fichi-mandorle",
+     "dosi": 2,
+     "nota": "doppia dose: le barrette avanzate sono lo spuntino di domenica"
+    }
+   ]
+  },
+  {
+   "id": "ven",
+   "nome": "Venerdì",
+   "pasti": [
+    {
+     "slot": "colazione",
+     "id": "porridge-mela-cannella-noci"
+    },
+    {
+     "slot": "pranzo",
+     "id": "spezzatino-seitan-funghi-patate",
+     "avanzo_di": "gio"
+    },
+    {
+     "slot": "cena",
+     "id": "farinata-ceci-radicchio-tropea",
+     "nota": "prepara la pastella a pranzo: deve riposare almeno 2 ore"
+    },
+    {
+     "slot": "spuntino",
+     "id": "mele-al-forno-noci-uvetta"
+    }
+   ]
+  },
+  {
+   "id": "sab",
+   "nome": "Sabato",
+   "pasti": [
+    {
+     "slot": "colazione",
+     "id": "pancake-integrali-composta-pere"
+    },
+    {
+     "slot": "pranzo",
+     "id": "pasta-fagioli-borlotti"
+    },
+    {
+     "slot": "cena",
+     "id": "minestra-orzo-cannellini-cavolo-nero",
+     "dosi": 2,
+     "nota": "cucina doppia dose: metà è il pranzo di domenica"
+    },
+    {
+     "slot": "spuntino",
+     "id": "crostini-hummus-verdure"
+    }
+   ]
+  },
+  {
+   "id": "dom",
+   "nome": "Domenica",
+   "pasti": [
+    {
+     "slot": "colazione",
+     "id": "yogurt-soia-melagrana-granola"
+    },
+    {
+     "slot": "pranzo",
+     "id": "minestra-orzo-cannellini-cavolo-nero",
+     "avanzo_di": "sab"
+    },
+    {
+     "slot": "cena",
+     "id": "riso-tofu-broccoli-tahina"
+    },
+    {
+     "slot": "spuntino",
+     "id": "barrette-avena-fichi-mandorle",
+     "avanzo_di": "gio",
+     "nota": "le barrette di giovedì si conservano in frigo"
+    }
+   ]
+  }
+ ]
+}

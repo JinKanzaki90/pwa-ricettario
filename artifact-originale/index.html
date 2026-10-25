@@ -1,0 +1,1532 @@
+<title>Ricettario Vegetale</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: app a schede per telefono — intestazione fissa in alto, barra schede fissa in basso, una colonna di contenuto da max 640px */
+:root {
+  --bg: #f1f4ee;
+  --surface: #ffffff;
+  --fg: #1d2a21;
+  --muted: #5a6a5e;
+  --line: #d6ded2;
+  --accent: #2c6a4d;
+  --accent-soft: #e1eee6;
+  --beet: #8b3a5b;
+  --beet-soft: #f4e4ea;
+  --sun: #9a6a12;
+  --sun-soft: #f6ecd4;
+  --chili: #b0321c;
+  --chili-soft: #f9e2dc;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --radius: 14px;
+  --bar-h: 64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111713; --surface: #1a221c; --fg: #e5ebe3; --muted: #98a69b; --line: #2b362e;
+    --accent: #7cc19d; --accent-soft: #1f3328; --beet: #e08cad; --beet-soft: #3a2230;
+    --sun: #e2b65c; --sun-soft: #33291a;
+    --chili: #f08b72; --chili-soft: #3d221c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111713; --surface: #1a221c; --fg: #e5ebe3; --muted: #98a69b; --line: #2b362e;
+  --accent: #7cc19d; --accent-soft: #1f3328; --beet: #e08cad; --beet-soft: #3a2230;
+  --sun: #e2b65c; --sun-soft: #33291a;
+  --chili: #f08b72; --chili-soft: #3d221c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+  padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px) + 24px);
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 640px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* intestazione */
+header.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+header.top .wrap { padding-block: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: 1.45rem; letter-spacing: -0.01em; margin: 0; }
+h1 span { color: var(--accent); }
+.top-right { display: flex; align-items: center; gap: 10px; }
+.icon-btn { appearance: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; height: 34px; padding: 0 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; color: var(--muted); cursor: pointer; }
+.icon-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* tipografia */
+h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; line-height: 1.25; margin: 0; text-wrap: balance; }
+main .wrap { padding-block: 24px; display: grid; gap: 20px; }
+.lead { color: var(--muted); margin: 0; max-width: 60ch; }
+section[role="tabpanel"] { display: grid; gap: 20px; min-width: 0; }
+.eyebrow { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 700; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: grid; gap: 12px; min-width: 0; }
+
+/* etichette */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.chip.no { background: var(--beet-soft); color: var(--beet); }
+.chip.no::before { content: "✕ "; font-weight: 400; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.76rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.badge svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.badge.stag { background: var(--accent-soft); color: var(--accent); }
+.badge.cal { background: var(--chili-soft); color: var(--chili); }
+
+/* filtri: righe a scorrimento orizzontale interno */
+.filters { display: grid; gap: 8px; min-width: 0; }
+.filter-row { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; margin-inline: -2px; padding-inline: 2px; }
+.filter-row::-webkit-scrollbar { display: none; }
+/* con mouse e trackpad niente scorrimento laterale: i chip vanno a capo */
+@media (hover: hover) and (pointer: fine) { .filter-row { flex-wrap: wrap; overflow: visible; } }
+.mesi { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.mesi .fchip { padding: 8px 0; text-align: center; min-height: 40px; }
+.mesi .fchip.oggi { position: relative; }
+.mesi .fchip.oggi::after { content: ""; position: absolute; left: 50%; bottom: 4px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: currentColor; }
+.fchip { appearance: none; flex: none; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 999px; padding: 6px 14px; font-size: 0.88rem; cursor: pointer; }
+.fchip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 700; }
+
+/* scheda ricetta (elenco) */
+.cards { display: grid; gap: 12px; }
+.rcard { appearance: none; text-align: left; width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 8px; cursor: pointer; min-width: 0; }
+.rcard:hover { border-color: var(--accent); }
+.rcard .meta, .detail .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.86rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rcard .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.empty { color: var(--muted); text-align: center; padding: 24px 8px; }
+
+/* dettaglio ricetta */
+.back { appearance: none; border: 0; background: none; color: var(--accent); font-weight: 700; padding: 4px 0; cursor: pointer; justify-self: start; display: inline-flex; align-items: center; gap: 4px; }
+.detail { display: grid; gap: 16px; min-width: 0; }
+.portions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.stepper button { appearance: none; border: 0; background: var(--surface); width: 40px; height: 36px; font-size: 1.2rem; cursor: pointer; color: var(--accent); }
+.stepper button:disabled { color: var(--line); cursor: default; }
+.stepper output { min-width: 3.2em; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ing { list-style: none; margin: 0; padding: 0; display: grid; }
+.ing li { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); align-items: baseline; }
+.ing li:first-child { border-top: 0; }
+.ing .q { font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+.ing .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-left: 6px; vertical-align: middle; }
+.ing .sub { display: block; font-size: 0.82rem; color: var(--chili); }
+ol.passi { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; }
+ol.passi li { padding-left: 4px; max-width: 62ch; }
+.note { font-size: 0.92rem; padding: 10px 12px; background: var(--accent-soft); border-radius: 10px; }
+.btn { appearance: none; border: 0; background: var(--accent); color: var(--surface); font-weight: 700; border-radius: 12px; padding: 12px 16px; cursor: pointer; width: 100%; font-size: 1rem; }
+.legend { display: grid; justify-items: start; gap: 4px; font-size: 0.82rem; color: var(--muted); }
+
+/* lista della spesa */
+.shop-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 0.88rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.dept { display: grid; gap: 0; min-width: 0; }
+.dept h3 { font-size: 1rem; padding-bottom: 6px; }
+.item { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); cursor: pointer; }
+.item input { width: 20px; height: 20px; accent-color: var(--accent); margin: 0; }
+.item .q { font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; font-size: 0.92rem; }
+.item.done .n { text-decoration: line-through; color: var(--muted); }
+
+.num { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; border: 1.5px solid var(--line); color: var(--muted); }
+.err { color: var(--beet); }
+
+/* avviso temporaneo */
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px) + 12px); z-index: 7; background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-size: 0.9rem; font-weight: 700; max-width: calc(100% - 32px); text-align: center; }
+
+/* barra schede */
+nav.tabs {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 6;
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px);
+}
+nav.tabs .row { max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); height: var(--bar-h); }
+nav.tabs button {
+  appearance: none; background: none; border: 0; color: var(--muted); font-size: 0.72rem; font-weight: 700;
+  display: grid; place-items: center; align-content: center; gap: 3px; cursor: pointer; letter-spacing: 0.02em; position: relative;
+}
+nav.tabs button svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+nav.tabs button[aria-selected="true"] { color: var(--accent); }
+nav.tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; border-radius: 10px; }
+.count { position: absolute; top: 8px; left: calc(50% + 6px); min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--beet); color: var(--surface); font-size: 0.68rem; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+
+/* guida nutrizionale */
+.panel p { margin: 0; max-width: 62ch; }
+.alert { background: var(--sun-soft); border-color: transparent; }
+.alert .eyebrow { color: var(--sun); }
+.fine { font-size: 0.86rem; color: var(--muted); margin: 0; max-width: 62ch; }
+.g-block { display: grid; gap: 12px; min-width: 0; }
+.nutr { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.nutr details + details { border-top: 1px solid var(--line); }
+.nutr summary { list-style: none; cursor: pointer; padding: 14px 16px; display: grid; grid-template-columns: 1fr auto 18px; gap: 4px 12px; align-items: baseline; }
+.nutr summary::-webkit-details-marker { display: none; }
+.nutr summary::after { content: "+"; color: var(--accent); font-weight: 700; text-align: center; }
+.nutr details[open] summary::after { content: "−"; }
+.nutr .nn { font-weight: 700; }
+.nutr .nk { font-size: 0.84rem; color: var(--muted); text-align: right; }
+.nutr details.must .nn::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--beet); margin-right: 8px; vertical-align: middle; }
+.nutr details.must .nk { color: var(--beet); font-weight: 700; }
+.nb { padding: 0 16px 16px; display: grid; gap: 8px; min-width: 0; }
+.nb p { margin: 0; max-width: 62ch; }
+.nb .ref { font-size: 0.86rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+@media (max-width: 400px) { .nutr summary { grid-template-columns: 1fr 18px; } .nutr .nk { grid-column: 1; grid-row: 2; text-align: left; } }
+.plate { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pl { border-radius: 12px; padding: 12px 14px; display: grid; gap: 2px; min-width: 0; }
+.pl span { font-size: 0.86rem; color: var(--muted); }
+.pl.veg { grid-row: span 2; background: var(--accent-soft); }
+.pl.veg b { color: var(--accent); font-size: 1.1rem; }
+.pl.cer { background: var(--sun-soft); }
+.pl.pro { background: var(--beet-soft); }
+.pl.fat { grid-column: 1 / -1; background: var(--surface); border: 1px solid var(--line); }
+ol.tappe { margin: 0; padding: 0; list-style: none; counter-reset: t; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+ol.tappe li { counter-increment: t; display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--line); }
+ol.tappe li:first-child { border-top: 0; }
+ol.tappe li::before { content: counter(t); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem; font-weight: 700; color: var(--accent); border: 1.5px solid var(--accent); font-variant-numeric: tabular-nums; }
+ul.fonti { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 0.92rem; }
+ul.fonti a { color: var(--accent); overflow-wrap: anywhere; }
+
+/* spesa: ricette in lista, voci a mano, stato salvataggio */
+.rsel { display: grid; gap: 6px; min-width: 0; }
+.rsel-list { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.rpill { display: inline-flex; align-items: center; gap: 2px; background: var(--accent-soft); color: var(--fg); border-radius: 999px; padding: 2px 2px 2px 12px; font-size: 0.86rem; max-width: 100%; min-width: 0; }
+.rpill > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rpill b { color: var(--accent); font-variant-numeric: tabular-nums; }
+.rpill button, .item .rm { appearance: none; border: 0; background: none; color: var(--muted); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; line-height: 1; flex: none; }
+.rpill button:hover, .item .rm:hover { color: var(--beet); background: var(--beet-soft); }
+.item { cursor: default; }
+.item .n { cursor: pointer; min-width: 0; }
+.item .sub { display: block; font-size: 0.8rem; color: var(--chili); }
+.item.done .sub { text-decoration: none; }
+.back.warn { color: var(--beet); }
+.addrow { display: grid; gap: 6px; min-width: 0; padding-top: 12px; border-top: 1px solid var(--line); }
+.addrow-f { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; }
+.addrow input, .addrow select { font: inherit; font-size: 0.95rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+.btn.small { width: auto; padding: 8px 14px; font-size: 0.92rem; border-radius: 10px; }
+@media (max-width: 440px) { .addrow-f { grid-template-columns: 1fr auto; } .addrow-f input { grid-column: 1 / -1; } .addrow-f select { width: 100%; } }
+.sync { font-size: 0.8rem; }
+
+/* stagionalità e dispensa */
+.seas { display: grid; gap: 14px; min-width: 0; }
+.seas-g { display: grid; gap: 8px; }
+.seas-g .eyebrow { display: flex; justify-content: space-between; gap: 8px; }
+.seas-g .eyebrow span { font-variant-numeric: tabular-nums; font-weight: 400; letter-spacing: 0.04em; }
+.prod { display: flex; flex-wrap: wrap; gap: 6px; }
+.prod span { font-size: 0.88rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); }
+.prod span.nuovo { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.prod span.ultimo { border-style: dashed; }
+.fchip.oggi:not([aria-pressed="true"]) { border-color: var(--accent); color: var(--accent); }
+.pitem { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.pitem:first-of-type { border-top: 0; }
+.pitem .n { min-width: 0; }
+.pitem .d { display: block; font-size: 0.82rem; color: var(--muted); }
+.pitem .sub { display: block; font-size: 0.82rem; color: var(--chili); }
+.addp { appearance: none; border: 1px solid var(--accent); background: transparent; color: var(--accent); border-radius: 999px; padding: 5px 12px; font-size: 0.84rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.addp[aria-pressed="true"] { background: var(--accent-soft); border-color: transparent; }
+.nutr details.cal-g .nn { color: var(--chili); }
+
+/* settimana */
+#sett { display: grid; gap: 16px; min-width: 0; }
+.days { display: grid; gap: 12px; }
+.day { gap: 8px; scroll-margin-top: 76px; }
+.day.oggi { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.day-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.day-h h3 { display: inline-flex; align-items: center; gap: 8px; }
+.meals { display: grid; }
+.meal { appearance: none; border: 0; border-top: 1px solid var(--line); background: none; text-align: left; width: 100%; display: grid; grid-template-columns: 88px 1fr; gap: 2px 12px; padding: 10px 0; cursor: pointer; align-items: baseline; min-width: 0; }
+.meal:first-child { border-top: 0; }
+.meal .slot { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; }
+.meal .t { font-weight: 700; min-width: 0; }
+.meal:hover .t { color: var(--accent); }
+.meal .m { grid-column: 2; font-size: 0.84rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; font-variant-numeric: tabular-nums; }
+.badge.dose { background: var(--beet-soft); color: var(--beet); }
+.badge.avz { background: transparent; color: var(--muted); border: 1px dashed var(--line); }
+.week-ctl { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+ul.consigli { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 0.92rem; }
+@media (max-width: 400px) { .meal { grid-template-columns: 1fr; } .meal .m { grid-column: 1; } }
+
+/* seconda fase: alcolici, azioni, archivio, modulo nuova ricetta */
+.badge.alc { background: var(--beet-soft); color: var(--beet); }
+.badge.mine { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.badge.arch { background: transparent; color: var(--muted); border: 1px dashed var(--muted); }
+.linkbtn { appearance: none; border: 0; background: none; padding: 0; color: var(--accent); font-weight: 700; text-decoration: underline; cursor: pointer; font-size: inherit; }
+.toast { display: flex; align-items: center; gap: 14px; width: max-content; border-radius: 16px; }
+.toast button { appearance: none; border: 0; background: none; color: var(--bg); font-weight: 700; text-decoration: underline; min-height: 36px; padding: 0 4px; cursor: pointer; flex: none; }
+.btn.line { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+.btn.line.warn { color: var(--beet); border-color: var(--beet); }
+.btn.line.warn.armed { background: var(--beet); color: var(--surface); }
+.btn.small { min-height: 44px; }
+.r-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.r-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.r-foot { display: grid; gap: 8px; justify-items: start; }
+.acard { gap: 8px; }
+.acard .uses { font-size: 0.86rem; color: var(--muted); }
+.acard .warnline { font-size: 0.86rem; color: var(--beet); }
+.meal.gone { cursor: default; }
+.meal.gone .t { color: var(--muted); font-style: italic; font-weight: 400; }
+.swap { grid-column: 2; display: grid; gap: 4px; padding-top: 6px; min-width: 0; }
+.swap label { font-size: 0.84rem; font-weight: 700; color: var(--beet); }
+.swap select, .form input[type="text"], .form input[type="number"], .form select, .form textarea {
+  font: inherit; font-size: 1rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 10px; padding: 9px 12px; min-height: 44px; width: 100%; min-width: 0;
+}
+.form textarea { resize: vertical; min-height: 76px; line-height: 1.45; }
+.form { display: grid; gap: 16px; min-width: 0; }
+.fs { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin: 0; padding: 16px; display: grid; gap: 14px; min-width: 0; }
+.fs > legend { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; padding: 0 6px; margin-left: -6px; }
+.fld { display: grid; gap: 4px; min-width: 0; }
+.fld > label, .fld > .lbl { font-weight: 700; font-size: 0.92rem; }
+.req { color: var(--beet); }
+.hint { font-size: 0.82rem; color: var(--muted); margin: 0; }
+.ferr { font-size: 0.84rem; color: var(--beet); font-weight: 700; margin: 0; }
+.form [aria-invalid="true"] { border-color: var(--beet); box-shadow: 0 0 0 1px var(--beet); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+.suf { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.suf span { color: var(--muted); font-size: 0.92rem; flex: none; }
+.ingrow-g { align-items: start; }
+.checks { display: flex; flex-wrap: wrap; gap: 8px; }
+.ck { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); cursor: pointer; font-size: 0.95rem; }
+.ck input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+.ck:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.ck.block { border-radius: 12px; padding: 10px 14px; align-items: flex-start; }
+.ck.block input { margin-top: 3px; flex: none; }
+.ck.block[aria-invalid="true"] { border-color: var(--beet); box-shadow: 0 0 0 1px var(--beet); }
+.ingrow { display: grid; gap: 8px; padding-top: 14px; border-top: 1px solid var(--line); min-width: 0; }
+.ingrow:first-of-type { border-top: 0; padding-top: 0; }
+.ingrow-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.ingrow-g { display: grid; grid-template-columns: 5.5em 1fr 1fr; gap: 8px; min-width: 0; }
+.calf { display: grid; gap: 8px; padding: 10px 12px; border-radius: 12px; background: var(--chili-soft); }
+.steprow { display: grid; grid-template-columns: 28px 1fr 44px; gap: 8px; align-items: start; }
+.steprow .num { margin-top: 8px; }
+.xbtn { appearance: none; border: 0; background: none; color: var(--muted); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 1.3rem; line-height: 1; flex: none; }
+.xbtn:hover { color: var(--beet); background: var(--beet-soft); }
+.addline { appearance: none; border: 1.5px dashed var(--accent); background: transparent; color: var(--accent); border-radius: 12px; min-height: 44px; font-weight: 700; cursor: pointer; }
+.errsum { background: var(--beet-soft); border-radius: 12px; padding: 12px 16px; display: grid; gap: 6px; }
+.errsum b { color: var(--beet); }
+.errsum ul { margin: 0; padding-left: 1.1em; display: grid; gap: 2px; }
+.errsum .linkbtn { color: var(--fg); text-align: left; }
+.prev { font-size: 0.86rem; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; color: var(--muted); }
+.draftbar { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font-size: 0.88rem; color: var(--muted); }
+.form-end { display: grid; gap: 10px; }
+@media (max-width: 400px) {
+  .ingrow-g { grid-template-columns: 1fr 1fr; }
+  .ingrow-g > :last-child { grid-column: 1 / -1; }
+  .swap { grid-column: 1; }
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <h1>Ricettario <span>Vegetale</span></h1>
+    <div class="top-right">
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Cambia tema">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><span id="theme-lbl">Auto</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- GUIDA -->
+    <section role="tabpanel" id="p-guida" aria-labelledby="t-guida">
+      <h2>Mangiare vegetale, un passo alla volta</h2>
+      <p class="lead">Una guida pratica per ridurre la carne e arrivare a un'alimentazione vegana completa, con ricette e spesa nello stesso posto.</p>
+      <div class="panel">
+        <div class="eyebrow">Il tuo profilo</div>
+        <div class="chips">
+          <span class="chip">Solo vegano</span>
+          <span class="chip">Transizione graduale</span>
+          <span class="chip">2 porzioni, regolabili</span>
+        </div>
+        <div class="eyebrow">Escluso dalle ricette</div>
+        <div class="chips">
+          <span class="chip no">Fave</span>
+          <span class="chip no">Piselli</span>
+          <span class="chip no">Tartufo</span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="eyebrow">Come leggere le ricette</div>
+        <div class="legend">
+          <span class="badge stag"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Di stagione</span><span>Più di metà della frutta e verdura stagionale della ricetta è di stagione questo mese, secondo il calendario della scheda <button type="button" class="linkbtn" data-goto="stagione">Stagione</button>; non contano i prodotti che si trovano tutto l'anno e gli aromi (aglio, limone, sedano).</span>
+        </div>
+        <div class="legend">
+          <span class="badge cal"><svg viewBox="0 0 24 24"><path d="M16.2 8.2c1.9.9 2.6 3 1.6 5.6-1.5 3.9-5.9 6.8-12.3 7.2 3.3-1.6 5.7-4.1 6.8-7.6.8-2.7 2.1-4.6 3.9-5.2z"/><path d="M13.6 8.6c.9-1.3 2.9-1.8 4.4-.8"/><path d="M16.2 7.4c0-2 .9-3.4 2.8-4.1"/></svg>Calabria</span><span>C'è un prodotto calabrese consigliato, con marca e dove trovarlo.</span>
+        </div>
+        <div class="legend">
+          <span class="badge alc"><svg viewBox="0 0 24 24"><path d="M7 3h10l-1 6.5a4 4 0 0 1-8 0z"/><path d="M12 13.5V20M8.5 21h7"/></svg>Con alcol</span><span>La ricetta usa vino, birra o superalcolici; aceto e salsa di soia non contano. Per restare vegano scegli vini e birre con dicitura vegana: alcuni sono chiarificati con albume, caseina o colla di pesce.</span>
+        </div>
+      </div>
+      <div class="panel alert">
+        <div class="eyebrow">Da sapere subito</div>
+        <p><strong>La vitamina B12 va integrata.</strong> Gli alimenti vegetali non ne forniscono in modo affidabile, quindi chi segue un'alimentazione vegana deve assumerla con un integratore o con alimenti fortificati. Conviene iniziare già mentre riduci i prodotti animali. Dose e forma si concordano con il medico o il dietista.</p>
+        <p class="fine">Questa guida riassume indicazioni di enti scientifici e non sostituisce il parere di un medico o di un dietista, a cui rivolgerti per esami e integrazioni.</p>
+      </div>
+
+      <div class="g-block">
+        <h3>Nutrienti da tenere d'occhio</h3>
+        <p class="lead">Un'alimentazione vegana ben pianificata copre i fabbisogni di un adulto. Questi sono i punti che richiedono più attenzione. I valori sono i fabbisogni di riferimento per adulti (LARN 2024, salvo dove indicato).</p>
+        <div class="nutr">
+          <details class="must">
+            <summary><span class="nn">Vitamina B12</span><span class="nk">integratore indispensabile</span></summary>
+            <div class="nb">
+              <p>Serve al sistema nervoso e alla formazione dei globuli rossi. Nei vegetali non è presente in forma utile: alghe, lieviti e cibi fermentati non sono fonti affidabili.</p>
+              <p><b>Cosa fare:</b> integratore con regolarità, più eventuali alimenti fortificati (alcune bevande vegetali e cereali da colazione, leggi l'etichetta). Chiedi al medico un controllo periodico.</p>
+              <p class="ref">Riferimento EFSA per adulti: 4 µg al giorno come assunzione adeguata.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Vitamina D</span><span class="nk">sole e, se serve, integratore</span></summary>
+            <div class="nb">
+              <p>La fonte principale è l'esposizione al sole; pochi alimenti ne contengono, tra questi alcune bevande vegetali fortificate.</p>
+              <p><b>Cosa fare:</b> in autunno e inverno, o se stai poco all'aperto, valuta con il medico se misurarla e integrarla.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Ferro</span><span class="nk">legumi + vitamina C</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> legumi (lenticchie, ceci, fagioli), tofu, cereali integrali, semi di zucca e di sesamo, frutta secca, verdure a foglia verde.</p>
+              <p><b>Cosa fare:</b> abbina nello stesso pasto una fonte di vitamina C (agrumi, kiwi, peperoni, prezzemolo, cavoli); tieni tè e caffè lontani dai pasti. Ammollo dei legumi, germogli e pane a lievitazione naturale migliorano l'assorbimento.</p>
+              <p class="ref">10 mg al giorno per gli uomini, 18 mg per le donne in età fertile.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Calcio</span><span class="nk">cavoli, tofu, acque calciche</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> verdure della famiglia dei cavoli (cavolo nero, broccoli, cime di rapa, rucola), tofu preparato con sali di calcio, bevande vegetali fortificate con calcio, mandorle, sesamo e tahina, acque minerali ricche di calcio.</p>
+              <p><b>Cosa fare:</b> scegli le bevande vegetali con calcio aggiunto. Spinaci e bietole ne contengono, ma lo cedono poco per via degli ossalati.</p>
+              <p class="ref">950 mg al giorno per gli adulti.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Iodio</span><span class="nk">poco sale, ma iodato</span></summary>
+            <div class="nb">
+              <p>Serve alla tiroide. In Italia il modo più semplice per assumerlo è il sale iodato, come raccomandano il Ministero della Salute e l'ISS.</p>
+              <p><b>Cosa fare:</b> usa solo sale iodato, in quantità moderata, anche in cottura.</p>
+              <p class="ref">150 µg al giorno per gli adulti.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Omega-3</span><span class="nk">noci e semi di lino</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> noci, semi di lino macinati, semi di chia, olio di lino (solo a crudo, in frigo).</p>
+              <p><b>Cosa fare:</b> una porzione al giorno di una di queste fonti; come condimento abituale preferisci l'olio extravergine d'oliva e limita olio di mais e di girasole.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Zinco</span><span class="nk">legumi, semi, integrali</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> legumi, tofu e tempeh, semi di zucca, sesamo, frutta secca, cereali integrali, avena.</p>
+              <p><b>Cosa fare:</b> valgono gli stessi accorgimenti del ferro: ammollo, germogli, lievito madre.</p>
+              <p class="ref">12 mg al giorno per gli uomini, 9 mg per le donne.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Proteine</span><span class="nk">legumi ogni giorno</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> legumi di ogni tipo, soia e derivati (tofu, tempeh, bevanda di soia), seitan, cereali, frutta secca e semi.</p>
+              <p><b>Cosa fare:</b> porta una fonte proteica in ogni pasto principale e varia nel corso della giornata. Le proteine vegetali sono un po' meno digeribili di quelle animali, per questo la SINU indica che il fabbisogno può essere leggermente più alto.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="g-block">
+        <h3>Il piatto bilanciato</h3>
+        <p class="lead">Nei pasti principali cerca di avere sempre questi quattro elementi. La verdura è la parte più abbondante.</p>
+        <div class="plate">
+          <div class="pl veg"><b>Verdura</b><span>di stagione, cruda e cotta</span></div>
+          <div class="pl cer"><b>Cereali</b><span>pasta, riso, farro, orzo, pane, meglio integrali</span></div>
+          <div class="pl pro"><b>Proteine vegetali</b><span>legumi, tofu, tempeh, seitan</span></div>
+          <div class="pl fat"><b>Grassi buoni</b><span>olio extravergine, frutta secca, semi</span></div>
+        </div>
+        <p class="fine">Frutta fresca, frutta secca e yogurt di soia sono la base degli spuntini. Acqua come bevanda abituale.</p>
+      </div>
+
+      <div class="g-block">
+        <h3>La transizione, per tappe</h3>
+        <p class="lead">Cambiare un'abitudine alla volta funziona meglio che cambiare tutto insieme. Ogni tappa dura quanto ti serve.</p>
+        <ol class="tappe">
+          <li><span><b>Comincia la B12.</b> È l'unico integratore che serve a tutti i vegani: impostalo con il medico prima di eliminare i prodotti animali.</span></li>
+          <li><span><b>Parti dai piatti che conosci.</b> Pasta e fagioli, pasta e ceci, minestre di lenticchie, ragù di legumi: la cucina italiana ha molti piatti già vegani o quasi.</span></li>
+          <li><span><b>Togli la carne un giorno alla volta.</b> Prima due o tre giorni a settimana, poi di più, sostituendola con legumi, tofu o tempeh.</span></li>
+          <li><span><b>Aumenta i legumi gradualmente.</b> Se all'inizio ti appesantiscono, parti da porzioni piccole, lenticchie decorticate e legumi passati; tieni l'ammollo lungo e cambia l'acqua.</span></li>
+          <li><span><b>Sostituisci latte e latticini.</b> Bevande vegetali e yogurt di soia arricchiti con calcio; creme di frutta secca e hummus al posto dei formaggi spalmabili.</span></li>
+          <li><span><b>Organizza la dispensa.</b> Legumi secchi e in barattolo, cereali integrali, semi, frutta secca, sale iodato: con questi pronti il pasto vegano diventa la scelta più comoda.</span></li>
+        </ol>
+      </div>
+
+      <div class="g-block">
+        <h3>Fonti</h3>
+        <ul class="fonti">
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/39923894/" target="_blank" rel="noopener">Academy of Nutrition and Dietetics, <i>Vegetarian Dietary Patterns for Adults</i>, position paper 2025</a></li>
+          <li><a href="https://doi.org/10.1016/j.numecd.2017.10.020" target="_blank" rel="noopener">SINU, <i>Position paper on vegetarian diets</i> (Agnoli et al., NMCD 2017)</a></li>
+          <li><a href="https://sinu.it/larn/" target="_blank" rel="noopener">SINU, LARN – Livelli di assunzione di riferimento, V revisione (2024)</a></li>
+          <li><a href="https://www.epicentro.iss.it/alimentazione/linee-guida-sana-alimentazione-crea-2018" target="_blank" rel="noopener">CREA, Linee guida per una sana alimentazione 2018 (scheda ISS EpiCentro)</a></li>
+          <li><a href="https://www.efsa.europa.eu/en/press/news/150709" target="_blank" rel="noopener">EFSA, valori di riferimento per la vitamina B12 (2015)</a></li>
+          <li><a href="https://www.epicentro.iss.it/iodio/documentazione-italia" target="_blank" rel="noopener">ISS EpiCentro, iodio e iodoprofilassi in Italia</a></li>
+          <li><a href="https://www.aslvco.it/wp-content/uploads/2026/01/6.CALENDARIO-FRUTTA-E-VERDURA-DI-STAGIONE.pdf" target="_blank" rel="noopener">Ministero delle politiche agricole, calendario di frutta e verdura di stagione «Sai quel che mangi» (pubblicato dall'ASL VCO)</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- STAGIONE -->
+    <section role="tabpanel" id="p-stagione" aria-labelledby="t-stagione" hidden>
+      <h2>Stagione</h2>
+      <p class="lead">Cosa comprare questo mese e cosa tenere sempre in casa.</p>
+      <div class="g-block" id="stagione">
+        <h3>Frutta e verdura di stagione</h3>
+        <p class="lead">Cosa trovi di stagione in Italia mese per mese. In verde i prodotti che arrivano proprio in quel mese, con il bordo tratteggiato quelli all'ultimo mese.</p>
+        <div class="mesi" id="mesi" role="group" aria-label="Mese"></div>
+        <div class="panel seas" id="seas"><div class="empty">Caricamento del calendario…</div></div>
+        <p class="fine" id="seas-fonte"></p>
+      </div>
+
+      <div class="g-block" id="dispensa">
+        <h3>La dispensa di base</h3>
+        <p class="lead">Con questi prodotti in casa un pasto vegano completo è sempre a portata di mano. Tocca «Aggiungi» per metterli nella lista della spesa.</p>
+        <div class="nutr" id="disp"><div class="empty">Caricamento della dispensa…</div></div>
+        <p class="fine">Escluse dalla lista fave, piselli e tartufo. Le marche calabresi sono esempi, non sponsorizzazioni.</p>
+      </div>
+    </section>
+
+    <!-- RICETTE -->
+    <section role="tabpanel" id="p-ricette" aria-labelledby="t-ricette" hidden>
+      <div id="r-list" class="detail">
+        <div class="r-tools">
+          <h2>Ricette</h2>
+          <button type="button" class="btn small" id="new-recipe">+ Nuova ricetta</button>
+        </div>
+        <p class="lead">Colazioni, pranzi, cene, spuntini e preparazioni di base, per 2 persone: nel dettaglio puoi cambiare le porzioni.</p>
+        <div class="filters" role="group" aria-label="Filtri">
+          <div class="filter-row" id="flt-pasto"></div>
+          <div class="filter-row" id="flt-altro"></div>
+        </div>
+        <div class="cards" id="cards"></div>
+        <div class="r-foot">
+          <button type="button" class="btn line small" id="open-arch">Archivio</button>
+          <p class="fine sync" id="usr-sync"></p>
+        </div>
+      </div>
+      <div id="r-detail" class="detail" hidden></div>
+      <div id="r-form" class="detail" hidden></div>
+      <div id="r-arch" class="detail" hidden></div>
+      <datalist id="ing-names"></datalist>
+    </section>
+
+    <!-- SETTIMANA -->
+    <section role="tabpanel" id="p-settimana" aria-labelledby="t-settimana" hidden>
+      <h2>Settimana</h2>
+      <p class="lead">Un piano di esempio da adattare, costruito con le ricette della raccolta.</p>
+      <div id="sett"><div class="empty">Caricamento della settimana…</div></div>
+    </section>
+
+    <!-- SPESA -->
+    <section role="tabpanel" id="p-spesa" aria-labelledby="t-spesa" hidden>
+      <h2>Lista della spesa</h2>
+      <p class="lead">Gli ingredienti delle ricette che scegli, sommati e raggruppati per reparto. Lista e spunte restano salvate.</p>
+      <div class="panel" id="shop"></div>
+    </section>
+
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<nav class="tabs" aria-label="Sezioni">
+  <div class="row" role="tablist">
+    <button role="tab" id="t-guida" aria-controls="p-guida" data-tab="guida" aria-selected="true">
+      <svg viewBox="0 0 24 24"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5z"/><path d="M12 6v13.5"/></svg>Guida</button>
+    <button role="tab" id="t-stagione" aria-controls="p-stagione" data-tab="stagione" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Stagione</button>
+    <button role="tab" id="t-ricette" aria-controls="p-ricette" data-tab="ricette" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M9 7c0-1.5 1-2 1-3M14 7c0-1.5 1-2 1-3"/></svg>Ricette</button>
+    <button role="tab" id="t-settimana" aria-controls="p-settimana" data-tab="settimana" aria-selected="false">
+      <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Settimana</button>
+    <button role="tab" id="t-spesa" aria-controls="p-spesa" data-tab="spesa" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.5 11h-11z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Spesa<span class="count" id="shop-count" hidden></span></button>
+  </div>
+</nav>
+
+<script>
+(function () {
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  /* dati: incorporati nella versione in file unico (window.RV_DATI), altrimenti letti dai file accanto alla pagina */
+  function carica(nome) {
+    var D = window.RV_DATI;
+    if (D && D[nome]) return Promise.resolve(JSON.parse(JSON.stringify(D[nome])));
+    return fetch(nome, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
+
+  /* ---------- tema: Auto → Chiaro → Scuro ---------- */
+  var THEMES = ['auto', 'light', 'dark'], LBL = { auto: 'Auto', light: 'Chiaro', dark: 'Scuro' };
+  function applyTheme(t) {
+    if (t === 'auto') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', t);
+    $('theme-lbl').textContent = LBL[t];
+    $('theme-btn').setAttribute('aria-label', 'Tema: ' + LBL[t] + '. Tocca per cambiare');
+  }
+  var theme = store('rv-theme') || 'auto'; if (THEMES.indexOf(theme) < 0) theme = 'auto';
+  applyTheme(theme);
+  $('theme-btn').addEventListener('click', function () {
+    theme = THEMES[(THEMES.indexOf(theme) + 1) % 3]; applyTheme(theme); store('rv-theme', theme);
+  });
+
+  /* ---------- schede ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var names = tabs.map(function (b) { return b.dataset.tab; });
+  function show(name) {
+    if (names.indexOf(name) < 0) name = 'guida';
+    tabs.forEach(function (b) {
+      var on = b.dataset.tab === name;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      $(b.getAttribute('aria-controls')).hidden = !on;
+    });
+    store('rv-tab', name);
+    window.scrollTo(0, 0);
+    /* nel calendario porta in vista il mese corrente */
+  }
+  tabs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      /* un secondo tocco su Ricette riporta all'elenco */
+      if (b.dataset.tab === 'ricette' && b.getAttribute('aria-selected') === 'true' && $('r-list').hidden) { backTo = null; vista('list'); return; }
+      show(b.dataset.tab);
+    });
+  });
+  document.addEventListener('click', function (e) { var g = e.target.closest('[data-goto]'); if (g) show(g.dataset.goto); });
+
+  /* avviso temporaneo, con un'azione facoltativa (es. Annulla) */
+  var toastT;
+  function toast(msg, act) {
+    var t = $('toast'); t.textContent = '';
+    var s = document.createElement('span'); s.textContent = msg; t.appendChild(s);
+    if (act) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = act.label;
+      b.addEventListener('click', function () { t.hidden = true; clearTimeout(toastT); act.fn(); });
+      t.appendChild(b);
+    }
+    t.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, act ? 6500 : 2600);
+  }
+
+  /* ---------- stagionalità: calendario mensile da stagioni.json ----------
+     una ricetta è "di stagione" se più di metà dei suoi prodotti ortofrutticoli riconosciuti nel calendario
+     lo è nel mese corrente; non contano i prodotti di tutto l'anno (12 mesi), cipolle e funghi coltivati
+     (fonte "conservazione") e gli aromi segnati "aromatico" (aglio, limone, sedano).
+     Se il calendario non si carica si ripiega sul campo stagioni della ricetta. */
+  var M = new Date().getMonth(), MESE = M + 1;
+  var STAGIONE = M >= 2 && M <= 4 ? 'primavera' : M >= 5 && M <= 7 ? 'estate' : M >= 8 && M <= 10 ? 'autunno' : 'inverno';
+  var MESI = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+  var CAL = null, ALIAS = [];
+  function prodotto(nome) {
+    var n = String(nome || '').toLowerCase();
+    for (var i = 0; i < ALIAS.length; i++) { var a = ALIAS[i][0]; if (n.indexOf(a) === 0 || n.indexOf(' ' + a) > -1) return ALIAS[i][1]; }
+    return null;
+  }
+  function ingStagione(i) {
+    if (!CAL || i.reparto !== 'ortofrutta') return null;
+    var p = prodotto(i.nome); if (!p || p.fonte === 'conservazione' || p.aromatico || p.mesi.length === 12) return null;
+    return p.mesi.indexOf(MESE) > -1;
+  }
+  function diStagione(r) {
+    if (!CAL) return Array.isArray(r.stagioni) && r.stagioni.indexOf(STAGIONE) > -1;
+    var tot = 0, si = 0;
+    (r.ingredienti || []).forEach(function (i) { var v = ingStagione(i); if (v === null) return; tot++; if (v) si++; });
+    return tot > 0 && si * 2 > tot;
+  }
+  function hasCal(r) { return (r.ingredienti || []).some(function (i) { return i.calabrese; }); }
+
+  /* alcolici: vino, birra e superalcolici; aceto e salsa di soia non contano */
+  var RE_ALC = /\b(vino|vini|birra|birre|liquore|liquori|grappa|rum|brandy|cognac|marsala|vermouth|whisky|vodka|gin|limoncello|sake|spumante|prosecco|passito)\b/i;
+  function nomeAlc(nome) { var n = String(nome || ''); return !/aceto/i.test(n) && RE_ALC.test(n); }
+  function hasAlc(r) { return r.alcolici === true || (r.ingredienti || []).some(function (i) { return nomeAlc(i.nome); }); }
+
+  /* ---------- quantità scalate ---------- */
+  function scale(q, unita, f) {
+    if (q == null || unita === 'q.b.') return null;
+    var v = q * f;
+    if (unita === 'g' || unita === 'ml') v = v >= 50 ? Math.round(v / 5) * 5 : Math.round(v);
+    else v = Math.round(v * 2) / 2;
+    return v;
+  }
+  var UN = { pz: ['pezzo', 'pezzi'], fetta: ['fetta', 'fette'], pizzico: ['pizzico', 'pizzichi'], cucchiaio: ['cucchiaio', 'cucchiai'], cucchiaino: ['cucchiaino', 'cucchiaini'], rametto: ['rametto', 'rametti'], spicchio: ['spicchio', 'spicchi'], costa: ['costa', 'coste'] };
+  function fmtQ(v, unita) {
+    if (v == null) return 'q.b.';
+    var n = String(v).replace('.', ',').replace(',5', '½').replace(/^0½$/, '½');
+    if (UN[unita]) return n + ' ' + (v > 1 ? UN[unita][1] : UN[unita][0]);
+    return n + ' ' + unita;
+  }
+
+  var ICON_STAG = '<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>';
+  var ICON_CAL = '<svg viewBox="0 0 24 24"><path d="M16.2 8.2c1.9.9 2.6 3 1.6 5.6-1.5 3.9-5.9 6.8-12.3 7.2 3.3-1.6 5.7-4.1 6.8-7.6.8-2.7 2.1-4.6 3.9-5.2z"/><path d="M13.6 8.6c.9-1.3 2.9-1.8 4.4-.8"/><path d="M16.2 7.4c0-2 .9-3.4 2.8-4.1"/></svg>';
+  var ICON_ALC = '<svg viewBox="0 0 24 24"><path d="M7 3h10l-1 6.5a4 4 0 0 1-8 0z"/><path d="M12 13.5V20M8.5 21h7"/></svg>';
+  var PASTI = [['tutti', 'Tutti'], ['colazione', 'Colazione'], ['pranzo', 'Pranzo'], ['cena', 'Cena'], ['spuntino', 'Spuntino'], ['base', 'Basi']];
+  var ALTRI = [['t15', 'Fino a 15 min'], ['t30', 'Fino a 30 min'], ['stag', 'Di stagione'], ['cal', 'Prodotti calabresi'], ['noalc', 'Senza alcol'], ['mie', 'Le mie ricette']];
+  var NOME_PASTO = { colazione: 'Colazione', pranzo: 'Pranzo', cena: 'Cena', spuntino: 'Spuntino', base: 'Base' };
+  var REPARTI = [['ortofrutta', 'Ortofrutta'], ['legumi', 'Legumi'], ['cereali', 'Pasta, riso e cereali'], ['frigo', 'Frigo'], ['surgelati', 'Surgelati'], ['dispensa', 'Dispensa'], ['spezie', 'Spezie ed erbe']];
+
+  /* ---------- ricette: ricette.json (BASE) + ricette personali dell'utente ----------
+     stato personale { personali:[ricetta], archiviate:[id], eliminate:[id], sostituzioni:{'giorno|slot': id}, agg }
+     salvato in db (data/users/<id>/ricettario, privato) se disponibile, sempre anche in localStorage.
+     RICETTE = BASE senza le eliminate + personali; le archiviate restano in RICETTE (settimana e spesa le usano)
+     ma non compaiono nell'elenco. */
+  var BASE = [], RICETTE = [], caricate = false;
+  var LS_USR = 'rv-ricettario';
+  function strArr(a) { return (Array.isArray(a) ? a : []).filter(function (x) { return typeof x === 'string'; }); }
+  function normUsr(s) {
+    s = s || {};
+    var sost = {};
+    if (s.sostituzioni && typeof s.sostituzioni === 'object') Object.keys(s.sostituzioni).forEach(function (k) { if (typeof s.sostituzioni[k] === 'string') sost[k] = s.sostituzioni[k]; });
+    return {
+      personali: (Array.isArray(s.personali) ? s.personali : []).filter(function (r) { return r && r.id && r.titolo && Array.isArray(r.ingredienti) && Array.isArray(r.passi); }),
+      archiviate: strArr(s.archiviate), eliminate: strArr(s.eliminate), sostituzioni: sost,
+      agg: typeof s.agg === 'string' ? s.agg : ''
+    };
+  }
+  function vuotoUsr(s) { return !s.personali.length && !s.archiviate.length && !s.eliminate.length && !Object.keys(s.sostituzioni).length; }
+  var usr = (function () { try { return normUsr(JSON.parse(store(LS_USR) || 'null')); } catch (e) { return normUsr(null); } })();
+  var usrRef = null, usrT = null, usrSync = 'locale';
+  function saveUsr() {
+    usr.agg = new Date().toISOString();
+    store(LS_USR, JSON.stringify(usr));
+    if (!usrRef) { updUsrSync(); return; }
+    clearTimeout(usrT);
+    usrT = setTimeout(function () {
+      usrRef.set(JSON.parse(JSON.stringify(usr)))
+        .then(function () { usrSync = 'account'; updUsrSync(); })
+        .catch(function () { usrSync = 'errore'; updUsrSync(); });
+    }, 400);
+  }
+  function updUsrSync() {
+    var el = $('usr-sync'); if (!el) return;
+    el.textContent = usrSync === 'account' ? 'Ricette personali e archivio sono salvati sul tuo account.'
+      : usrSync === 'errore' ? 'Non riesco a salvare sul tuo account in questo momento: le modifiche restano su questo browser.'
+      : 'Ricette personali e archivio sono salvati su questo browser.';
+    el.className = 'fine sync' + (usrSync === 'errore' ? ' err' : '');
+  }
+  function ricompila() {
+    var el = {}; usr.eliminate.forEach(function (i) { el[i] = true; });
+    RICETTE = BASE.filter(function (r) { return !el[r.id]; }).concat(usr.personali.map(function (r) { r.personale = true; return r; }));
+  }
+  function archiviata(id) { return usr.archiviate.indexOf(id) > -1; }
+  function attive() { return RICETTE.filter(function (r) { return !archiviata(r.id); }); }
+  /* ridisegna tutto ciò che dipende dalle ricette */
+  function aggiorna() {
+    ricompila(); renderCards(); renderSett(); pruneSpunte(); renderShop(); updArchBtn(); aggNomi();
+    if (!$('r-detail').hidden && cur) { var c = byId(cur.id); if (c) { cur = c; renderDetail(); } else vista('list'); }
+    if (!$('r-arch').hidden) renderArch();
+  }
+
+  /* ---------- elenco e filtri ---------- */
+  var fPasto = 'tutti', fAltro = {};
+  function fchip(key, label, on, group) { return '<button type="button" class="fchip" data-g="' + group + '" data-k="' + key + '" aria-pressed="' + on + '">' + esc(label) + '</button>'; }
+  function renderFilters() {
+    $('flt-pasto').innerHTML = PASTI.map(function (p) { return fchip(p[0], p[1], fPasto === p[0], 'pasto'); }).join('');
+    $('flt-altro').innerHTML = ALTRI.map(function (p) { return fchip(p[0], p[1], !!fAltro[p[0]], 'altro'); }).join('');
+  }
+  document.querySelector('.filters').addEventListener('click', function (e) {
+    var b = e.target.closest('.fchip'); if (!b) return;
+    if (b.dataset.g === 'pasto') fPasto = b.dataset.k;
+    else { var k = b.dataset.k; fAltro[k] = !fAltro[k]; if (k === 't15' && fAltro.t15) fAltro.t30 = false; if (k === 't30' && fAltro.t30) fAltro.t15 = false; }
+    renderFilters(); renderCards();
+  });
+  function badges(r, ext) {
+    var b = '';
+    if (ext && r.personale) b += '<span class="badge mine">La tua ricetta</span>';
+    if (ext && archiviata(r.id)) b += '<span class="badge arch">In archivio</span>';
+    if (diStagione(r)) b += '<span class="badge stag">' + ICON_STAG + 'Di stagione</span>';
+    if (hasCal(r)) b += '<span class="badge cal">' + ICON_CAL + 'Calabria</span>';
+    if (hasAlc(r)) b += '<span class="badge alc">' + ICON_ALC + 'Con alcol</span>';
+    return b;
+  }
+  function metaTempo(r) { return r.tempo_min + ' min' + (r.riposo ? ' + riposo' : ''); }
+  function renderCards() {
+    if (!caricate) { $('cards').innerHTML = '<div class="empty">Caricamento delle ricette…</div>'; return; }
+    var list = attive().filter(function (r) {
+      if (fPasto !== 'tutti' && r.pasto !== fPasto) return false;
+      if (fAltro.t15 && r.tempo_min > 15) return false;
+      if (fAltro.t30 && r.tempo_min > 30) return false;
+      if (fAltro.stag && !diStagione(r)) return false;
+      if (fAltro.cal && !hasCal(r)) return false;
+      if (fAltro.noalc && hasAlc(r)) return false;
+      if (fAltro.mie && !r.personale) return false;
+      return true;
+    });
+    $('cards').innerHTML = list.length ? list.map(function (r) {
+      return '<button type="button" class="rcard" data-id="' + esc(r.id) + '">' +
+        '<h3>' + esc(r.titolo) + '</h3>' +
+        '<div class="meta"><span>' + esc(NOME_PASTO[r.pasto] || r.pasto) + '</span><span>' + metaTempo(r) + '</span><span>' + esc(r.difficolta) + '</span></div>' +
+        '<div class="badges">' + badges(r, true) + '</div></button>';
+    }).join('') : '<div class="empty">' + (fAltro.mie ? 'Non hai ancora ricette tue. Tocca «+ Nuova ricetta» per aggiungerne una.' : 'Nessuna ricetta con questi filtri.') + '</div>';
+  }
+  $('cards').addEventListener('click', function (e) { var c = e.target.closest('.rcard'); if (c) { backTo = null; openRecipe(c.dataset.id); } });
+
+  /* ---------- viste della scheda Ricette: elenco, dettaglio, modulo, archivio ---------- */
+  var VISTE = { list: 'r-list', detail: 'r-detail', form: 'r-form', arch: 'r-arch' };
+  function vista(v) { Object.keys(VISTE).forEach(function (k) { $(VISTE[k]).hidden = k !== v; }); window.scrollTo(0, 0); }
+
+  /* ---------- dettaglio ---------- */
+  var cur = null, porz = 2, backTo = null, lastDay = '';
+  function openRecipe(id) {
+    cur = byId(id); if (!cur) return;
+    porz = cur.porzioni_base || 2;
+    vista('detail'); renderDetail();
+  }
+  function renderDetail() {
+    var r = cur, f = porz / (r.porzioni_base || 2), arch = archiviata(r.id);
+    var ing = r.ingredienti.map(function (i) {
+      var sub = i.calabrese ? '<span class="sub">Consigliato: ' + esc(i.calabrese.prodotto) + (i.calabrese.marca ? ' · ' + esc(i.calabrese.marca) : '') + (i.calabrese.dove ? ' · ' + esc(i.calabrese.dove) : '') + '</span>' : '';
+      return '<li><span>' + esc(i.nome) + (ingStagione(i) === true ? '<span class="dot" title="Di stagione questo mese" aria-label="di stagione"></span>' : '') + sub + '</span><span class="q">' + fmtQ(scale(i.qta, i.unita, f), i.unita) + '</span></li>';
+    }).join('');
+    var tempi = r.tempo_prep != null ? '<span>Preparazione ' + r.tempo_prep + ' min</span><span>Cottura ' + (r.tempo_cottura || 0) + ' min</span>' : '<span>' + r.tempo_min + ' min</span>';
+    var azioni = '<div class="panel"><div class="eyebrow">La tua raccolta</div><div class="r-actions">' +
+      (r.personale ? '<button type="button" class="btn line small" id="d-edit">Modifica</button>' : '') +
+      '<button type="button" class="btn line small" id="d-copy">Crea una tua versione</button>' +
+      (arch ? '<button type="button" class="btn small" id="d-rest">Ripristina dall\'archivio</button>'
+            : '<button type="button" class="btn line warn small" id="d-arch">Sposta in archivio</button>') + '</div>' +
+      '<p class="fine">' + (arch ? 'Questa ricetta è in archivio: non compare nell\'elenco, ma resta nel piano della settimana e nella spesa.'
+        : 'Archiviare toglie la ricetta dall\'elenco senza toglierla dalla settimana; dall\'archivio puoi ripristinarla o eliminarla per sempre.') + '</p></div>';
+    $('r-detail').innerHTML =
+      '<button type="button" class="back" id="back">‹ ' + (backTo === 'settimana' ? 'Torna alla settimana' : backTo === 'archivio' ? 'Torna all\'archivio' : 'Tutte le ricette') + '</button>' +
+      '<div style="display:grid;gap:8px"><h2>' + esc(r.titolo) + '</h2>' +
+      '<div class="meta"><span>' + esc(NOME_PASTO[r.pasto]) + '</span>' + tempi + '<span>' + esc(r.difficolta) + '</span>' + (r.riposo ? '<span>Riposo: ' + esc(r.riposo) + '</span>' : '') + '</div>' +
+      '<div class="chips">' + badges(r, true) + '</div></div>' +
+      '<div class="panel"><div class="portions"><span class="eyebrow">Porzioni</span><div class="stepper">' +
+      '<button type="button" id="p-meno" aria-label="Una porzione in meno"' + (porz <= 1 ? ' disabled' : '') + '>−</button><output id="p-val" aria-live="polite">' + porz + '</output>' +
+      '<button type="button" id="p-piu" aria-label="Una porzione in più"' + (porz >= 12 ? ' disabled' : '') + '>+</button></div></div>' +
+      '<ul class="ing">' + ing + '</ul>' +
+      '<button type="button" class="btn" id="add-shop">Aggiungi alla spesa</button></div>' +
+      '<div class="panel"><div class="eyebrow">Procedimento</div><ol class="passi">' + r.passi.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ol></div>' +
+      (r.note_nutrizionali ? '<div class="note">' + esc(r.note_nutrizionali) + '</div>' : '') + azioni;
+    $('back').onclick = function () {
+      var b = backTo; backTo = null;
+      if (b === 'archivio') { openArch(); return; }
+      vista('list');
+      if (b === 'settimana') { show('settimana'); var g = $('day-' + lastDay); if (g) g.scrollIntoView(); }
+    };
+    $('p-meno').onclick = function () { if (porz > 1) { porz--; renderDetail(); } };
+    $('p-piu').onclick = function () { if (porz < 12) { porz++; renderDetail(); } };
+    $('add-shop').onclick = function () { addToShop(r, porz); };
+    if ($('d-edit')) $('d-edit').onclick = function () { openForm(daRicetta(r, false)); };
+    $('d-copy').onclick = function () { openForm(daRicetta(r, true)); };
+    if ($('d-arch')) $('d-arch').onclick = function () { archivia(r.id); if (backTo !== 'settimana') { backTo = null; vista('list'); } };
+    if ($('d-rest')) $('d-rest').onclick = function () { ripristina(r.id); };
+  }
+
+  /* ---------- archivio ---------- */
+  function updArchBtn() { var n = usr.archiviate.filter(function (id) { return byId(id); }).length; $('open-arch').textContent = 'Archivio · ' + n + (n === 1 ? ' ricetta' : ' ricette'); }
+  function archivia(id) {
+    var r = byId(id); if (!r) return;
+    if (!archiviata(id)) usr.archiviate.push(id);
+    saveUsr(); aggiorna();
+    toast('«' + r.titolo + '» in archivio', { label: 'Annulla', fn: function () { ripristina(id, true); } });
+  }
+  function ripristina(id, quiet) {
+    usr.archiviate = usr.archiviate.filter(function (x) { return x !== id; });
+    saveUsr(); aggiorna();
+    if (!quiet) { var r = byId(id); toast((r ? '«' + r.titolo + '»' : 'Ricetta') + ' di nuovo nell\'elenco'); }
+  }
+  /* dove compare una ricetta nel piano della settimana (pasti cucinati, non gli avanzi) */
+  var GIORNO_BREVE = { lun: 'lun', mar: 'mar', mer: 'mer', gio: 'gio', ven: 'ven', sab: 'sab', dom: 'dom' };
+  function usiSett(id) {
+    var out = []; if (!SETT) return out;
+    SETT.giorni.forEach(function (g) { g.pasti.forEach(function (p) { if (!p.avanzo_di && effId(g, p) === id) out.push(GIORNO_BREVE[g.id] + ' ' + p.slot); }); });
+    return out;
+  }
+  function inSpesa(id) { return shop.selezione.some(function (x) { return x.id === id; }); }
+  var delArmed = null;
+  function elimina(id) {
+    var r = byId(id); if (!r) return;
+    var usi = usiSett(id);
+    if (r.personale) usr.personali = usr.personali.filter(function (x) { return x.id !== id; });
+    else if (usr.eliminate.indexOf(id) < 0) usr.eliminate.push(id);
+    usr.archiviate = usr.archiviate.filter(function (x) { return x !== id; });
+    Object.keys(usr.sostituzioni).forEach(function (k) { if (usr.sostituzioni[k] === id) delete usr.sostituzioni[k]; });
+    var spesa = inSpesa(id);
+    if (spesa) shop.selezione = shop.selezione.filter(function (x) { return x.id !== id; });
+    saveUsr(); delArmed = null; aggiorna(); if (spesa) saveShop();
+    toast('«' + r.titolo + '» eliminata' + (usi.length ? ': nella settimana scegli un sostituto' : ''));
+  }
+  function openArch() { delArmed = null; vista('arch'); renderArch(); }
+  function renderArch() {
+    var list = usr.archiviate.map(byId).filter(Boolean);
+    var html = '<button type="button" class="back" id="arch-back">‹ Tutte le ricette</button>' +
+      '<h2>Archivio</h2><p class="lead">Le ricette archiviate non compaiono nell\'elenco ma restano nel piano della settimana e nella spesa. Puoi ripristinarle o eliminarle per sempre.</p>';
+    if (!list.length) html += '<div class="panel"><div class="empty">L\'archivio è vuoto. Per archiviare una ricetta aprila e tocca «Sposta in archivio».</div></div>';
+    html += list.map(function (r) {
+      var usi = usiSett(r.id), armed = delArmed === r.id, sp = inSpesa(r.id);
+      var warn = armed ? '<p class="warnline">L\'eliminazione non si può annullare.' +
+        (usi.length ? ' È nel piano della settimana (' + esc(usi.join(', ')) + '): al suo posto potrai scegliere un sostituto.' : '') +
+        (sp ? ' Verrà tolta anche dalla lista della spesa.' : '') + '</p>' : '';
+      return '<div class="panel acard"><h3>' + esc(r.titolo) + '</h3>' +
+        '<div class="meta"><span>' + esc(NOME_PASTO[r.pasto] || r.pasto) + '</span><span>' + metaTempo(r) + '</span>' + (r.personale ? '<span class="badge mine">La tua ricetta</span>' : '') + '</div>' +
+        (usi.length ? '<div class="uses">Nel piano: ' + esc(usi.join(', ')) + '</div>' : '') + warn +
+        '<div class="r-actions"><button type="button" class="btn line small" data-aopen="' + esc(r.id) + '">Apri</button>' +
+        '<button type="button" class="btn small" data-arest="' + esc(r.id) + '">Ripristina</button>' +
+        '<button type="button" class="btn line warn small' + (armed ? ' armed' : '') + '" data-adel="' + esc(r.id) + '">' + (armed ? 'Conferma: elimina per sempre' : 'Elimina') + '</button></div></div>';
+    }).join('');
+    $('r-arch').innerHTML = html;
+  }
+  $('r-arch').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.id === 'arch-back') { delArmed = null; vista('list'); return; }
+    if (b.dataset.aopen) { backTo = 'archivio'; openRecipe(b.dataset.aopen); return; }
+    if (b.dataset.arest) { ripristina(b.dataset.arest); return; }
+    if (b.dataset.adel) {
+      var id = b.dataset.adel;
+      if (delArmed !== id) { delArmed = id; renderArch(); var c = document.querySelector('[data-adel="' + id.replace(/"/g, '') + '"]'); if (c) c.focus(); return; }
+      elimina(id);
+    }
+  });
+  $('open-arch').addEventListener('click', openArch);
+  $('new-recipe').addEventListener('click', function () { openForm(null); });
+
+  /* ---------- modulo ricetta (nuova, modifica, tua versione) ----------
+     la bozza di una nuova ricetta resta su questo browser (rv-bozza) finché non la salvi o la svuoti */
+  var UNITA = [['g', 'g'], ['ml', 'ml'], ['pz', 'pezzi'], ['cucchiaio', 'cucchiai'], ['cucchiaino', 'cucchiaini'], ['pizzico', 'pizzichi'], ['fetta', 'fette'], ['rametto', 'rametti'], ['spicchio', 'spicchi'], ['costa', 'coste'], ['q.b.', 'q.b.']];
+  var DIFF = ['facile', 'media', 'impegnativa'];
+  var STAG = [['primavera', 'Primavera'], ['estate', 'Estate'], ['autunno', 'Autunno'], ['inverno', 'Inverno']];
+  var LS_BOZZA = 'rv-bozza';
+  /* parole che indicano ingredienti non vegani, salvo versioni vegetali; esclusioni del profilo */
+  var RE_ANIM = /\b(carne|manzo|maiale|pollo|tacchino|vitello|agnello|prosciutto|pancetta|guanciale|salame|salsiccia|speck|bresaola|wurstel|pesce|tonno|salmone|acciughe|acciuga|alici|gamberi|uova|uovo|albume|tuorlo|miele|formaggio|parmigiano|grana|pecorino|mozzarella|ricotta|burrata|stracchino|gorgonzola|panna|burro|latte|yogurt|strutto|gelatina|colla di pesce)\b/i;
+  var RE_VEG = /(vegetal|vegan|di soia|d'avena|di avena|di riso|di mandorl|di cocco|di arachid|di cacao|di nocciol|di anacard|di girasole|di sesamo|di ceci)/i;
+  var RE_ESCL = /\b(fave|fava|piselli|pisello|tartufo|tartufi|tartufato)\b/i;
+  function ingVuoto() { return { nome: '', qta: '', unita: 'g', reparto: '', cal: false, prodotto: '', marca: '', dove: '' }; }
+  function nuovaBozza() {
+    return { id: null, base: null, titolo: '', pasto: '', difficolta: '', tempo_prep: '', tempo_cottura: '', riposo: '', porzioni_base: '2',
+      stagioni: [], tutto_anno: false, alcolici: false, calabria: false, vegana: false,
+      ingredienti: [ingVuoto(), ingVuoto(), ingVuoto()], passi: ['', ''], note: '' };
+  }
+  function daRicetta(r, copia) {
+    var tp = r.tempo_prep != null ? r.tempo_prep : r.tempo_min, tc = r.tempo_cottura != null ? r.tempo_cottura : 0;
+    return { id: copia ? null : r.id, base: copia ? r.id : null, titolo: copia ? r.titolo + ' (la mia versione)' : r.titolo, pasto: r.pasto, difficolta: r.difficolta,
+      tempo_prep: String(tp), tempo_cottura: String(tc), riposo: r.riposo || '', porzioni_base: String(r.porzioni_base || 2),
+      stagioni: Array.isArray(r.stagioni) ? r.stagioni.slice() : [], tutto_anno: r.stagioni === 'tutto_anno',
+      alcolici: hasAlc(r), calabria: hasCal(r), vegana: !copia && !!r.personale,
+      ingredienti: r.ingredienti.map(function (i) { return { nome: i.nome, qta: i.qta == null ? '' : String(i.qta), unita: i.unita, reparto: i.reparto || '',
+        cal: !!i.calabrese, prodotto: i.calabrese ? i.calabrese.prodotto || '' : '', marca: i.calabrese ? i.calabrese.marca || '' : '', dove: i.calabrese ? i.calabrese.dove || '' : '' }; }),
+      passi: r.passi.slice(), note: r.note_nutrizionali || '' };
+  }
+  var bozza = null, ferr = {}, bozzaT = null, bozzaRipresa = false, svuotaArmed = false;
+  function openForm(b) {
+    ferr = {}; svuotaArmed = false; bozzaRipresa = false;
+    if (b) bozza = b;
+    else {
+      var saved = null; try { saved = JSON.parse(store(LS_BOZZA) || 'null'); } catch (e) {}
+      if (saved && saved.ingredienti) { bozza = saved; bozza.id = null; bozzaRipresa = true; } else bozza = nuovaBozza();
+    }
+    vista('form'); renderForm();
+  }
+  function salvaBozza() {
+    if (!bozza || bozza.id) return;
+    clearTimeout(bozzaT); bozzaT = setTimeout(function () { store(LS_BOZZA, JSON.stringify(bozza)); }, 400);
+  }
+  function opt(v, l, sel) { return '<option value="' + esc(v) + '"' + (v === sel ? ' selected' : '') + '>' + esc(l) + '</option>'; }
+  function errAttr(k) { return ferr[k] ? ' aria-invalid="true" aria-describedby="e-' + k + '"' : ''; }
+  function errMsg(k) { return ferr[k] ? '<p class="ferr" id="e-' + k + '">' + esc(ferr[k]) + '</p>' : ''; }
+  function fld(k, label, ctl, hint, req) {
+    return '<div class="fld"><label for="' + k + '">' + label + (req ? ' <span class="req">*</span>' : '') + '</label>' + ctl + (hint ? '<p class="hint">' + hint + '</p>' : '') + errMsg(k) + '</div>';
+  }
+  function txt(k, v, extra) { return '<input type="text" id="' + k + '" value="' + esc(v) + '"' + errAttr(k) + (extra || '') + '>'; }
+  function num(k, v, min, max, extra) { return '<input type="number" inputmode="numeric" id="' + k + '" min="' + min + '" max="' + max + '" value="' + esc(v) + '"' + errAttr(k) + (extra || '') + '>'; }
+  function suf(ctl, u) { return '<div class="suf">' + ctl + '<span aria-hidden="true">' + u + '</span></div>'; }
+  function ck(k, label, on, cls) { return '<label class="ck' + (cls ? ' ' + cls : '') + '"' + (ferr[k] ? ' aria-invalid="true"' : '') + '><input type="checkbox" id="' + k + '"' + (on ? ' checked' : '') + '><span>' + label + '</span></label>'; }
+  var ETICHETTE = {};
+  function renderForm() {
+    var b = bozza, nuovo = !b.id;
+    ETICHETTE = { 'f-titolo': 'Titolo', 'f-pasto': 'Pasto', 'f-diff': 'Difficoltà', 'f-tp': 'Tempo di preparazione', 'f-tc': 'Tempo di cottura', 'f-porz': 'Porzioni', 'f-stag': 'Stagioni', 'f-veg': 'Conferma ricetta vegana', 'f-alc': 'Contiene alcolici', 'f-cal': 'Prodotti calabresi', 'f-ing': 'Ingredienti', 'f-passi': 'Procedimento' };
+    var tot = (parseInt(b.tempo_prep, 10) || 0) + (parseInt(b.tempo_cottura, 10) || 0);
+    var errs = Object.keys(ferr);
+    var h = '<button type="button" class="back" id="form-back">‹ ' + (nuovo ? 'Torna alle ricette' : 'Annulla le modifiche') + '</button>' +
+      '<h2>' + (b.id ? 'Modifica ricetta' : b.base ? 'La tua versione' : 'Nuova ricetta') + '</h2>' +
+      '<p class="lead">Compila tutti i campi con <span class="req">*</span>. Le quantità valgono per le porzioni indicate: nel dettaglio si potranno ricalcolare.</p>';
+    if (nuovo && bozzaRipresa) h += '<div class="draftbar"><span>Ho ripreso la bozza che avevi lasciato.</span><button type="button" class="linkbtn" id="f-reset">Ricomincia da capo</button></div>';
+    if (errs.length) {
+      h += '<div class="errsum" id="f-errsum" tabindex="-1" role="alert"><b>' + (errs.length === 1 ? 'C\'è un campo da sistemare' : 'Ci sono ' + errs.length + ' campi da sistemare') + '</b><ul>' +
+        errs.map(function (k) { return '<li><button type="button" class="linkbtn" data-focus="' + k + '">' + esc(ETICHETTE[k] || etichettaIng(k)) + ': ' + esc(ferr[k]) + '</button></li>'; }).join('') + '</ul></div>';
+    }
+    h += '<form class="form" id="rform" novalidate autocomplete="off">';
+    /* dati principali */
+    h += '<fieldset class="fs"><legend>Dati principali</legend>' +
+      fld('f-titolo', 'Titolo', txt('f-titolo', b.titolo, ' maxlength="80" placeholder="es. Pasta e ceci al rosmarino"'), '', true) +
+      fld('f-pasto', 'Pasto', '<select id="f-pasto"' + errAttr('f-pasto') + '>' + opt('', 'Scegli…', b.pasto) + ['colazione', 'pranzo', 'cena', 'spuntino', 'base'].map(function (p) { return opt(p, NOME_PASTO[p], b.pasto); }).join('') + '</select>', '', true) +
+      '<div class="fld" role="radiogroup" aria-labelledby="l-diff"' + (ferr['f-diff'] ? ' aria-describedby="e-f-diff"' : '') + '><span class="lbl" id="l-diff">Difficoltà <span class="req">*</span></span><div class="checks">' +
+        DIFF.map(function (d, i) { return '<label class="ck"' + (ferr['f-diff'] ? ' aria-invalid="true"' : '') + '><input type="radio" name="f-diff" id="' + (i === 0 ? 'f-diff' : 'f-diff-' + d) + '" value="' + d + '"' + (b.difficolta === d ? ' checked' : '') + '><span>' + d.charAt(0).toUpperCase() + d.slice(1) + '</span></label>'; }).join('') +
+        '</div>' + errMsg('f-diff') + '</div>' +
+      '<div class="row2">' + fld('f-tp', 'Preparazione', suf(num('f-tp', b.tempo_prep, 1, 600), 'min'), '', true) + fld('f-tc', 'Cottura', suf(num('f-tc', b.tempo_cottura, 0, 600), 'min'), '', true) + '</div>' +
+      '<p class="hint" id="f-tot">Tempo totale: ' + tot + ' min. Metti 0 nella cottura se il piatto non si cuoce.</p>' +
+      fld('f-riposo', 'Riposo o attesa', txt('f-riposo', b.riposo, ' maxlength="60" placeholder="es. 2 ore in frigo"'), 'Lascia vuoto se non serve: ammollo, lievitazione, frigo.', false) +
+      fld('f-porz', 'Porzioni', num('f-porz', b.porzioni_base, 1, 12), 'Per quante persone sono le quantità che inserisci.', true) +
+      '</fieldset>';
+    /* stagionalità e icone */
+    h += '<fieldset class="fs"><legend>Stagione e icone</legend>' +
+      '<div class="fld"' + (ferr['f-stag'] ? ' aria-describedby="e-f-stag"' : '') + '><span class="lbl">Stagioni <span class="req">*</span></span><div class="checks">' +
+        STAG.map(function (s, i) { return ck(i === 0 ? 'f-stag' : 'f-st-' + s[0], s[1], !b.tutto_anno && b.stagioni.indexOf(s[0]) > -1); }).join('') + ck('f-tutto', 'Tutto l\'anno', b.tutto_anno) +
+        '</div><p class="hint">Il simbolo «Di stagione» si calcola da solo ogni mese con il calendario della scheda Stagione; queste stagioni servono quando gli ingredienti non sono nel calendario.</p>' + errMsg('f-stag') + '</div>' +
+      '<div class="prev" id="f-prev"></div>' +
+      '<div class="fld">' + ck('f-alc', '<b>Contiene alcolici</b> (vino, birra, superalcolici; non contano aceto e salsa di soia)', b.alcolici, 'block') + errMsg('f-alc') + '</div>' +
+      '<div class="fld">' + ck('f-cal', '<b>Usa prodotti calabresi</b>: per ogni ingrediente calabrese indicherai prodotto, marca e dove trovarlo', b.calabria, 'block') + errMsg('f-cal') + '</div>' +
+      '<div class="fld">' + ck('f-veg', '<b>Confermo che la ricetta è vegana</b> e non contiene fave, piselli o tartufo <span class="req">*</span>', b.vegana, 'block') + errMsg('f-veg') + '</div>' +
+      '</fieldset>';
+    /* ingredienti */
+    h += '<fieldset class="fs" id="f-ing" tabindex="-1"><legend>Ingredienti <span class="req">*</span></legend><p class="hint">Almeno due. Scegli i nomi già suggeriti quando puoi: così nella spesa le stesse voci si sommano.</p>' + errMsg('f-ing') +
+      b.ingredienti.map(function (i, n) {
+        var k = 'f-i' + n, qb = i.unita === 'q.b.';
+        return '<div class="ingrow" data-row="' + n + '"><div class="ingrow-h"><span class="eyebrow">Ingrediente ' + (n + 1) + '</span>' +
+          (b.ingredienti.length > 1 ? '<button type="button" class="xbtn" data-rmi="' + n + '" aria-label="Togli l\'ingrediente ' + (n + 1) + '">×</button>' : '') + '</div>' +
+          fld(k + '-nome', 'Nome', txt(k + '-nome', i.nome, ' maxlength="60" list="ing-names" placeholder="es. Ceci in barattolo"'), '', true) +
+          '<div class="ingrow-g">' +
+            fld(k + '-qta', 'Quantità', '<input type="number" inputmode="decimal" step="any" min="0" id="' + k + '-qta" value="' + esc(qb ? '' : i.qta) + '"' + (qb ? ' disabled' : '') + errAttr(k + '-qta') + '>', '', !qb) +
+            fld(k + '-un', 'Unità', '<select id="' + k + '-un"' + errAttr(k + '-un') + '>' + UNITA.map(function (u) { return opt(u[0], u[1], i.unita); }).join('') + '</select>', '', true) +
+            fld(k + '-rep', 'Reparto', '<select id="' + k + '-rep"' + errAttr(k + '-rep') + '>' + opt('', 'Scegli…', i.reparto) + REPARTI.map(function (r) { return opt(r[0], r[1], i.reparto); }).join('') + '</select>', '', true) +
+          '</div>' +
+          (b.calabria ? ck(k + '-cal', 'Prodotto calabrese', i.cal) + (i.cal ? '<div class="calf">' +
+            fld(k + '-prod', 'Prodotto', txt(k + '-prod', i.prodotto, ' maxlength="80" placeholder="es. Cipolla Rossa di Tropea Calabria IGP"'), '', true) +
+            fld(k + '-marca', 'Marca', txt(k + '-marca', i.marca, ' maxlength="80" placeholder="es. Sapori & Dintorni Conad"'), '', false) +
+            fld(k + '-dove', 'Dove trovarlo', txt(k + '-dove', i.dove, ' maxlength="120" placeholder="es. Conad, reparto ortofrutta"'), '', false) + '</div>' : '') : '') +
+          '</div>';
+      }).join('') +
+      '<button type="button" class="addline" id="f-addi">+ Aggiungi ingrediente</button></fieldset>';
+    /* procedimento */
+    h += '<fieldset class="fs" id="f-passi" tabindex="-1"><legend>Procedimento <span class="req">*</span></legend><p class="hint">Un passaggio per riquadro, nell\'ordine in cui si fanno.</p>' + errMsg('f-passi') +
+      b.passi.map(function (p, n) {
+        return '<div class="steprow"><span class="num">' + (n + 1) + '</span><div class="fld"><label class="hint" for="f-p' + n + '">Passaggio ' + (n + 1) + '</label><textarea id="f-p' + n + '" maxlength="600"' + errAttr('f-p' + n) + '>' + esc(p) + '</textarea>' + errMsg('f-p' + n) + '</div>' +
+          (b.passi.length > 1 ? '<button type="button" class="xbtn" data-rmp="' + n + '" aria-label="Togli il passaggio ' + (n + 1) + '">×</button>' : '<span></span>') + '</div>';
+      }).join('') +
+      '<button type="button" class="addline" id="f-addp">+ Aggiungi passaggio</button></fieldset>';
+    /* note */
+    h += '<fieldset class="fs"><legend>Note</legend>' + fld('f-note', 'Note nutrizionali o consigli', '<textarea id="f-note" maxlength="600" placeholder="es. Il limone porta vitamina C, utile per il ferro dei legumi.">' + esc(b.note) + '</textarea>', '', false) + '</fieldset>';
+    h += '<div class="form-end"><button type="submit" class="btn">Salva ricetta</button>' +
+      (nuovo ? '<button type="button" class="btn line warn small' + (svuotaArmed ? ' armed' : '') + '" id="f-svuota">' + (svuotaArmed ? 'Tocca ancora per svuotare il modulo' : 'Svuota il modulo') + '</button>' : '') +
+      '<p class="fine">' + (nuovo ? 'Finché non salvi, la bozza resta su questo browser.' : 'Le modifiche si applicano anche alla settimana e alla spesa.') + '</p></div>';
+    h += '</form>';
+    $('r-form').innerHTML = h;
+    aggPrev();
+  }
+  function etichettaIng(k) {
+    var m = /^f-(i|p)(\d+)(?:-(\w+))?$/.exec(k); if (!m) return k;
+    if (m[1] === 'p') return 'Passaggio ' + (+m[2] + 1);
+    var c = { nome: 'nome', qta: 'quantità', un: 'unità', rep: 'reparto', prod: 'prodotto calabrese' }[m[3]] || m[3];
+    return 'Ingrediente ' + (+m[2] + 1) + ', ' + c;
+  }
+  /* legge il modulo nella bozza */
+  function leggi() {
+    var b = bozza; function v(id) { var e = $(id); return e ? e.value : ''; } function c(id) { var e = $(id); return !!(e && e.checked); }
+    b.titolo = v('f-titolo'); b.pasto = v('f-pasto');
+    var d = document.querySelector('input[name="f-diff"]:checked'); b.difficolta = d ? d.value : '';
+    b.tempo_prep = v('f-tp'); b.tempo_cottura = v('f-tc'); b.riposo = v('f-riposo'); b.porzioni_base = v('f-porz');
+    b.tutto_anno = c('f-tutto');
+    b.stagioni = STAG.filter(function (s, i) { return c(i === 0 ? 'f-stag' : 'f-st-' + s[0]); }).map(function (s) { return s[0]; });
+    b.alcolici = c('f-alc'); b.calabria = c('f-cal'); b.vegana = c('f-veg');
+    b.ingredienti.forEach(function (i, n) {
+      var k = 'f-i' + n;
+      i.nome = v(k + '-nome'); i.unita = v(k + '-un') || i.unita; i.reparto = v(k + '-rep');
+      if (i.unita !== 'q.b.') i.qta = v(k + '-qta');
+      if ($(k + '-cal')) i.cal = c(k + '-cal');
+      if ($(k + '-prod')) { i.prodotto = v(k + '-prod'); i.marca = v(k + '-marca'); i.dove = v(k + '-dove'); }
+    });
+    b.passi = b.passi.map(function (p, n) { return v('f-p' + n); });
+    b.note = v('f-note');
+  }
+  function aggPrev() {
+    var el = $('f-prev'); if (!el || !bozza) return;
+    var finta = { stagioni: bozza.tutto_anno ? 'tutto_anno' : bozza.stagioni, ingredienti: bozza.ingredienti.filter(function (i) { return i.nome.trim(); }) };
+    var t = $('f-tot'); if (t) t.textContent = 'Tempo totale: ' + ((parseInt(bozza.tempo_prep, 10) || 0) + (parseInt(bozza.tempo_cottura, 10) || 0)) + ' min. Metti 0 nella cottura se il piatto non si cuoce.';
+    var si = diStagione(finta);
+    el.innerHTML = 'Anteprima per ' + MESI[M].toLowerCase() + ': ' + (si ? '<span class="badge stag">' + ICON_STAG + 'Di stagione</span>' : '<span>senza simbolo di stagione</span>') +
+      (bozza.calabria && bozza.ingredienti.some(function (i) { return i.cal; }) ? '<span class="badge cal">' + ICON_CAL + 'Calabria</span>' : '') +
+      (bozza.alcolici ? '<span class="badge alc">' + ICON_ALC + 'Con alcol</span>' : '');
+  }
+  function intero(s) { return /^\d+$/.test(String(s).trim()) ? parseInt(s, 10) : NaN; }
+  function valida() {
+    var b = bozza, e = {};
+    var t = b.titolo.replace(/\s+/g, ' ').trim();
+    if (t.length < 3) e['f-titolo'] = 'scrivi un titolo di almeno 3 caratteri';
+    else if (RICETTE.some(function (r) { return r.id !== b.id && r.titolo.toLowerCase() === t.toLowerCase(); })) e['f-titolo'] = 'esiste già una ricetta con questo titolo';
+    if (!b.pasto) e['f-pasto'] = 'scegli il pasto';
+    if (!b.difficolta) e['f-diff'] = 'scegli la difficoltà';
+    var tp = intero(b.tempo_prep), tc = intero(b.tempo_cottura), pz = intero(b.porzioni_base);
+    if (!(tp >= 1 && tp <= 600)) e['f-tp'] = 'minuti interi da 1 a 600';
+    if (!(tc >= 0 && tc <= 600)) e['f-tc'] = 'minuti interi da 0 a 600';
+    if (!(pz >= 1 && pz <= 12)) e['f-porz'] = 'un numero intero da 1 a 12';
+    if (!b.tutto_anno && !b.stagioni.length) e['f-stag'] = 'scegli almeno una stagione o «Tutto l\'anno»';
+    if (!b.vegana) e['f-veg'] = 'conferma che la ricetta è vegana';
+    var piene = 0, alcNome = '', calOk = false;
+    b.ingredienti.forEach(function (i, n) {
+      var k = 'f-i' + n, nome = i.nome.replace(/\s+/g, ' ').trim();
+      var vuota = !nome && !String(i.qta).trim() && !i.reparto;
+      if (vuota) return;
+      piene++;
+      if (!nome) e[k + '-nome'] = 'scrivi il nome';
+      else if (RE_ESCL.test(nome)) e[k + '-nome'] = '«' + nome + '» è tra gli alimenti esclusi';
+      else if (RE_ANIM.test(nome) && !RE_VEG.test(nome)) e[k + '-nome'] = '«' + nome + '» non sembra vegano: se è una versione vegetale scrivilo nel nome (es. «burro vegetale»)';
+      if (i.unita !== 'q.b.') { var q = parseFloat(String(i.qta).replace(',', '.')); if (!(q > 0 && q < 100000)) e[k + '-qta'] = 'inserisci una quantità maggiore di zero, o scegli q.b.'; }
+      if (!i.reparto) e[k + '-rep'] = 'scegli il reparto';
+      if (nomeAlc(nome) && !alcNome) alcNome = nome;
+      if (b.calabria && i.cal) { if (!i.prodotto.trim()) e[k + '-prod'] = 'indica il prodotto calabrese'; else calOk = true; }
+    });
+    if (piene < 2) e['f-ing'] = 'inserisci almeno due ingredienti';
+    if (alcNome && !b.alcolici) e['f-alc'] = 'tra gli ingredienti c\'è «' + alcNome + '»: spunta «Contiene alcolici»';
+    if (b.calabria && !calOk && !Object.keys(e).some(function (k) { return /-prod$/.test(k); })) e['f-cal'] = 'segna almeno un ingrediente come prodotto calabrese, oppure togli la spunta';
+    var passi = 0;
+    b.passi.forEach(function (p) { if (p.trim()) passi++; });
+    if (!passi) e['f-passi'] = 'scrivi almeno un passaggio';
+    return e;
+  }
+  function slug(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40); }
+  function costruisci() {
+    var b = bozza, tp = intero(b.tempo_prep), tc = intero(b.tempo_cottura);
+    var r = {
+      id: b.id || ('mia-' + slug(b.titolo) + '-' + Date.now().toString(36)),
+      titolo: b.titolo.replace(/\s+/g, ' ').trim(), pasto: b.pasto, tempo_min: tp + tc, tempo_prep: tp, tempo_cottura: tc,
+      difficolta: b.difficolta, porzioni_base: intero(b.porzioni_base),
+      stagioni: b.tutto_anno ? 'tutto_anno' : b.stagioni.slice(),
+      ingredienti: b.ingredienti.filter(function (i) { return i.nome.trim(); }).map(function (i) {
+        var o = { nome: i.nome.replace(/\s+/g, ' ').trim(), qta: i.unita === 'q.b.' ? null : parseFloat(String(i.qta).replace(',', '.')), unita: i.unita, reparto: i.reparto };
+        if (b.calabria && i.cal && i.prodotto.trim()) o.calabrese = { prodotto: i.prodotto.trim(), marca: i.marca.trim(), dove: i.dove.trim() };
+        return o;
+      }),
+      passi: b.passi.map(function (p) { return p.trim(); }).filter(Boolean),
+      alcolici: !!b.alcolici, aggiornata: new Date().toISOString()
+    };
+    if (b.riposo.trim()) r.riposo = b.riposo.trim();
+    if (b.note.trim()) r.note_nutrizionali = b.note.trim();
+    if (b.base) r.versione_di = b.base;
+    return r;
+  }
+  $('r-form').addEventListener('input', function (e) {
+    if (!bozza) return;
+    leggi(); salvaBozza();
+    if (/^f-(tp|tc|tutto|st-|stag|alc)/.test(e.target.id) || /-(nome|rep)$/.test(e.target.id)) aggPrev();
+  });
+  $('r-form').addEventListener('change', function (e) {
+    if (!bozza) return;
+    var id = e.target.id || '';
+    leggi();
+    /* nome ingrediente: reparto suggerito e spunta alcolici automatica */
+    var m = /^f-i(\d+)-nome$/.exec(id);
+    if (m) {
+      var i = bozza.ingredienti[+m[1]], noto = NOMI[i.nome.trim().toLowerCase()];
+      if (noto && !i.reparto) { i.reparto = noto; var s = $('f-i' + m[1] + '-rep'); if (s) s.value = noto; }
+      if (nomeAlc(i.nome) && !bozza.alcolici) { bozza.alcolici = true; $('f-alc').checked = true; toast('Segnata «Contiene alcolici»: tra gli ingredienti c\'è ' + i.nome.trim()); }
+    }
+    /* stagioni e «tutto l'anno» si escludono */
+    if (id === 'f-tutto' && bozza.tutto_anno) { bozza.stagioni = []; STAG.forEach(function (s, n) { var c = $(n === 0 ? 'f-stag' : 'f-st-' + s[0]); if (c) c.checked = false; }); }
+    if ((id === 'f-stag' || /^f-st-/.test(id)) && e.target.checked) { bozza.tutto_anno = false; $('f-tutto').checked = false; }
+    /* cambi che modificano la struttura del modulo */
+    if (id === 'f-cal' || /^f-i\d+-(cal|un)$/.test(id)) { renderForm(); var el = $(id); if (el) el.focus(); }
+    salvaBozza(); aggPrev();
+  });
+  $('r-form').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b || !bozza) return;
+    if (b.id === 'form-back') { leggi(); salvaBozza(); ferr = {}; if (bozza.id && byId(bozza.id)) openRecipe(bozza.id); else vista('list'); return; }
+    if (b.dataset.focus) { var t = $(b.dataset.focus); if (t) { t.focus(); t.scrollIntoView({ block: 'center' }); } return; }
+    if (b.id === 'f-reset') { bozza = nuovaBozza(); store(LS_BOZZA, ''); bozzaRipresa = false; ferr = {}; renderForm(); return; }
+    if (b.id === 'f-svuota') {
+      if (!svuotaArmed) { svuotaArmed = true; leggi(); renderForm(); $('f-svuota').focus(); return; }
+      bozza = nuovaBozza(); store(LS_BOZZA, ''); svuotaArmed = false; bozzaRipresa = false; ferr = {}; renderForm(); window.scrollTo(0, 0); toast('Modulo svuotato'); return;
+    }
+    leggi();
+    if (b.id === 'f-addi') { bozza.ingredienti.push(ingVuoto()); renderForm(); $('f-i' + (bozza.ingredienti.length - 1) + '-nome').focus(); salvaBozza(); return; }
+    if (b.id === 'f-addp') { bozza.passi.push(''); renderForm(); $('f-p' + (bozza.passi.length - 1)).focus(); salvaBozza(); return; }
+    if (b.dataset.rmi) { bozza.ingredienti.splice(+b.dataset.rmi, 1); ferr = {}; renderForm(); salvaBozza(); return; }
+    if (b.dataset.rmp) { bozza.passi.splice(+b.dataset.rmp, 1); ferr = {}; renderForm(); salvaBozza(); }
+  });
+  $('r-form').addEventListener('submit', function (e) {
+    e.preventDefault(); if (!bozza) return;
+    leggi(); ferr = valida(); svuotaArmed = false;
+    if (Object.keys(ferr).length) { renderForm(); var s = $('f-errsum'); if (s) { s.focus(); s.scrollIntoView({ block: 'start' }); } return; }
+    var r = costruisci(), modifica = !!bozza.id;
+    if (modifica) usr.personali = usr.personali.map(function (x) { return x.id === r.id ? r : x; });
+    else { usr.personali.push(r); store(LS_BOZZA, ''); }
+    saveUsr(); bozza = null; ferr = {}; aggiorna();
+    backTo = null; openRecipe(r.id);
+    toast(modifica ? 'Modifiche salvate' : 'Ricetta salvata nella tua raccolta');
+  });
+  /* nomi degli ingredienti già usati, per i suggerimenti e il reparto automatico */
+  var NOMI = {};
+  function aggNomi() {
+    NOMI = {};
+    RICETTE.forEach(function (r) { r.ingredienti.forEach(function (i) { var k = i.nome.toLowerCase(); if (!NOMI[k]) NOMI[k] = i.reparto; }); });
+    if (DISP) DISP.gruppi.forEach(function (g) { g.voci.forEach(function (v) { var k = v.nome.toLowerCase(); if (!NOMI[k]) NOMI[k] = v.reparto; }); });
+    var nomi = {}; RICETTE.forEach(function (r) { r.ingredienti.forEach(function (i) { nomi[i.nome] = 1; }); });
+    if (DISP) DISP.gruppi.forEach(function (g) { g.voci.forEach(function (v) { nomi[v.nome] = 1; }); });
+    $('ing-names').innerHTML = Object.keys(nomi).sort(function (a, b) { return a.localeCompare(b, 'it'); }).map(function (n) { return '<option value="' + esc(n) + '"></option>'; }).join('');
+  }
+
+  /* ---------- lista della spesa: ricette scelte + voci a mano + spunte, salvate ---------- */
+  /* stato: { selezione:[{id, porzioni}], extra:[{nome, reparto}], spunte:[chiave], agg: ISO }
+     salvato in db (data/users/<id>/spesa, privato) se disponibile, sempre anche in localStorage */
+  var LS_SHOP = 'rv-spesa';
+  function normShop(s) {
+    s = s || {};
+    return {
+      selezione: (Array.isArray(s.selezione) ? s.selezione : []).filter(function (x) { return x && x.id && x.porzioni > 0; }),
+      extra: (Array.isArray(s.extra) ? s.extra : []).filter(function (x) { return x && x.nome; }),
+      spunte: (Array.isArray(s.spunte) ? s.spunte : []).filter(function (x) { return typeof x === 'string'; }),
+      agg: typeof s.agg === 'string' ? s.agg : ''
+    };
+  }
+  function vuota(s) { return !s.selezione.length && !s.extra.length; }
+  var shop = (function () { try { return normShop(JSON.parse(store(LS_SHOP) || 'null')); } catch (e) { return normShop(null); } })();
+  var dbRef = null, saveT = null, sync = 'locale', clearArmed = false;
+
+  function saveShop() {
+    shop.agg = new Date().toISOString();
+    store(LS_SHOP, JSON.stringify(shop));
+    if (!dbRef) return;
+    clearTimeout(saveT);
+    saveT = setTimeout(function () {
+      dbRef.set(JSON.parse(JSON.stringify(shop)))
+        .then(function () { if (sync !== 'account') { sync = 'account'; updSync(); } })
+        .catch(function () { sync = 'errore'; updSync(); });
+    }, 400);
+  }
+  function updSync() {
+    var el = $('shop-sync'); if (!el) return;
+    el.textContent = sync === 'account' ? 'Salvata sul tuo account: la ritrovi da telefono e computer.'
+      : sync === 'errore' ? 'Non riesco a salvare sul tuo account in questo momento: la lista resta su questo browser.'
+      : 'Salvata su questo browser.';
+    el.className = 'fine sync' + (sync === 'errore' ? ' err' : '');
+  }
+
+  function byId(id) { for (var i = 0; i < RICETTE.length; i++) if (RICETTE[i].id === id) return RICETTE[i]; return null; }
+  function chiave(nome, unita) { return nome.toLowerCase().trim() + '|' + unita; }
+  /* in spesa le dosi a cucchiai e pizzichi non si sommano: sono prodotti da avere in dispensa (q.b.);
+     i rametti si arrotondano all'intero per eccesso */
+  var DA_DISPENSA = { cucchiaio: 1, cucchiaino: 1, pizzico: 1 };
+  function vociSpesa() {
+    var m = {}, out = [], nomi = {};
+    shop.selezione.forEach(function (s) {
+      var r = byId(s.id); if (!r) return;
+      var f = s.porzioni / (r.porzioni_base || 2);
+      r.ingredienti.forEach(function (i) {
+        var u = DA_DISPENSA[i.unita] ? 'q.b.' : i.unita;
+        var k = chiave(i.nome, u), q = (i.qta == null || u === 'q.b.') ? null : i.qta * f, v = m[k];
+        if (!v) { v = m[k] = { k: k, nome: i.nome, unita: u, raw: q, reparto: i.reparto || 'dispensa', calabrese: i.calabrese || null }; out.push(v); }
+        else if (q != null && v.raw != null) v.raw += q;
+        if (!v.calabrese && i.calabrese) v.calabrese = i.calabrese;
+        nomi[i.nome.toLowerCase().trim()] = true;
+      });
+    });
+    out.forEach(function (v) { v.qta = v.unita === 'rametto' && v.raw != null ? Math.ceil(v.raw - 0.01) : scale(v.raw, v.unita, 1); });
+    shop.extra.forEach(function (x) {
+      var n = x.nome.toLowerCase().trim(), k = 'mano|' + n;
+      if (nomi[n]) return; /* già presente dalle ricette: niente doppione */
+      if (!m[k]) { m[k] = { k: k, nome: x.nome, reparto: x.reparto || 'dispensa', manuale: true }; out.push(m[k]); }
+    });
+    return out;
+  }
+
+  function addToShop(r, p) {
+    var s = shop.selezione.filter(function (x) { return x.id === r.id; })[0];
+    if (s) { s.porzioni = Math.min(48, s.porzioni + p); toast(r.titolo + ': ora ' + s.porzioni + ' porzioni in lista'); }
+    else { shop.selezione.push({ id: r.id, porzioni: p }); toast(r.titolo + ' in lista (' + p + (p > 1 ? ' porzioni)' : ' porzione)')); }
+    clearArmed = false; saveShop(); renderShop();
+  }
+
+  function renderShop() {
+    var c = $('shop-count');
+    if (vuota(shop)) {
+      c.hidden = true; clearArmed = false;
+      updDisp();
+      $('shop').innerHTML = '<div class="empty">La lista è vuota. Apri una ricetta, scegli le porzioni e tocca «Aggiungi alla spesa», oppure scrivi qui sotto una voce a mano.</div>' + formAdd() + '<p class="fine sync" id="shop-sync"></p>';
+      updSync(); return;
+    }
+    if (shop.selezione.length && !caricate) { $('shop').innerHTML = '<div class="empty">Caricamento della lista…</div>'; return; }
+    var all = vociSpesa(), done = {};
+    shop.spunte.forEach(function (k) { done[k] = true; });
+    var left = all.filter(function (v) { return !done[v.k]; }).length;
+    c.hidden = !left; c.textContent = left;
+
+    var html = '<div class="shop-head"><span>' + left + ' da comprare su ' + all.length + '</span>' +
+      '<button type="button" class="back' + (clearArmed ? ' warn' : '') + '" id="shop-clear">' + (clearArmed ? 'Tocca ancora per svuotare' : 'Svuota') + '</button></div>';
+    if (shop.selezione.length) {
+      html += '<div class="rsel"><span class="eyebrow">Ricette in lista</span><div class="rsel-list">' + shop.selezione.map(function (s) {
+        var r = byId(s.id); if (!r) return '';
+        return '<span class="rpill"><span>' + esc(r.titolo) + ' <b>· ' + s.porzioni + '</b></span>' +
+          '<button type="button" data-rm="' + esc(s.id) + '" aria-label="Togli ' + esc(r.titolo) + ' dalla lista">×</button></span>';
+      }).join('') + '</div></div>';
+    }
+    var n = 0;
+    REPARTI.forEach(function (rp) {
+      var items = all.filter(function (v) { return v.reparto === rp[0]; });
+      if (!items.length) return;
+      items.sort(function (a, b) { return (done[a.k] ? 1 : 0) - (done[b.k] ? 1 : 0) || a.nome.localeCompare(b.nome, 'it'); });
+      html += '<div class="dept"><h3>' + rp[1] + '</h3>' + items.map(function (v) {
+        var id = 'sh-' + (n++) + '-' + v.k.replace(/[^a-z0-9]/g, '-').slice(0, 30), on = !!done[v.k];
+        var sub = v.calabrese ? '<span class="sub">Calabrese: ' + esc(v.calabrese.prodotto) + (v.calabrese.dove ? ' · ' + esc(v.calabrese.dove) : '') + '</span>' : '';
+        var right = v.manuale ? '<button type="button" class="rm" data-rmx="' + esc(v.nome) + '" aria-label="Togli ' + esc(v.nome) + '">×</button>' : '<span class="q">' + fmtQ(v.qta, v.unita) + '</span>';
+        return '<div class="item' + (on ? ' done' : '') + '"><input type="checkbox" id="' + id + '" data-k="' + esc(v.k) + '"' + (on ? ' checked' : '') + '>' +
+          '<label class="n" for="' + id + '">' + esc(v.nome) + sub + '</label>' + right + '</div>';
+      }).join('') + '</div>';
+    });
+    html += formAdd() + '<p class="fine sync" id="shop-sync"></p>';
+    $('shop').innerHTML = html;
+    updSync(); updDisp();
+  }
+  function formAdd() {
+    return '<form class="addrow" id="shop-add" autocomplete="off"><label class="eyebrow" for="shop-new">Aggiungi una voce</label>' +
+      '<div class="addrow-f"><input id="shop-new" type="text" maxlength="60" placeholder="es. Bevanda di soia con calcio">' +
+      '<select id="shop-rep" aria-label="Reparto">' + REPARTI.map(function (r) { return '<option value="' + r[0] + '"' + (r[0] === 'dispensa' ? ' selected' : '') + '>' + r[1] + '</option>'; }).join('') + '</select>' +
+      '<button type="submit" class="btn small">Aggiungi</button></div></form>';
+  }
+
+  $('shop').addEventListener('change', function (e) {
+    var k = e.target.dataset && e.target.dataset.k; if (!k) return;
+    var i = shop.spunte.indexOf(k);
+    if (e.target.checked && i < 0) shop.spunte.push(k);
+    if (!e.target.checked && i > -1) shop.spunte.splice(i, 1);
+    clearArmed = false; saveShop(); renderShop();
+  });
+  $('shop').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.id === 'shop-clear') {
+      if (!clearArmed) { clearArmed = true; renderShop(); return; }
+      shop = normShop(null); clearArmed = false; saveShop(); renderShop(); toast('Lista svuotata'); return;
+    }
+    if (b.dataset.rm) { shop.selezione = shop.selezione.filter(function (x) { return x.id !== b.dataset.rm; }); pruneSpunte(); saveShop(); renderShop(); return; }
+    if (b.dataset.rmx) { var nm = b.dataset.rmx; shop.extra = shop.extra.filter(function (x) { return x.nome !== nm; }); pruneSpunte(); saveShop(); renderShop(); }
+  });
+  $('shop').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var inp = $('shop-new'), nome = (inp.value || '').replace(/\s+/g, ' ').trim(); if (!nome) { inp.focus(); return; }
+    if (!shop.extra.some(function (x) { return x.nome.toLowerCase() === nome.toLowerCase(); })) shop.extra.push({ nome: nome, reparto: $('shop-rep').value });
+    saveShop(); renderShop(); toast(nome + ' aggiunto alla lista');
+    var ni = $('shop-new'); if (ni) ni.focus();
+  });
+  function pruneSpunte() {
+    if (!caricate) return;
+    var keys = {}; vociSpesa().forEach(function (v) { keys[v.k] = true; });
+    shop.spunte = shop.spunte.filter(function (k) { return keys[k]; });
+  }
+
+  /* collegamento al salvataggio sull'account (db privato); senza, resta localStorage */
+  function connettiDb() {
+    var C = window.claude; if (!C || typeof C.use !== 'function') return false;
+    Promise.all([C.use('db'), C.use('user')]).then(function (a) {
+      var db = a[0], u = a[1]; if (!db || !u) return;
+      return u.id().then(function (uid) {
+        if (!uid) return;
+        var ref = db.doc('data/users/' + uid + '/spesa');
+        return ref.get().then(function (snap) {
+          dbRef = ref; sync = 'account';
+          var remote = snap.exists ? normShop(snap.data()) : null;
+          if (remote && (vuota(shop) || remote.agg >= shop.agg)) { shop = remote; store(LS_SHOP, JSON.stringify(shop)); }
+          else if (!vuota(shop)) saveShop();
+          renderShop();
+          ref.onSnapshot(function (s) {
+            if (!s.exists || s.metadata.hasPendingWrites) return;
+            var d = normShop(s.data());
+            if (d.agg && d.agg > shop.agg) { shop = d; store(LS_SHOP, JSON.stringify(shop)); renderShop(); }
+          }, function () {});
+        }).then(function () {
+          /* ricette personali, archivio, eliminate e sostituti: stesso schema della spesa */
+          var uref = db.doc('data/users/' + uid + '/ricettario');
+          return uref.get().then(function (snap) {
+            usrRef = uref; usrSync = 'account';
+            var remote = snap.exists ? normUsr(snap.data()) : null;
+            if (remote && (vuotoUsr(usr) || remote.agg >= usr.agg)) { usr = remote; store(LS_USR, JSON.stringify(usr)); }
+            else if (!vuotoUsr(usr)) saveUsr();
+            updUsrSync(); if (caricate) aggiorna();
+            uref.onSnapshot(function (s) {
+              if (!s.exists || s.metadata.hasPendingWrites) return;
+              var d = normUsr(s.data());
+              if (d.agg && d.agg > usr.agg) { usr = d; store(LS_USR, JSON.stringify(usr)); if (caricate) aggiorna(); }
+            }, function () {});
+          });
+        });
+      });
+    }).catch(function () { sync = 'locale'; updSync(); });
+    return true;
+  }
+  if (!connettiDb()) window.addEventListener('load', connettiDb, { once: true });
+
+  renderFilters(); renderCards(); renderShop(); updUsrSync(); updArchBtn();
+  carica('ricette.json')
+    .then(function (d) { BASE = d.ricette || []; caricate = true; aggiorna(); })
+    .catch(function () { $('cards').innerHTML = '<div class="empty err">Non riesco a caricare le ricette. Ricarica la pagina tra poco.</div>'; });
+
+  /* ---------- calendario di stagione (Guida) ---------- */
+  var meseSel = MESE;
+  function renderMesi() {
+    $('mesi').innerHTML = MESI.map(function (m, i) {
+      var k = i + 1;
+      return '<button type="button" class="fchip' + (k === MESE ? ' oggi' : '') + '" data-m="' + k + '" aria-pressed="' + (k === meseSel) + '" aria-label="' + m + (k === MESE ? ', mese corrente' : '') + '" title="' + m + '">' + m.slice(0, 3) + '</button>';
+    }).join('');
+  }
+  function renderSeas() {
+    if (!CAL) return;
+    var prev = meseSel === 1 ? 12 : meseSel - 1, next = meseSel === 12 ? 1 : meseSel + 1;
+    var html = '';
+    [['verdura', 'Verdura'], ['frutta', 'Frutta']].forEach(function (t) {
+      var list = CAL.prodotti.filter(function (p) { return p.tipo === t[0] && p.fonte !== 'conservazione' && p.mesi.indexOf(meseSel) > -1 && p.mesi.length < 12; });
+      list.sort(function (a, b) { return a.nome.localeCompare(b.nome, 'it'); });
+      html += '<div class="seas-g"><div class="eyebrow">' + t[1] + ' a ' + MESI[meseSel - 1].toLowerCase() + '<span>' + list.length + '</span></div><div class="prod">' +
+        (list.length ? list.map(function (p) {
+          var cls = p.mesi.indexOf(prev) < 0 ? 'nuovo' : (p.mesi.indexOf(next) < 0 ? 'ultimo' : '');
+          return '<span' + (cls ? ' class="' + cls + '"' : '') + ' title="' + (cls === 'nuovo' ? 'Arriva questo mese' : cls === 'ultimo' ? 'Ultimo mese' : 'Di stagione') + '">' + esc(p.nome) + '</span>';
+        }).join('') : '<span>nessun prodotto</span>') + '</div></div>';
+    });
+    var sempre = CAL.prodotti.filter(function (p) { return p.mesi.length === 12; }).map(function (p) { return p.nome.toLowerCase(); });
+    html += '<p class="fine">Tutto l\'anno: ' + esc(sempre.join(', ')) + '.</p>';
+    $('seas').innerHTML = html;
+  }
+  $('mesi').addEventListener('click', function (e) { var b = e.target.closest('.fchip'); if (!b) return; meseSel = +b.dataset.m; renderMesi(); renderSeas(); });
+
+  /* ---------- dispensa di base (Guida), collegata alla spesa come voci a mano ---------- */
+  var DISP = null;
+  function inLista(nome) { var n = nome.toLowerCase(); return shop.extra.some(function (x) { return x.nome.toLowerCase() === n; }); }
+  function renderDisp() {
+    if (!DISP) return;
+    var html = DISP.gruppi.map(function (g, gi) {
+      return '<details class="' + (g.id === 'calabria' ? 'cal-g' : '') + '"' + (gi === 0 ? ' open' : '') + '><summary><span class="nn">' + esc(g.titolo) + '</span><span class="nk">' + g.voci.length + ' prodotti</span></summary><div class="nb">' +
+        (g.nota ? '<p class="fine">' + esc(g.nota) + '</p>' : '') + '<div>' +
+        g.voci.map(function (v) {
+          var c = v.calabrese, on = inLista(v.nome);
+          var sub = c ? '<span class="sub">' + esc(c.prodotto) + (c.marca ? ' · ' + esc(c.marca) : '') + (c.dove ? ' · ' + esc(c.dove) : '') + '</span>' : '';
+          return '<div class="pitem"><span class="n">' + esc(v.nome) + (v.nota ? '<span class="d">' + esc(v.nota) + '</span>' : '') + sub + '</span>' +
+            '<button type="button" class="addp" data-dn="' + esc(v.nome) + '" data-dr="' + esc(v.reparto) + '" aria-pressed="' + on + '">' + (on ? 'In lista ✓' : 'Aggiungi') + '</button></div>';
+        }).join('') + '</div></div></details>';
+    }).join('');
+    $('disp').innerHTML = html;
+  }
+  function updDisp() {
+    if (!DISP) return;
+    Array.prototype.forEach.call(document.querySelectorAll('#disp .addp'), function (b) {
+      var on = inLista(b.dataset.dn); b.setAttribute('aria-pressed', on); b.textContent = on ? 'In lista ✓' : 'Aggiungi';
+    });
+  }
+  $('disp').addEventListener('click', function (e) {
+    var b = e.target.closest('.addp'); if (!b) return;
+    var nome = b.dataset.dn;
+    if (inLista(nome)) { shop.extra = shop.extra.filter(function (x) { return x.nome.toLowerCase() !== nome.toLowerCase(); }); pruneSpunte(); toast(nome + ' tolto dalla lista'); }
+    else { shop.extra.push({ nome: nome, reparto: b.dataset.dr || 'dispensa' }); toast(nome + ' aggiunto alla spesa'); }
+    clearArmed = false; saveShop(); renderShop();
+  });
+
+  renderMesi();
+  carica('stagioni.json')
+    .then(function (d) {
+      CAL = d; ALIAS = [];
+      (d.prodotti || []).forEach(function (p) { (p.alias || []).forEach(function (a) { ALIAS.push([a, p]); }); });
+      ALIAS.sort(function (a, b) { return b[0].length - a[0].length; });
+      renderSeas(); renderCards(); renderSett(); if (cur && !$('r-detail').hidden) renderDetail();
+      if (d.fonte) $('seas-fonte').innerHTML = 'Fonte: <a href="' + esc(d.fonte.url) + '" target="_blank" rel="noopener" style="color:var(--accent)">' + esc(d.fonte.titolo) + '</a>. ' + esc(d.nota_integrazioni || '') + (d.nota_stagionalita ? ' ' + esc(d.nota_stagionalita) : '');
+    })
+    .catch(function () { $('seas').innerHTML = '<div class="empty err">Non riesco a caricare il calendario. Ricarica la pagina tra poco.</div>'; });
+  carica('dispensa.json')
+    .then(function (d) { DISP = d; renderDisp(); aggNomi(); })
+    .catch(function () { $('disp').innerHTML = '<div class="empty err">Non riesco a caricare la dispensa. Ricarica la pagina tra poco.</div>'; });
+
+  /* ---------- settimana di esempio (settimana.json), collegata alla spesa ----------
+     ogni pasto: {slot, id, dosi?, avanzo_di?, nota?}; porzioni in spesa = persone × dosi; gli avanzi non entrano in spesa */
+  var SETT = null, SLOT = { colazione: 'Colazione', pranzo: 'Pranzo', cena: 'Cena', spuntino: 'Spuntino' };
+  var pers = parseInt(store('rv-sett-pers'), 10); if (!(pers >= 1 && pers <= 6)) pers = 2;
+  var OGGI = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab'][new Date().getDay()];
+  function nomeGiorno(id) { var g = SETT.giorni.filter(function (x) { return x.id === id; })[0]; return g ? g.nome.toLowerCase() : id; }
+  function renderSett() {
+    if (!SETT || !caricate) return;
+    var html = '<div class="panel"><div class="week-ctl"><span class="eyebrow">Persone</span><div class="stepper">' +
+      '<button type="button" id="s-meno" aria-label="Una persona in meno"' + (pers <= 1 ? ' disabled' : '') + '>−</button><output aria-live="polite">' + pers + '</output>' +
+      '<button type="button" id="s-piu" aria-label="Una persona in più"' + (pers >= 6 ? ' disabled' : '') + '>+</button></div></div>' +
+      '<p>' + esc(SETT.nota) + '</p>' +
+      '<button type="button" class="btn" id="sett-all">Metti tutta la settimana nella spesa</button>' +
+      '<p class="fine">Le quantità tengono conto delle persone scelte e delle dosi doppie. Tocca un piatto per aprire la ricetta.</p></div>';
+    html += '<div class="filter-row" role="group" aria-label="Vai al giorno">' + SETT.giorni.map(function (g) {
+      return '<button type="button" class="fchip' + (g.id === OGGI ? ' oggi' : '') + '" data-go="' + g.id + '" aria-pressed="false">' + esc(g.nome.slice(0, 3)) + (g.id === OGGI ? ' · oggi' : '') + '</button>';
+    }).join('') + '</div><div class="days">';
+    html += SETT.giorni.map(function (g) {
+      var rows = g.pasti.map(function (p) {
+        var rid = effId(g, p), r = byId(rid), sost = !p.avanzo_di && usr.sostituzioni[g.id + '|' + p.slot];
+        if (!r) {
+          if (p.avanzo_di) return '<div class="meal gone"><span class="slot">' + SLOT[p.slot] + '</span><span class="t">Avanzo di un piatto eliminato</span><span class="m">scegli il sostituto nel giorno di ' + esc(nomeGiorno(p.avanzo_di)) + '</span></div>';
+          var sid = 'sw-' + g.id + '-' + p.slot;
+          return '<div class="meal gone"><span class="slot">' + SLOT[p.slot] + '</span><span class="t">Piatto eliminato dalla raccolta</span>' +
+            '<div class="swap"><label for="' + sid + '">Scegli un sostituto</label><select id="' + sid + '" data-sw="' + g.id + '|' + p.slot + '">' + opzioniSost(p.slot) + '</select></div></div>';
+        }
+        var m = '<span>' + r.tempo_min + ' min</span>';
+        if (p.avanzo_di) m = '<span class="badge avz">avanzo di ' + esc(nomeGiorno(p.avanzo_di)) + '</span>';
+        else if (p.dosi > 1) m += '<span class="badge dose">doppia dose</span>';
+        if (sost) m += '<span class="badge mine">sostituto</span>';
+        if (archiviata(r.id)) m += '<span class="badge arch">in archivio</span>';
+        if (!p.avanzo_di && diStagione(r)) m += '<span class="badge stag">' + ICON_STAG + 'Di stagione</span>';
+        if (hasAlc(r)) m += '<span class="badge alc">' + ICON_ALC + 'Con alcol</span>';
+        if (p.nota && (!sost || p.dosi > 1)) m += '<span>' + esc(p.nota) + '</span>';
+        return '<button type="button" class="meal" data-id="' + esc(r.id) + '" data-day="' + g.id + '"><span class="slot">' + SLOT[p.slot] + '</span><span class="t">' + esc(r.titolo) + '</span><span class="m">' + m + '</span></button>';
+      }).join('');
+      return '<div class="panel day' + (g.id === OGGI ? ' oggi' : '') + '" id="day-' + g.id + '"><div class="day-h"><h3>' + esc(g.nome) + (g.id === OGGI ? '<span class="badge stag">oggi</span>' : '') + '</h3>' +
+        '<button type="button" class="addp" data-addday="' + g.id + '">Spesa del giorno</button></div><div class="meals">' + rows + '</div></div>';
+    }).join('') + '</div>';
+    if (SETT.consigli && SETT.consigli.length) html += '<div class="panel"><div class="eyebrow">Per organizzarti</div><ul class="consigli">' + SETT.consigli.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
+    $('sett').innerHTML = html;
+  }
+  /* ricetta effettiva di un pasto: sostituto scelto dall'utente, oppure quella del piano;
+     un avanzo segue sempre il piatto del giorno in cui è stato cucinato */
+  function effId(g, p) {
+    if (p.avanzo_di && SETT) {
+      var src = SETT.giorni.filter(function (x) { return x.id === p.avanzo_di; })[0];
+      var sp = src && src.pasti.filter(function (q) { return q.id === p.id && !q.avanzo_di; })[0];
+      if (sp) return effId(src, sp);
+    }
+    return usr.sostituzioni[g.id + '|' + p.slot] || p.id;
+  }
+  var SLOT_PASTI = { colazione: ['colazione'], pranzo: ['pranzo', 'cena'], cena: ['cena', 'pranzo'], spuntino: ['spuntino'] };
+  function opzioniSost(slot) {
+    var pref = SLOT_PASTI[slot] || [], att = attive().slice().sort(function (a, b) { return a.titolo.localeCompare(b.titolo, 'it'); });
+    var adatte = att.filter(function (r) { return pref.indexOf(r.pasto) > -1; }), altre = att.filter(function (r) { return pref.indexOf(r.pasto) < 0; });
+    function o(list) { return list.map(function (r) { return '<option value="' + esc(r.id) + '">' + esc(r.titolo) + '</option>'; }).join(''); }
+    return '<option value="">Scegli…</option>' + (adatte.length ? '<optgroup label="Adatte a ' + esc(SLOT[slot].toLowerCase()) + '">' + o(adatte) + '</optgroup>' : '') +
+      (altre.length ? '<optgroup label="Altre ricette">' + o(altre) + '</optgroup>' : '');
+  }
+  $('sett').addEventListener('change', function (e) {
+    var k = e.target.dataset && e.target.dataset.sw; if (!k || !e.target.value) return;
+    var r = byId(e.target.value); if (!r) return;
+    usr.sostituzioni[k] = r.id; saveUsr(); renderSett();
+    toast('Sostituto scelto: ' + r.titolo);
+  });
+  function settToShop(giorni) {
+    var n = 0, gia = {}, mancanti = 0;
+    shop.selezione.forEach(function (x) { gia[x.id] = true; });
+    var somm = 0;
+    giorni.forEach(function (g) {
+      g.pasti.forEach(function (p) {
+        if (p.avanzo_di) return;
+        var r = byId(effId(g, p)); if (!r) { mancanti++; return; }
+        var q = pers * (p.dosi || 1), s = shop.selezione.filter(function (x) { return x.id === r.id; })[0];
+        if (gia[r.id]) somm++;
+        if (s) s.porzioni = Math.min(48, s.porzioni + q); else shop.selezione.push({ id: r.id, porzioni: q });
+        n++;
+      });
+    });
+    clearArmed = false; saveShop(); renderShop();
+    toast(n + (n === 1 ? ' piatto aggiunto' : ' piatti aggiunti') + ' alla spesa per ' + pers + (pers === 1 ? ' persona' : ' persone') +
+      (somm ? '. ' + somm + (somm === 1 ? ' era già in lista: porzioni sommate' : ' erano già in lista: porzioni sommate') : '') +
+      (mancanti ? '. ' + mancanti + (mancanti === 1 ? ' piatto eliminato escluso: scegli un sostituto' : ' piatti eliminati esclusi: scegli i sostituti') : ''));
+  }
+  $('sett').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.id === 's-meno' || b.id === 's-piu') { pers = Math.max(1, Math.min(6, pers + (b.id === 's-piu' ? 1 : -1))); store('rv-sett-pers', String(pers)); renderSett(); return; }
+    if (b.id === 'sett-all') { settToShop(SETT.giorni); return; }
+    if (b.dataset.addday) { settToShop(SETT.giorni.filter(function (g) { return g.id === b.dataset.addday; })); return; }
+    if (b.dataset.go) { var d = $('day-' + b.dataset.go); if (d) d.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); return; }
+    if (b.classList.contains('meal')) { backTo = 'settimana'; lastDay = b.dataset.day; show('ricette'); openRecipe(b.dataset.id); }
+  });
+  carica('settimana.json')
+    .then(function (d) { SETT = d; renderSett(); })
+    .catch(function () { $('sett').innerHTML = '<div class="empty err">Non riesco a caricare la settimana. Ricarica la pagina tra poco.</div>'; });
+
+  var start = (location.hash || '').slice(1);
+  if (!start) start = store('rv-tab') || '';
+  show(start || 'guida');
+
+})();
+</script>
