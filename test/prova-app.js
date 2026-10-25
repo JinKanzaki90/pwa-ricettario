@@ -26,6 +26,7 @@ async function imitaSupabase(ctx, db) {
     const oggetto = (req.headers()['accept'] || '').indexOf('vnd.pgrst.object') > -1;
     const corpo = req.postData() ? JSON.parse(req.postData()) : null;
     db.chiamate.push(m + ' ' + p);
+    if (db.giu && p.indexOf('/rest/') === 0) return route.abort('internetdisconnected');
     if (p === '/auth/v1/token') {
       if (!db.esiste || corpo.password !== db.password) return json(400, { code: 400, error_code: 'invalid_credentials', msg: 'Invalid login credentials' });
       return json(200, { access_token: jwt(), token_type: 'bearer', expires_in: 3600, expires_at: Math.floor(Date.now() / 1000) + 3600, refresh_token: 'rinnovo', user: utente() });
@@ -62,8 +63,8 @@ async function imitaSupabase(ctx, db) {
     const voluto = function (url) { return url.indexOf('/auth/v1/token') > -1 || url.indexOf('/rest/v1/profili') > -1; };
     page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') { if (voluto(m.location().url || '')) attesi++; else errs.push(m.type() + ': ' + m.text()); } });
     page.on('pageerror', e => errs.push('pageerror: ' + e.message));
-    /* l'uscita non legge la risposta (204): con l'imitazione Chromium la segna «interrotta», non è un errore dell'app */
-    page.on('requestfailed', r => { if (r.url().indexOf('/auth/v1/logout') < 0) errs.push('requestfailed: ' + r.url() + ' ' + (r.failure() || {}).errorText); });
+    /* rete giù simulata e l'uscita, che non legge la risposta (204): con l'imitazione Chromium la segna «interrotta», non è un errore dell'app */
+    page.on('requestfailed', r => { if (r.url().indexOf('/auth/v1/logout') < 0 && !db.giu) errs.push('requestfailed: ' + r.url() + ' ' + (r.failure() || {}).errorText); });
     page.on('response', r => { if (r.status() >= 400 && !voluto(r.url())) errs.push('HTTP ' + r.status() + ' ' + r.url()); });
     const tag = `${w}-${scheme}`;
     const testo = sel => page.$eval(sel, e => e.textContent.trim());
@@ -153,6 +154,15 @@ async function imitaSupabase(ctx, db) {
     await page.waitForSelector('nav.tabs', { state: 'visible' });
     const persist = await page.$eval('#shop-count', e => e.textContent);
 
+    /* senza rete all'avvio la sessione non si perde: messaggio e «Riprova» */
+    db.giu = true;
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.waitForSelector('#avvio-riprova');
+    const msgRete = await testo('#avvio');
+    db.giu = false;
+    await page.click('#avvio-riprova'); await page.waitForSelector('nav.tabs', { state: 'visible' });
+    const reteOk = /connessione/.test(msgRete);
+
     /* uscita e cancellazione dell'account */
     await page.click('#imp-btn'); await page.click('#imp-esci');
     await page.waitForSelector('#f-accesso', { state: 'visible' });
@@ -169,12 +179,12 @@ async function imitaSupabase(ctx, db) {
     const esito = {
       nascosta, errVuoto: !!errVuoto, errSbagliata, mostrata, errRiservato: !!errRiservato, errDiverse, benvenutoOk,
       nCards, nErr, nVoci, scrollW, scrollWImp, font, email: email === EMAIL, nomeCampo, errPwdAtt, pwdOk, evitOk, temaOk, filtroOk,
-      persist, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
+      persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
     };
     console.log(tag, esito);
     const ok = db.uscite === 2 && !errs.length && scrollW <= w && scrollWImp <= w && nCards && nascosta && esito.errVuoto && /non corretti/.test(errSbagliata) &&
       mostrata === 'text' && esito.errRiservato && /non coincidono/.test(errDiverse) && benvenutoOk && nomeCampo === 'Prova' &&
-      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && persist && uscitoOk && esito.errCasella && cancOk && esito.email;
+      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
     if (!ok) fail++;
     await ctx.close();
   }

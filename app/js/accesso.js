@@ -33,12 +33,16 @@ export function msgErrore(e) {
   if (code === '23514' && /nome_lunghezza/.test(msg)) return 'Il nome deve avere da 1 a 40 caratteri, senza spazi all\'inizio o alla fine.';
   if (code === '23514' && /da_evitare/.test(msg)) return 'Al massimo 30 ingredienti da evitare, ognuno fino a 40 caratteri.';
   if (code === '42501') return 'Operazione non permessa.';
-  if (e.name === 'AuthRetryableFetchError' || e instanceof TypeError || st === 0 || /fetch|network/i.test(msg)) {
+  if (senzaRete(e)) {
     return 'Non riesco a raggiungere il server. Controlla la connessione e riprova.';
   }
   return 'Qualcosa non ha funzionato. Riprova tra poco.';
 }
 
+function senzaRete(e) {
+  const msg = String((e && e.message) || '');
+  return !!e && (e.name === 'AuthRetryableFetchError' || e instanceof TypeError || e.status === 0 || /fetch|network/i.test(msg));
+}
 function mostraErr(id, testo) { const el = $(id); el.textContent = testo || ''; el.hidden = !testo; }
 function occupato(btn, si, testo) {
   btn.disabled = si;
@@ -76,6 +80,14 @@ async function dopoAccesso(user) {
   try {
     await caricaUtente(user);
   } catch (e) {
+    /* senza rete la sessione resta valida: niente uscita, si propone di riprovare */
+    if (senzaRete(e)) {
+      stato('avvio');
+      $('avvio').querySelector('.wrap').innerHTML = '<div class="panel"><p>' + esc(msgErrore(e)) + '</p>' +
+        '<button type="button" class="btn small" id="avvio-riprova">Riprova</button></div>';
+      $('avvio-riprova').onclick = function () { $('avvio').querySelector('.wrap').innerHTML = '<p class="empty">Caricamento…</p>'; dopoAccesso(user); };
+      return;
+    }
     /* senza profilo non si va avanti: si torna all'accesso con il motivo */
     U.utente = null;
     await sb.auth.signOut({ scope: 'local' }).catch(function () {});
