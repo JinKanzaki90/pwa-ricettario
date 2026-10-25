@@ -50,3 +50,6 @@ jobs:
 
       - name: Stato finale
         run: supabase migration list --password "$SUPABASE_DB_PASSWORD"
+
+      - name: Verifica - nessuna tabella leggibile senza accesso
+        run: sh supabase/strumenti/verifica-anonimo.sh
