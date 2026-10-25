@@ -1,6 +1,6 @@
 # Requisiti — Ricettario Vegetale (PWA)
 
-Stato: **bozza da approvare**, revisione 2 · ultimo aggiornamento 25/10/2026
+Stato: **bozza da approvare**, revisione 3 · ultimo aggiornamento 25/10/2026
 
 Questo documento è il riferimento per lo sviluppo, anche per le attività pianificate: ogni esecuzione lo rilegge prima di lavorare. Le decisioni prese sono marcate **[deciso]**; quelle da confermare con Angelo sono marcate **[da decidere]**.
 
@@ -14,24 +14,25 @@ Fuori ambito per ora: app store, APK, notifiche push, funzionamento offline in s
 
 ## 2. Utenti e accesso
 
-**[da decidere] Modalità di accesso: proposta «email + password creata dall'amministratore».**
+**[deciso] Modalità di accesso: «email + password creata dall'amministratore».** Se in prova non funziona bene si passa all'alternativa «email + codice d'invito personale».
 
 | Requisito | Stato |
 |---|---|
-| Registrazione libera **disattivata** nel progetto Supabase: nessuno può creare un account da solo | proposta |
-| Angelo crea ogni utente dalla dashboard Supabase (Authentication → Users → Add user) con email e password iniziale, già confermato; nessuna email viene spedita | proposta |
-| L'elenco utenti di Supabase è l'elenco degli ammessi: non serve una tabella separata | proposta |
-| Accesso nell'app con email e password; la sessione resta salvata sul dispositivo, quindi l'accesso si fa una volta per dispositivo | proposta |
-| Più dispositivi per lo stesso utente | proposta |
-| Al primo accesso l'app chiede il **nome visualizzato** e propone di cambiare la password | proposta |
-| Password dimenticata: la reimposta Angelo dalla dashboard (non c'è recupero via email) | proposta |
-| Disattivazione di un amico: Angelo blocca o elimina l'utente dalla dashboard | proposta |
+| Registrazione libera **disattivata** nel progetto Supabase: nessuno può creare un account da solo | [deciso] |
+| Angelo crea ogni utente dalla dashboard Supabase (Authentication → Users → Add user) con email e password iniziale, già confermato; nessuna email viene spedita | [deciso] |
+| L'elenco utenti di Supabase è l'elenco degli ammessi: non serve una tabella separata | [deciso] |
+| Accesso nell'app con email e password; la sessione resta salvata sul dispositivo, quindi l'accesso si fa una volta per dispositivo | [deciso] |
+| Più dispositivi per lo stesso utente | [deciso] |
+| Al primo accesso l'app chiede il **nome visualizzato** e propone di cambiare la password | [deciso] |
+| Password dimenticata: la reimposta Angelo dalla dashboard (non c'è recupero via email) | [deciso] |
+| Disattivazione di un amico: Angelo blocca o elimina l'utente dalla dashboard | [deciso] |
 | Ogni utente ha un **nome visualizzato**, mostrato come autore di ricette, commenti e settimana | [deciso] |
+| Nome predefinito **«Anonimo»** per chi non ha ancora scelto un nome, per gli account cancellati e come autore delle ricette generiche | [deciso] |
 | Un utente può chiedere la cancellazione del proprio account | [deciso, requisito GDPR] |
 
-Alternative valutate e scartate (salvo diversa decisione):
+Alternative valutate:
 - *Solo email, senza secondo elemento*: chiunque conosca l'email di un amico entra al suo posto e può modificarne o eliminarne i contenuti.
-- *Email + codice d'invito personalizzato*: sicurezza simile, ma logica di accesso da scrivere e mantenere.
+- *Email + codice d'invito personalizzato*: sicurezza simile, ma logica di accesso da scrivere e mantenere. **Piano di riserva.**
 - *Codice di 6 cifre via email*: richiede un servizio SMTP esterno; da riconsiderare se il gruppo cresce o serve il recupero password autonomo.
 
 ## 3. Cosa è condiviso e cosa è personale
@@ -45,15 +46,16 @@ Alternative valutate e scartate (salvo diversa decisione):
 | Lista della spesa | Personale | [deciso] |
 | Settimana | Ognuno modifica solo la propria; le settimane degli altri sono visibili **in sola lettura** | [deciso] |
 | Archivio | Personale | [deciso] |
-| Ricette private (visibili solo all'autore) | — | [da decidere: servono o tutto è condiviso?] |
+| Ricette private (visibili solo all'autore) | Non previste: tutto ciò che si inserisce è condiviso | [deciso] |
 
 ## 4. Permessi sulle ricette
 
 | Azione | Ricette «generiche» (le 23 di partenza) | Ricette con autore |
 |---|---|---|
+| Autore mostrato | «Anonimo» | Nome visualizzato dell'autore |
 | Vedere | Tutti | Tutti |
 | Archiviare (solo per sé) | Tutti | Tutti |
-| Modificare | Tutti | Solo l'autore [da confermare] |
+| Modificare | Tutti | Solo l'autore (gli altri interagiscono con i commenti) |
 | Eliminare definitivamente | Tutti | Solo l'autore |
 | Commentare | Tutti | Tutti |
 
@@ -61,7 +63,13 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 
 **[da decidere] Protezione delle ricette generiche.** Chiunque può eliminarle: un errore cancella la ricetta per tutto il gruppo. Proposta: l'eliminazione sposta la ricetta in un **cestino condiviso** per 30 giorni, da cui chiunque può ripristinarla; dopo 30 giorni sparisce davvero.
 
-**[da decidere] Cancellazione di un account.** Proposta: le ricette dell'utente cancellato diventano «generiche» (restano nel ricettario e chiunque le può gestire); i suoi commenti restano con autore «utente rimosso».
+**[deciso] Cancellazione di un account.** Le ricette dell'utente diventano «generiche»: restano nel ricettario, con autore «Anonimo», e chiunque le può modificare ed eliminare. I suoi commenti restano con autore «Anonimo». Settimana, spesa e archivio dell'utente vengono cancellati.
+
+**[deciso] Eliminazione di una ricetta presente nella settimana di qualcuno.** Vale per qualsiasi eliminazione (ricetta generica eliminata da chiunque, ricetta con autore eliminata dall'autore):
+- nella settimana di ogni utente che la usa, il pasto compare come «Ricetta eliminata» con la scelta di un sostituto, come oggi nell'artifact; un avanzo segue il sostituto del piatto da cui deriva;
+- chi elimina vede prima un avviso con il numero di settimane coinvolte (per esempio «È nella settimana di 2 persone»);
+- se la ricetta è nella lista della spesa di qualcuno, esce dalla lista; le voci già spuntate restano spuntate se l'ingrediente serve ad altre ricette;
+- se la ricetta viene ripristinata dal cestino (se adottato), ricompare automaticamente in tutte le settimane dove non è già stata sostituita.
 
 ## 5. Funzioni
 
@@ -77,10 +85,10 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 - Se una ricetta presente nella settimana di qualcuno viene eliminata, in quella settimana compare lo spazio vuoto con la scelta del sostituto (comportamento attuale).
 
 ### 5.3 Settimana personale
-- Ogni utente parte dalla settimana d'esempio e può **scegliere la ricetta di ogni pasto** (oggi si possono solo sostituire i piatti eliminati).
+- Ogni utente parte dalla settimana d'esempio e può **scegliere la ricetta di ogni pasto** (oggi si possono solo sostituire i piatti eliminati); può modificare solo la propria settimana.
 - Doppie dosi e avanzi come oggi.
 - Invio alla spesa del giorno o dell'intera settimana.
-- **Settimane del gruppo**: ognuno può consultare in sola lettura la settimana degli altri (chi ha scelto cosa, giorno per giorno) e aprirne le ricette; non può modificarla. Facoltativo: copiare un pasto o un giorno nella propria settimana [da decidere].
+- **Settimane del gruppo** [deciso]: ognuno può consultare in sola lettura la settimana degli altri (chi ha scelto cosa, giorno per giorno) e aprirne le ricette; non può modificarla. Niente copia di pasti o giorni nella propria settimana, per ora.
 
 ### 5.4 Lista della spesa personale
 - Comportamento attuale: ricette in lista con porzioni, somma per ingrediente, raggruppamento per reparto, voci a mano, spunte, prodotti calabresi indicati.
@@ -128,7 +136,7 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 
 1. Struttura del repository: frontend dall'artifact attuale, cartella `supabase/`, workflow di migrazione e di continuità.
 2. Schema del database: profili, inviti, ricette, commenti, archivio, settimana, spesa; regole di accesso; caricamento delle 23 ricette generiche.
-3. Accesso con email e password, primo accesso con nome visualizzato e cambio password.
+3. Accesso con email e password, primo accesso con nome visualizzato e cambio password, nome «Anonimo» predefinito.
 4. Ricettario collegato al database (lettura, inserimento, modifica, eliminazione, cestino).
 5. Archivio, settimana e spesa personali collegati al database.
 6. Commenti e settimane del gruppo in sola lettura.
