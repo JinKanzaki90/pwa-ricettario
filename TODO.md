@@ -32,7 +32,7 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 - [x] Verifica: workflow Migrazioni verde; con la sola chiave publishable tutte le tabelle e le funzioni rispondono «permesso negato» (401/42501), controllato sia dalla sessione sia dal nuovo passo del workflow (`supabase/strumenti/verifica-anonimo.sh`). Regole di accesso provate su PostgreSQL locale con imitazione di Supabase (`test/db/prova-db.sh`: anon, utenti diversi, cestino, svuotamento, cancellazione di un account). App invariata: `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita.
 - [x] Revisione di fine passo.
 
-### [ ] 3. Accesso e impostazioni
+### [~] 3. Accesso e impostazioni (iniziato il 25/10/2026 alle 18:58 UTC)
 - [ ] Schermata di accesso (email + password), sessione persistente, uscita.
 - [ ] Primo accesso: scelta del nome visualizzato, invito a cambiare password.
 - [ ] Impostazioni (ingranaggio in alto a destra): password, nome, tema, ingredienti da evitare, cancellazione account (funzione con privilegi elevati, §5.9), collegamento alla privacy.
