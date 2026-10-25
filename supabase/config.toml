@@ -1,0 +1,4 @@
+# Configurazione minima della CLI Supabase, usata dai workflow (link, db push, migration list).
+# Il codice del progetto remoto (wtwmjwpmovttalkxzhvm) è passato da riga di comando nei workflow;
+# password e token arrivano solo dai Secrets di GitHub.
+project_id = "pwa-ricettario"

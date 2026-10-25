@@ -1,0 +1,52 @@
+# Applica le migrazioni di supabase/migrations/ al database a ogni push su main che le tocca.
+# Unica strada ammessa per cambiare lo schema: niente modifiche dalla dashboard.
+name: Migrazioni del database
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/migrations/**'
+      - 'supabase/config.toml'
+      - '.github/workflows/migrazioni.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: migrazioni
+  cancel-in-progress: false
+
+jobs:
+  applica:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_REF: wtwmjwpmovttalkxzhvm
+    steps:
+      - name: Controllo dei segreti
+        run: |
+          manca=0
+          test -n "$SUPABASE_ACCESS_TOKEN" || { echo "::error::Manca il segreto SUPABASE_ACCESS_TOKEN (Settings → Secrets and variables → Actions)"; manca=1; }
+          test -n "$SUPABASE_DB_PASSWORD" || { echo "::error::Manca il segreto SUPABASE_DB_PASSWORD (Settings → Secrets and variables → Actions)"; manca=1; }
+          exit $manca
+
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.120.0
+
+      - name: Collegamento al progetto
+        run: supabase link --project-ref "$SUPABASE_PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+
+      - name: Migrazioni da applicare
+        run: supabase migration list --password "$SUPABASE_DB_PASSWORD"
+
+      - name: Applicazione
+        run: supabase db push --password "$SUPABASE_DB_PASSWORD"
+
+      - name: Stato finale
+        run: supabase migration list --password "$SUPABASE_DB_PASSWORD"
