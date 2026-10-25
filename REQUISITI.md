@@ -1,6 +1,6 @@
 # Requisiti — Ricettario Vegetale (PWA)
 
-Stato: **bozza da approvare**, revisione 3 · ultimo aggiornamento 25/10/2026
+Stato: **bozza da approvare**, revisione 4 · ultimo aggiornamento 25/10/2026
 
 Questo documento è il riferimento per lo sviluppo, anche per le attività pianificate: ogni esecuzione lo rilegge prima di lavorare. Le decisioni prese sono marcate **[deciso]**; quelle da confermare con Angelo sono marcate **[da decidere]**.
 
@@ -9,6 +9,8 @@ Questo documento è il riferimento per lo sviluppo, anche per le attività piani
 ## 1. Obiettivo
 
 Trasformare l'artifact «Ricettario Vegetale» in una PWA installabile da telefono, con dati su Supabase, da condividere con un gruppo ristretto di amici su invito. Il ricettario è comune al gruppo: si vede chi ha inserito ogni ricetta.
+
+**[deciso] Ambito alimentare: niente carne.** Sono ammesse ricette vegane, vegetariane (con uova, latte e derivati) e con pesce. La carne non è ammessa in nessuna forma (vedi §5.1 per l'elenco di cosa conta come carne). Il nome dell'app «Ricettario Vegetale» va rivalutato [da decidere].
 
 Fuori ambito per ora: app store, APK, notifiche push, funzionamento offline in scrittura.
 
@@ -61,7 +63,7 @@ Alternative valutate:
 
 Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fatta**.
 
-**[da decidere] Protezione delle ricette generiche.** Chiunque può eliminarle: un errore cancella la ricetta per tutto il gruppo. Proposta: l'eliminazione sposta la ricetta in un **cestino condiviso** per 30 giorni, da cui chiunque può ripristinarla; dopo 30 giorni sparisce davvero.
+**[deciso] Cestino.** Eliminare una ricetta (generica o propria) la sposta in un **cestino condiviso** per 30 giorni; dopo 30 giorni sparisce davvero. Vedi §5.7.
 
 **[deciso] Cancellazione di un account.** Le ricette dell'utente diventano «generiche»: restano nel ricettario, con autore «Anonimo», e chiunque le può modificare ed eliminare. I suoi commenti restano con autore «Anonimo». Settimana, spesa e archivio dell'utente vengono cancellati.
 
@@ -69,15 +71,20 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 - nella settimana di ogni utente che la usa, il pasto compare come «Ricetta eliminata» con la scelta di un sostituto, come oggi nell'artifact; un avanzo segue il sostituto del piatto da cui deriva;
 - chi elimina vede prima un avviso con il numero di settimane coinvolte (per esempio «È nella settimana di 2 persone»);
 - se la ricetta è nella lista della spesa di qualcuno, esce dalla lista; le voci già spuntate restano spuntate se l'ingrediente serve ad altre ricette;
-- se la ricetta viene ripristinata dal cestino (se adottato), ricompare automaticamente in tutte le settimane dove non è già stata sostituita.
+- se la ricetta viene ripristinata dal cestino, ricompare automaticamente in tutte le settimane dove non è già stata sostituita.
 
 ## 5. Funzioni
 
 ### 5.1 Ricettario
-- Elenco con filtri esistenti: pasto, tempo, di stagione, prodotti calabresi, senza alcol; in più **«Inserite da…»** (filtro per autore) e ricerca per titolo e ingrediente.
-- Dettaglio con porzioni regolabili, autore, ultima modifica, commenti.
-- Modulo di inserimento e modifica: lo stesso dell'artifact attuale (campi obbligatori, controllo vegano ed esclusioni fave, piselli, tartufo, rilevamento alcolici, prodotti calabresi, anteprima del simbolo di stagione).
-- Icone: Di stagione (calcolata dal calendario), Calabria (peperoncino), Con alcol.
+- Elenco con filtri esistenti: pasto, tempo, di stagione, prodotti calabresi, senza alcol; in più **categoria** (vegana, vegetariana, con pesce), **«Inserite da…»** (filtro per autore) e ricerca per titolo e ingrediente.
+- Dettaglio con porzioni regolabili, autore, ultima modifica, commenti e pulsante **«Aggiungi alla settimana»** (scelta di giorno e pasto, eventuale doppia dose).
+- Modulo di inserimento e modifica: lo stesso dell'artifact attuale (campi obbligatori, rilevamento alcolici, prodotti calabresi, anteprima del simbolo di stagione), con queste differenze:
+  - campo obbligatorio **categoria**: vegana, vegetariana, con pesce;
+  - **blocco della carne**: il salvataggio è rifiutato se un ingrediente è carne (carne di qualsiasi animale, salumi e insaccati, strutto, lardo, brodo o dado di carne, gelatina animale) [elenco da confermare];
+  - **coerenza della categoria**: se la categoria è «vegana» ma ci sono uova, latticini, miele o pesce, il modulo lo segnala; idem per «vegetariana» con pesce;
+  - esclusioni fave, piselli, tartufo: [da decidere] restano un divieto per tutti o diventano una preferenza personale.
+- Icone: **Vegana** (foglia), Di stagione (calcolata dal calendario, nuova icona da scegliere perché la foglia passa a Vegana) [da decidere], Calabria (peperoncino), Con alcol.
+- Le 23 ricette di partenza sono tutte vegane e ricevono l'icona Vegana.
 
 ### 5.2 Archivio personale
 - Ogni utente archivia qualunque ricetta solo per sé; dall'archivio la ripristina.
@@ -88,18 +95,36 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 - Ogni utente parte dalla settimana d'esempio e può **scegliere la ricetta di ogni pasto** (oggi si possono solo sostituire i piatti eliminati); può modificare solo la propria settimana.
 - Doppie dosi e avanzi come oggi.
 - Invio alla spesa del giorno o dell'intera settimana.
-- **Settimane del gruppo** [deciso]: ognuno può consultare in sola lettura la settimana degli altri (chi ha scelto cosa, giorno per giorno) e aprirne le ricette; non può modificarla. Niente copia di pasti o giorni nella propria settimana, per ora.
+- **Settimane del gruppo** [deciso]: ognuno può consultare in sola lettura la settimana degli altri (chi ha scelto cosa, giorno per giorno) e aprirne le ricette; non può modificarla.
+- Un singolo pasto non si copia: si apre la ricetta e si usa «Aggiungi alla settimana».
+- **Copia di un giorno intero** dalla settimana di un altro nella propria [deciso], con conferma prima di sovrascrivere. [da decidere] Regola per doppie dosi e avanzi del giorno copiato.
 
 ### 5.4 Lista della spesa personale
 - Comportamento attuale: ricette in lista con porzioni, somma per ingrediente, raggruppamento per reparto, voci a mano, spunte, prodotti calabresi indicati.
 - Sincronizzata tra i dispositivi dell'utente.
 
 ### 5.5 Commenti
-- Testo semplice, massimo 1.000 caratteri, con autore e data.
+- Testo semplice, massimo 500 caratteri, con autore e data.
 - Ognuno modifica ed elimina i propri commenti.
 
 ### 5.6 Guida e Stagione
-- Contenuti dell'artifact attuale, invariati. Restano file statici nel frontend: non serve il database.
+- **Stagione**: contenuti dell'artifact attuale, invariati.
+- **Guida** [deciso, contenuti da definire]: va riscritta per un'alimentazione senza carne (non più solo vegana):
+  - rimuovere le indicazioni sull'integrazione per la dieta vegana; [da decidere] se tenere una nota breve sulla B12 per chi sceglie ricette solo vegane;
+  - aggiungere una sezione sul consumo di carne rossa: effetti sulla salute e impatto ambientale, con fonti autorevoli citate;
+  - aggiungere una sezione «Acquisti consapevoli» con aziende da evitare, solo con criteri espliciti e una fonte e una data per ogni voce (vedi §5.8).
+- Struttura della Guida da progettare per contenuti lunghi: indice in alto con salto alle sezioni, riassunto «in breve» all'inizio di ogni sezione, dettagli a scomparsa, fonti in fondo a ogni sezione.
+- Guida e Stagione restano file statici nel frontend: non serve il database.
+
+### 5.7 Cestino
+- Elenco delle ricette eliminate negli ultimi 30 giorni, con chi le ha eliminate e quando.
+- Chiunque può ripristinare una ricetta generica; una ricetta con autore la ripristina solo l'autore.
+- Eliminazione definitiva automatica dopo 30 giorni (operazione programmata nel database).
+
+### 5.8 Acquisti consapevoli [da decidere: criteri e fonti]
+- Ogni voce: azienda o marchio, motivo, fonte, data della verifica.
+- Si riportano solo segnalazioni di enti o campagne riconoscibili, formulate come «segnalata da X per Y», senza giudizi propri.
+- Revisione periodica: le voci senza verifica da oltre 12 mesi vengono segnalate come da ricontrollare.
 
 ## 6. Requisiti non funzionali
 
@@ -114,7 +139,8 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 | Continuità | Workflow GitHub Actions programmato: una chiamata al giorno per evitare la sospensione del piano gratuito e backup settimanale del database |
 | Privacy | Pagina breve che spiega quali dati si raccolgono (email, nome visualizzato, contenuti inseriti) e come chiedere la cancellazione |
 | Costi | Tutto su piani gratuiti; nessun costo ricorrente previsto |
-| Hosting | Repository privato → Cloudflare Pages [da decidere: Cloudflare Pages o repository pubblico con GitHub Pages] |
+| Hosting | [deciso] GitHub Pages dal repository pubblico; Cloudflare Pages come piano di riserva |
+| Repository pubblico | Codice, requisiti e contenuti statici sono visibili a chiunque; i dati degli utenti stanno solo su Supabase |
 
 ## 7. Vincoli emersi
 
@@ -128,7 +154,7 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 | Segreti `SUPABASE_ACCESS_TOKEN`, `SUPABASE_DB_PASSWORD`, `SUPABASE_PROJECT_REF` | GitHub → repository → Settings → Secrets and variables → Actions | Prima della prima migrazione |
 | Disattivare la registrazione libera (Authentication → Sign In / Providers) | Dashboard Supabase | Prima di pubblicare l'app |
 | Creare gli utenti degli amici con email e password | Dashboard Supabase → Authentication → Users | Prima di invitarli |
-| Account Cloudflare collegato al repository | Cloudflare Pages | Prima della prima pubblicazione |
+| Attivare GitHub Pages con origine «GitHub Actions» | GitHub → repository → Settings → Pages | Prima della prima pubblicazione |
 | URL dell'app tra gli indirizzi consentiti per l'accesso | Supabase → Authentication → URL Configuration | Dopo la prima pubblicazione |
 | (Facoltativo) dominio `wtwmjwpmovttalkxzhvm.supabase.co` consentito | Impostazioni di claude.ai | Per i test da parte di Claude |
 
@@ -137,10 +163,11 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 1. Struttura del repository: frontend dall'artifact attuale, cartella `supabase/`, workflow di migrazione e di continuità.
 2. Schema del database: profili, inviti, ricette, commenti, archivio, settimana, spesa; regole di accesso; caricamento delle 23 ricette generiche.
 3. Accesso con email e password, primo accesso con nome visualizzato e cambio password, nome «Anonimo» predefinito.
-4. Ricettario collegato al database (lettura, inserimento, modifica, eliminazione, cestino).
-5. Archivio, settimana e spesa personali collegati al database.
-6. Commenti e settimane del gruppo in sola lettura.
-7. PWA: manifest, icona, service worker per lettura offline.
-8. Pubblicazione, prova completa, pagina privacy.
+4. Ricettario collegato al database (lettura, inserimento, modifica, categorie, blocco della carne, eliminazione, cestino).
+5. Archivio, settimana (con «Aggiungi alla settimana») e spesa personali collegati al database.
+6. Commenti, settimane del gruppo in sola lettura, copia di un giorno.
+7. Guida riscritta e sezione «Acquisti consapevoli».
+8. PWA: manifest, icona, service worker per lettura offline.
+9. Pubblicazione, prova completa, pagina privacy.
 
 Ogni passo si chiude con un commit e una nota in `TODO.md`.
