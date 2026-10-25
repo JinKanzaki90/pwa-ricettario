@@ -1,0 +1,40 @@
+# Controllo una tantum della configurazione: verifica che i segreti esistano e siano validi,
+# senza stamparne il valore. Si può rilanciare a mano da GitHub (Actions → Run workflow).
+name: Verifica configurazione
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/verifica-configurazione.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  verifica:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_REF: wtwmjwpmovttalkxzhvm
+    steps:
+      - name: Segreti presenti
+        run: |
+          test -n "$SUPABASE_ACCESS_TOKEN" || { echo "::error::Manca il segreto SUPABASE_ACCESS_TOKEN"; exit 1; }
+          test -n "$SUPABASE_DB_PASSWORD" || { echo "::error::Manca il segreto SUPABASE_DB_PASSWORD"; exit 1; }
+          echo "Entrambi i segreti sono presenti."
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Token di accesso valido
+        run: supabase projects list > /dev/null && echo "Token valido."
+
+      - name: Password del database valida
+        run: |
+          mkdir -p tmp && cd tmp
+          supabase init > /dev/null
+          supabase link --project-ref "$SUPABASE_PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+          supabase migration list --password "$SUPABASE_DB_PASSWORD" > /dev/null && echo "Connessione al database riuscita."
