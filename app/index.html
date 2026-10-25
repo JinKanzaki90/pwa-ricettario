@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ricettario di famiglia</title>
+<meta name="description" content="Guida alimentare, ricettario condiviso, settimana e lista della spesa per un gruppo di amici.">
+<meta name="theme-color" content="#f1f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111713" media="(prefers-color-scheme: dark)">
+<link rel="preload" href="fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/stile.css">
+<script>/* tema salvato applicato subito, prima del disegno della pagina */try{var t=localStorage.getItem('rv-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Ricettario <span>di famiglia</span></h1>
+    <div class="top-right">
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Cambia tema">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><span id="theme-lbl">Auto</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- GUIDA -->
+    <section role="tabpanel" id="p-guida" aria-labelledby="t-guida">
+      <h2>Mangiare vegetale, un passo alla volta</h2>
+      <p class="lead">Una guida pratica per ridurre la carne e arrivare a un'alimentazione vegana completa, con ricette e spesa nello stesso posto.</p>
+      <div class="panel">
+        <div class="eyebrow">Il tuo profilo</div>
+        <div class="chips">
+          <span class="chip">Solo vegano</span>
+          <span class="chip">Transizione graduale</span>
+          <span class="chip">2 porzioni, regolabili</span>
+        </div>
+        <div class="eyebrow">Escluso dalle ricette</div>
+        <div class="chips">
+          <span class="chip no">Fave</span>
+          <span class="chip no">Piselli</span>
+          <span class="chip no">Tartufo</span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="eyebrow">Come leggere le ricette</div>
+        <div class="legend">
+          <span class="badge stag"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Di stagione</span><span>Più di metà della frutta e verdura stagionale della ricetta è di stagione questo mese, secondo il calendario della scheda <button type="button" class="linkbtn" data-goto="stagione">Stagione</button>; non contano i prodotti che si trovano tutto l'anno e gli aromi (aglio, limone, sedano).</span>
+        </div>
+        <div class="legend">
+          <span class="badge cal"><svg viewBox="0 0 24 24"><path d="M16.2 8.2c1.9.9 2.6 3 1.6 5.6-1.5 3.9-5.9 6.8-12.3 7.2 3.3-1.6 5.7-4.1 6.8-7.6.8-2.7 2.1-4.6 3.9-5.2z"/><path d="M13.6 8.6c.9-1.3 2.9-1.8 4.4-.8"/><path d="M16.2 7.4c0-2 .9-3.4 2.8-4.1"/></svg>Calabria</span><span>C'è un prodotto calabrese consigliato, con marca e dove trovarlo.</span>
+        </div>
+        <div class="legend">
+          <span class="badge alc"><svg viewBox="0 0 24 24"><path d="M7 3h10l-1 6.5a4 4 0 0 1-8 0z"/><path d="M12 13.5V20M8.5 21h7"/></svg>Con alcol</span><span>La ricetta usa vino, birra o superalcolici; aceto e salsa di soia non contano. Per restare vegano scegli vini e birre con dicitura vegana: alcuni sono chiarificati con albume, caseina o colla di pesce.</span>
+        </div>
+      </div>
+      <div class="panel alert">
+        <div class="eyebrow">Da sapere subito</div>
+        <p><strong>La vitamina B12 va integrata.</strong> Gli alimenti vegetali non ne forniscono in modo affidabile, quindi chi segue un'alimentazione vegana deve assumerla con un integratore o con alimenti fortificati. Conviene iniziare già mentre riduci i prodotti animali. Dose e forma si concordano con il medico o il dietista.</p>
+        <p class="fine">Questa guida riassume indicazioni di enti scientifici e non sostituisce il parere di un medico o di un dietista, a cui rivolgerti per esami e integrazioni.</p>
+      </div>
+
+      <div class="g-block">
+        <h3>Nutrienti da tenere d'occhio</h3>
+        <p class="lead">Un'alimentazione vegana ben pianificata copre i fabbisogni di un adulto. Questi sono i punti che richiedono più attenzione. I valori sono i fabbisogni di riferimento per adulti (LARN 2024, salvo dove indicato).</p>
+        <div class="nutr">
+          <details class="must">
+            <summary><span class="nn">Vitamina B12</span><span class="nk">integratore indispensabile</span></summary>
+            <div class="nb">
+              <p>Serve al sistema nervoso e alla formazione dei globuli rossi. Nei vegetali non è presente in forma utile: alghe, lieviti e cibi fermentati non sono fonti affidabili.</p>
+              <p><b>Cosa fare:</b> integratore con regolarità, più eventuali alimenti fortificati (alcune bevande vegetali e cereali da colazione, leggi l'etichetta). Chiedi al medico un controllo periodico.</p>
+              <p class="ref">Riferimento EFSA per adulti: 4 µg al giorno come assunzione adeguata.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Vitamina D</span><span class="nk">sole e, se serve, integratore</span></summary>
+            <div class="nb">
+              <p>La fonte principale è l'esposizione al sole; pochi alimenti ne contengono, tra questi alcune bevande vegetali fortificate.</p>
+              <p><b>Cosa fare:</b> in autunno e inverno, o se stai poco all'aperto, valuta con il medico se misurarla e integrarla.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Ferro</span><span class="nk">legumi + vitamina C</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> legumi (lenticchie, ceci, fagioli), tofu, cereali integrali, semi di zucca e di sesamo, frutta secca, verdure a foglia verde.</p>
+              <p><b>Cosa fare:</b> abbina nello stesso pasto una fonte di vitamina C (agrumi, kiwi, peperoni, prezzemolo, cavoli); tieni tè e caffè lontani dai pasti. Ammollo dei legumi, germogli e pane a lievitazione naturale migliorano l'assorbimento.</p>
+              <p class="ref">10 mg al giorno per gli uomini, 18 mg per le donne in età fertile.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Calcio</span><span class="nk">cavoli, tofu, acque calciche</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> verdure della famiglia dei cavoli (cavolo nero, broccoli, cime di rapa, rucola), tofu preparato con sali di calcio, bevande vegetali fortificate con calcio, mandorle, sesamo e tahina, acque minerali ricche di calcio.</p>
+              <p><b>Cosa fare:</b> scegli le bevande vegetali con calcio aggiunto. Spinaci e bietole ne contengono, ma lo cedono poco per via degli ossalati.</p>
+              <p class="ref">950 mg al giorno per gli adulti.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Iodio</span><span class="nk">poco sale, ma iodato</span></summary>
+            <div class="nb">
+              <p>Serve alla tiroide. In Italia il modo più semplice per assumerlo è il sale iodato, come raccomandano il Ministero della Salute e l'ISS.</p>
+              <p><b>Cosa fare:</b> usa solo sale iodato, in quantità moderata, anche in cottura.</p>
+              <p class="ref">150 µg al giorno per gli adulti.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Omega-3</span><span class="nk">noci e semi di lino</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> noci, semi di lino macinati, semi di chia, olio di lino (solo a crudo, in frigo).</p>
+              <p><b>Cosa fare:</b> una porzione al giorno di una di queste fonti; come condimento abituale preferisci l'olio extravergine d'oliva e limita olio di mais e di girasole.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Zinco</span><span class="nk">legumi, semi, integrali</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> legumi, tofu e tempeh, semi di zucca, sesamo, frutta secca, cereali integrali, avena.</p>
+              <p><b>Cosa fare:</b> valgono gli stessi accorgimenti del ferro: ammollo, germogli, lievito madre.</p>
+              <p class="ref">12 mg al giorno per gli uomini, 9 mg per le donne.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Proteine</span><span class="nk">legumi ogni giorno</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> legumi di ogni tipo, soia e derivati (tofu, tempeh, bevanda di soia), seitan, cereali, frutta secca e semi.</p>
+              <p><b>Cosa fare:</b> porta una fonte proteica in ogni pasto principale e varia nel corso della giornata. Le proteine vegetali sono un po' meno digeribili di quelle animali, per questo la SINU indica che il fabbisogno può essere leggermente più alto.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="g-block">
+        <h3>Il piatto bilanciato</h3>
+        <p class="lead">Nei pasti principali cerca di avere sempre questi quattro elementi. La verdura è la parte più abbondante.</p>
+        <div class="plate">
+          <div class="pl veg"><b>Verdura</b><span>di stagione, cruda e cotta</span></div>
+          <div class="pl cer"><b>Cereali</b><span>pasta, riso, farro, orzo, pane, meglio integrali</span></div>
+          <div class="pl pro"><b>Proteine vegetali</b><span>legumi, tofu, tempeh, seitan</span></div>
+          <div class="pl fat"><b>Grassi buoni</b><span>olio extravergine, frutta secca, semi</span></div>
+        </div>
+        <p class="fine">Frutta fresca, frutta secca e yogurt di soia sono la base degli spuntini. Acqua come bevanda abituale.</p>
+      </div>
+
+      <div class="g-block">
+        <h3>La transizione, per tappe</h3>
+        <p class="lead">Cambiare un'abitudine alla volta funziona meglio che cambiare tutto insieme. Ogni tappa dura quanto ti serve.</p>
+        <ol class="tappe">
+          <li><span><b>Comincia la B12.</b> È l'unico integratore che serve a tutti i vegani: impostalo con il medico prima di eliminare i prodotti animali.</span></li>
+          <li><span><b>Parti dai piatti che conosci.</b> Pasta e fagioli, pasta e ceci, minestre di lenticchie, ragù di legumi: la cucina italiana ha molti piatti già vegani o quasi.</span></li>
+          <li><span><b>Togli la carne un giorno alla volta.</b> Prima due o tre giorni a settimana, poi di più, sostituendola con legumi, tofu o tempeh.</span></li>
+          <li><span><b>Aumenta i legumi gradualmente.</b> Se all'inizio ti appesantiscono, parti da porzioni piccole, lenticchie decorticate e legumi passati; tieni l'ammollo lungo e cambia l'acqua.</span></li>
+          <li><span><b>Sostituisci latte e latticini.</b> Bevande vegetali e yogurt di soia arricchiti con calcio; creme di frutta secca e hummus al posto dei formaggi spalmabili.</span></li>
+          <li><span><b>Organizza la dispensa.</b> Legumi secchi e in barattolo, cereali integrali, semi, frutta secca, sale iodato: con questi pronti il pasto vegano diventa la scelta più comoda.</span></li>
+        </ol>
+      </div>
+
+      <div class="g-block">
+        <h3>Fonti</h3>
+        <ul class="fonti">
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/39923894/" target="_blank" rel="noopener">Academy of Nutrition and Dietetics, <i>Vegetarian Dietary Patterns for Adults</i>, position paper 2025</a></li>
+          <li><a href="https://doi.org/10.1016/j.numecd.2017.10.020" target="_blank" rel="noopener">SINU, <i>Position paper on vegetarian diets</i> (Agnoli et al., NMCD 2017)</a></li>
+          <li><a href="https://sinu.it/larn/" target="_blank" rel="noopener">SINU, LARN – Livelli di assunzione di riferimento, V revisione (2024)</a></li>
+          <li><a href="https://www.epicentro.iss.it/alimentazione/linee-guida-sana-alimentazione-crea-2018" target="_blank" rel="noopener">CREA, Linee guida per una sana alimentazione 2018 (scheda ISS EpiCentro)</a></li>
+          <li><a href="https://www.efsa.europa.eu/en/press/news/150709" target="_blank" rel="noopener">EFSA, valori di riferimento per la vitamina B12 (2015)</a></li>
+          <li><a href="https://www.epicentro.iss.it/iodio/documentazione-italia" target="_blank" rel="noopener">ISS EpiCentro, iodio e iodoprofilassi in Italia</a></li>
+          <li><a href="https://www.aslvco.it/wp-content/uploads/2026/01/6.CALENDARIO-FRUTTA-E-VERDURA-DI-STAGIONE.pdf" target="_blank" rel="noopener">Ministero delle politiche agricole, calendario di frutta e verdura di stagione «Sai quel che mangi» (pubblicato dall'ASL VCO)</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- STAGIONE -->
+    <section role="tabpanel" id="p-stagione" aria-labelledby="t-stagione" hidden>
+      <h2>Stagione</h2>
+      <p class="lead">Cosa comprare questo mese e cosa tenere sempre in casa.</p>
+      <div class="g-block" id="stagione">
+        <h3>Frutta e verdura di stagione</h3>
+        <p class="lead">Cosa trovi di stagione in Italia mese per mese. In verde i prodotti che arrivano proprio in quel mese, con il bordo tratteggiato quelli all'ultimo mese.</p>
+        <div class="mesi" id="mesi" role="group" aria-label="Mese"></div>
+        <div class="panel seas" id="seas"><div class="empty">Caricamento del calendario…</div></div>
+        <p class="fine" id="seas-fonte"></p>
+      </div>
+
+      <div class="g-block" id="dispensa">
+        <h3>La dispensa di base</h3>
+        <p class="lead">Con questi prodotti in casa un pasto vegano completo è sempre a portata di mano. Tocca «Aggiungi» per metterli nella lista della spesa.</p>
+        <div class="nutr" id="disp"><div class="empty">Caricamento della dispensa…</div></div>
+        <p class="fine">Escluse dalla lista fave, piselli e tartufo. Le marche calabresi sono esempi, non sponsorizzazioni.</p>
+      </div>
+    </section>
+
+    <!-- RICETTE -->
+    <section role="tabpanel" id="p-ricette" aria-labelledby="t-ricette" hidden>
+      <div id="r-list" class="detail">
+        <div class="r-tools">
+          <h2>Ricette</h2>
+          <button type="button" class="btn small" id="new-recipe">+ Nuova ricetta</button>
+        </div>
+        <p class="lead">Colazioni, pranzi, cene, spuntini e preparazioni di base, per 2 persone: nel dettaglio puoi cambiare le porzioni.</p>
+        <div class="filters" role="group" aria-label="Filtri">
+          <div class="filter-row" id="flt-pasto"></div>
+          <div class="filter-row" id="flt-altro"></div>
+        </div>
+        <div class="cards" id="cards"></div>
+        <div class="r-foot">
+          <button type="button" class="btn line small" id="open-arch">Archivio</button>
+          <p class="fine sync" id="usr-sync"></p>
+        </div>
+      </div>
+      <div id="r-detail" class="detail" hidden></div>
+      <div id="r-form" class="detail" hidden></div>
+      <div id="r-arch" class="detail" hidden></div>
+      <datalist id="ing-names"></datalist>
+    </section>
+
+    <!-- SETTIMANA -->
+    <section role="tabpanel" id="p-settimana" aria-labelledby="t-settimana" hidden>
+      <h2>Settimana</h2>
+      <p class="lead">Un piano di esempio da adattare, costruito con le ricette della raccolta.</p>
+      <div id="sett"><div class="empty">Caricamento della settimana…</div></div>
+    </section>
+
+    <!-- SPESA -->
+    <section role="tabpanel" id="p-spesa" aria-labelledby="t-spesa" hidden>
+      <h2>Lista della spesa</h2>
+      <p class="lead">Gli ingredienti delle ricette che scegli, sommati e raggruppati per reparto. Lista e spunte restano salvate.</p>
+      <div class="panel" id="shop"></div>
+    </section>
+
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<nav class="tabs" aria-label="Sezioni">
+  <div class="row" role="tablist">
+    <button role="tab" id="t-guida" aria-controls="p-guida" data-tab="guida" aria-selected="true">
+      <svg viewBox="0 0 24 24"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5z"/><path d="M12 6v13.5"/></svg>Guida</button>
+    <button role="tab" id="t-stagione" aria-controls="p-stagione" data-tab="stagione" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Stagione</button>
+    <button role="tab" id="t-ricette" aria-controls="p-ricette" data-tab="ricette" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M9 7c0-1.5 1-2 1-3M14 7c0-1.5 1-2 1-3"/></svg>Ricette</button>
+    <button role="tab" id="t-settimana" aria-controls="p-settimana" data-tab="settimana" aria-selected="false">
+      <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Settimana</button>
+    <button role="tab" id="t-spesa" aria-controls="p-spesa" data-tab="spesa" aria-selected="false">
+      <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.5 11h-11z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Spesa<span class="count" id="shop-count" hidden></span></button>
+  </div>
+</nav>
+
+</body>
+</html>
