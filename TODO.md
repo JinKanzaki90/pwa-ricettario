@@ -12,7 +12,7 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 
 ## Passi
 
-### [ ] 1. Struttura del repository
+### [~] 1. Struttura del repository (iniziato il 25/10/2026 alle 14:58 UTC)
 - [ ] `app/`: copia dell'artifact divisa in `index.html`, `css/`, `js/` (moduli), `data/` (JSON di guida, stagione, dispensa, settimana d'esempio); nome «Ricettario di famiglia»; nessun collegamento a Supabase per ora: deve funzionare come l'artifact (dati sul browser).
 - [ ] `app/config.js` con URL e chiave publishable; `app/vendor/` con supabase-js a versione fissata.
 - [ ] Workflow `pubblica.yml`: pubblica `app/` su GitHub Pages a ogni push su `main` che tocca `app/`.
