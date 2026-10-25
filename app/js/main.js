@@ -1,4 +1,5 @@
-/* Avvio dell'app: collega le schede e carica i dati statici da app/data/. */
+/* Avvio dell'app: collega le schede, carica i dati statici da app/data/ e chiede l'accesso.
+   Le schede si mostrano solo con una sessione valida (vedi accesso.js). */
 import { $, carica, store } from './util.js';
 import { S, updUsrSync } from './stato.js';
 import { impostaCalendario } from './dominio.js';
@@ -9,6 +10,7 @@ import { initModulo, aggNomi } from './modulo.js';
 import { initSpesa, renderShop } from './spesa.js';
 import { initStagione, renderMesi, renderSeas, renderFonte, renderDisp } from './stagione.js';
 import { initSettimana, renderSett } from './settimana.js';
+import { initAccesso } from './accesso.js';
 
 initTema();
 initSchede();
@@ -41,6 +43,15 @@ carica('settimana.json')
   .then(function (d) { S.SETT = d; renderSett(); })
   .catch(function () { $('sett').innerHTML = '<div class="empty err">Non riesco a caricare la settimana. Ricarica la pagina tra poco.</div>'; });
 
-let start = (location.hash || '').slice(1);
-if (!start) start = store('rv-tab') || '';
-show(start || 'guida');
+/* gli ingredienti da evitare cambiano filtri e segnalazioni delle ricette */
+document.addEventListener('rv-evitare', function () {
+  renderFilters(); renderCards();
+  if (S.cur && !$('r-detail').hidden) renderDetail();
+});
+
+initAccesso(function () {
+  renderFilters(); renderCards();
+  let start = (location.hash || '').slice(1);
+  if (!start) start = store('rv-tab') || '';
+  show(start || 'guida');
+});

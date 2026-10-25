@@ -55,6 +55,7 @@ export const S = {
   NOMI: {},          /* nome ingrediente → reparto, per i suggerimenti */
   cur: null, porz: 2, backTo: null, lastDay: '',
   clearArmed: false,
+  evitare: [],       /* ingredienti da evitare dell'utente collegato (Impostazioni) */
   pers: persIniz
 };
 

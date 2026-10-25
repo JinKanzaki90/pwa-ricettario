@@ -64,7 +64,7 @@ export const ICON_STAG = '<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14
 export const ICON_CAL = '<svg viewBox="0 0 24 24"><path d="M16.2 8.2c1.9.9 2.6 3 1.6 5.6-1.5 3.9-5.9 6.8-12.3 7.2 3.3-1.6 5.7-4.1 6.8-7.6.8-2.7 2.1-4.6 3.9-5.2z"/><path d="M13.6 8.6c.9-1.3 2.9-1.8 4.4-.8"/><path d="M16.2 7.4c0-2 .9-3.4 2.8-4.1"/></svg>';
 export const ICON_ALC = '<svg viewBox="0 0 24 24"><path d="M7 3h10l-1 6.5a4 4 0 0 1-8 0z"/><path d="M12 13.5V20M8.5 21h7"/></svg>';
 export const PASTI = [['tutti', 'Tutti'], ['colazione', 'Colazione'], ['pranzo', 'Pranzo'], ['cena', 'Cena'], ['spuntino', 'Spuntino'], ['base', 'Basi']];
-export const ALTRI = [['t15', 'Fino a 15 min'], ['t30', 'Fino a 30 min'], ['stag', 'Di stagione'], ['cal', 'Prodotti calabresi'], ['noalc', 'Senza alcol'], ['mie', 'Le mie ricette']];
+export const ALTRI = [['t15', 'Fino a 15 min'], ['t30', 'Fino a 30 min'], ['stag', 'Di stagione'], ['cal', 'Prodotti calabresi'], ['noalc', 'Senza alcol'], ['mie', 'Le mie ricette'], ['noevit', 'Senza ingredienti da evitare']];
 export const NOME_PASTO = { colazione: 'Colazione', pranzo: 'Pranzo', cena: 'Cena', spuntino: 'Spuntino', base: 'Base' };
 export const REPARTI = [['ortofrutta', 'Ortofrutta'], ['legumi', 'Legumi'], ['cereali', 'Pasta, riso e cereali'], ['frigo', 'Frigo'], ['surgelati', 'Surgelati'], ['dispensa', 'Dispensa'], ['spezie', 'Spezie ed erbe']];
 
@@ -80,3 +80,16 @@ export function byId(id) {
 }
 export function archiviata(id) { return S.usr.archiviate.indexOf(id) > -1; }
 export function attive() { return S.RICETTE.filter(function (r) { return !archiviata(r.id); }); }
+
+/* ingredienti della ricetta che compaiono nell'elenco personale «da evitare» (confronto senza accenti né maiuscole) */
+function semplice(t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+export function daEvitare(r) {
+  const l = (S.evitare || []).map(semplice);
+  if (!l.length) return [];
+  const trovati = [];
+  (r.ingredienti || []).forEach(function (i) {
+    const n = semplice(i.nome);
+    l.forEach(function (x, k) { if (n.indexOf(x) > -1 && trovati.indexOf(S.evitare[k]) < 0) trovati.push(S.evitare[k]); });
+  });
+  return trovati;
+}

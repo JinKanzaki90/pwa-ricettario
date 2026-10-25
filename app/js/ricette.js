@@ -3,7 +3,7 @@ import { $, esc, toast } from './util.js';
 import { S, saveUsr, saveShop } from './stato.js';
 import {
   diStagione, ingStagione, hasCal, hasAlc, scale, fmtQ, ICON_STAG, ICON_CAL, ICON_ALC,
-  PASTI, ALTRI, NOME_PASTO, ricompila, byId, archiviata, attive
+  PASTI, ALTRI, NOME_PASTO, ricompila, byId, archiviata, attive, daEvitare
 } from './dominio.js';
 import { show, vista } from './navigazione.js';
 import { renderSett, usiSett } from './settimana.js';
@@ -28,7 +28,9 @@ function fchip(key, label, on, group) {
 }
 export function renderFilters() {
   $('flt-pasto').innerHTML = PASTI.map(function (p) { return fchip(p[0], p[1], fPasto === p[0], 'pasto'); }).join('');
-  $('flt-altro').innerHTML = ALTRI.map(function (p) { return fchip(p[0], p[1], !!fAltro[p[0]], 'altro'); }).join('');
+  if (!(S.evitare || []).length) fAltro.noevit = false;
+  $('flt-altro').innerHTML = ALTRI.filter(function (p) { return p[0] !== 'noevit' || (S.evitare || []).length; })
+    .map(function (p) { return fchip(p[0], p[1], !!fAltro[p[0]], 'altro'); }).join('');
 }
 function badges(r, ext) {
   let b = '';
@@ -37,6 +39,8 @@ function badges(r, ext) {
   if (diStagione(r)) b += '<span class="badge stag">' + ICON_STAG + 'Di stagione</span>';
   if (hasCal(r)) b += '<span class="badge cal">' + ICON_CAL + 'Calabria</span>';
   if (hasAlc(r)) b += '<span class="badge alc">' + ICON_ALC + 'Con alcol</span>';
+  const ev = daEvitare(r);
+  if (ev.length) b += '<span class="badge evit">Contiene: ' + esc(ev.join(', ')) + '</span>';
   return b;
 }
 function metaTempo(r) { return r.tempo_min + ' min' + (r.riposo ? ' + riposo' : ''); }
@@ -50,6 +54,7 @@ export function renderCards() {
     if (fAltro.cal && !hasCal(r)) return false;
     if (fAltro.noalc && hasAlc(r)) return false;
     if (fAltro.mie && !r.personale) return false;
+    if (fAltro.noevit && daEvitare(r).length) return false;
     return true;
   });
   $('cards').innerHTML = list.length ? list.map(function (r) {

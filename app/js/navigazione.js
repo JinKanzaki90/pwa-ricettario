@@ -11,9 +11,29 @@ export function show(name) {
     b.setAttribute('aria-selected', on ? 'true' : 'false');
     $(b.getAttribute('aria-controls')).hidden = !on;
   });
+  chiudiImpostazioni();
   store('rv-tab', name);
   window.scrollTo(0, 0);
 }
+
+/* Impostazioni: pagina a parte, aperta dall'ingranaggio; le schede restano visibili e la chiudono */
+let ultima = 'guida';
+export function apriImpostazioni() {
+  tabs.forEach(function (b) {
+    if (b.getAttribute('aria-selected') === 'true') ultima = b.dataset.tab;
+    b.setAttribute('aria-selected', 'false');
+    $(b.getAttribute('aria-controls')).hidden = true;
+  });
+  $('p-impostazioni').hidden = false;
+  $('imp-btn').setAttribute('aria-expanded', 'true');
+  window.scrollTo(0, 0);
+  $('imp-titolo').setAttribute('tabindex', '-1'); $('imp-titolo').focus();
+}
+function chiudiImpostazioni() {
+  $('p-impostazioni').hidden = true;
+  $('imp-btn').setAttribute('aria-expanded', 'false');
+}
+export function tornaDaImpostazioni() { show(ultima); }
 
 const VISTE = { list: 'r-list', detail: 'r-detail', form: 'r-form', arch: 'r-arch' };
 export function vista(v) {

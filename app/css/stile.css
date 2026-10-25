@@ -323,3 +323,29 @@ ul.consigli { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size
   .ingrow-g > :last-child { grid-column: 1 / -1; }
   .swap { grid-column: 1; }
 }
+
+/* accesso, primo accesso e impostazioni (passo 3) */
+body:not([data-stato="dentro"]) main,
+body:not([data-stato="dentro"]) nav.tabs { display: none; }
+body:not([data-stato="avvio"]) #avvio { display: none; }
+.gate .wrap { padding-block: 24px; }
+.gate .form { max-width: 480px; margin: 0 auto; }
+.form input[type="email"], .form input[type="password"] {
+  font: inherit; font-size: 1rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 10px; padding: 9px 12px; min-height: 44px; width: 100%; min-width: 0;
+}
+.pwdrow { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; min-width: 0; }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+a.btn { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; justify-self: start; }
+.gate a, .fine a { color: var(--accent); }
+.icon-btn.gear { width: 40px; height: 40px; padding: 0; justify-content: center; }
+.icon-btn.gear svg { width: 20px; height: 20px; }
+#p-impostazioni { display: grid; gap: 20px; min-width: 0; }
+.danger { border-color: var(--beet); }
+.danger .eyebrow { color: var(--beet); }
+.btn.warnfill { background: var(--beet); }
+.chip .xchip { appearance: none; border: 0; background: none; color: inherit; padding: 0 0 0 6px; cursor: pointer; font-weight: 700; min-width: 28px; min-height: 28px; }
+.chip.evit { display: inline-flex; align-items: center; background: var(--beet-soft); color: var(--beet); padding-right: 2px; }
+.badge.evit { background: var(--beet-soft); color: var(--beet); white-space: normal; }
+.ok { color: var(--accent); font-weight: 700; font-size: 0.86rem; margin: 0; }
+a.back { text-decoration: none; }

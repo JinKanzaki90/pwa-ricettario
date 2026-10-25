@@ -12,17 +12,72 @@
 <script>/* tema salvato applicato subito, prima del disegno della pagina */try{var t=localStorage.getItem('rv-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <script type="module" src="js/main.js"></script>
 </head>
-<body>
+<body data-stato="avvio">
 <header class="top">
   <div class="wrap">
     <h1>Ricettario <span>di famiglia</span></h1>
     <div class="top-right">
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Cambia tema">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><span id="theme-lbl">Auto</span>
+      <button class="icon-btn gear" id="imp-btn" type="button" aria-label="Impostazioni" aria-expanded="false" aria-controls="p-impostazioni" hidden>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
       </button>
     </div>
   </div>
 </header>
+
+<!-- AVVIO E ACCESSO: visibili finché non c'è una sessione valida -->
+<div class="gate" id="avvio" role="status"><div class="wrap"><p class="empty">Caricamento…</p></div></div>
+
+<div class="gate" id="accesso" hidden>
+  <div class="wrap">
+    <form class="form panel" id="f-accesso" novalidate>
+      <h2>Accedi</h2>
+      <p class="lead">Il ricettario è riservato al gruppo: entra con l'email e la password che ti ha dato chi lo gestisce. Sullo stesso dispositivo l'accesso resta salvato.</p>
+      <div class="fld">
+        <label for="a-email">Email</label>
+        <input type="email" id="a-email" name="email" autocomplete="username" inputmode="email" autocapitalize="off" spellcheck="false" required maxlength="254">
+      </div>
+      <div class="fld">
+        <label for="a-pwd">Password</label>
+        <div class="pwdrow">
+          <input type="password" id="a-pwd" name="password" autocomplete="current-password" required maxlength="72">
+          <button type="button" class="btn line small mostra" data-mostra="a-pwd" aria-pressed="false">Mostra</button>
+        </div>
+      </div>
+      <p class="ferr" id="a-err" role="alert" hidden></p>
+      <button type="submit" class="btn" id="a-invia">Entra</button>
+      <p class="fine">Password dimenticata o account bloccato? Chiedi a chi gestisce il ricettario: può reimpostarla. <a href="privacy.html">Privacy</a></p>
+    </form>
+  </div>
+</div>
+
+<div class="gate" id="benvenuto" hidden>
+  <div class="wrap">
+    <form class="form panel" id="f-benvenuto" novalidate>
+      <h2>Benvenuto nel ricettario</h2>
+      <p class="lead">Scegli il nome che gli altri vedranno accanto alle tue ricette, ai commenti e alla tua settimana.</p>
+      <div class="fld">
+        <label for="b-nome">Nome visualizzato <span class="req">*</span></label>
+        <input type="text" id="b-nome" autocomplete="nickname" maxlength="40" required aria-describedby="b-nome-h">
+        <p class="hint" id="b-nome-h">Da 1 a 40 caratteri, per esempio il tuo nome o un soprannome. Lo puoi cambiare dalle Impostazioni.</p>
+      </div>
+      <fieldset class="fs">
+        <legend>Password</legend>
+        <p class="hint">La password iniziale te l'ha data qualcun altro: conviene sceglierne una tua. Puoi farlo anche dopo, dalle Impostazioni.</p>
+        <div class="fld">
+          <label for="b-pwd">Nuova password (facoltativa)</label>
+          <input type="password" id="b-pwd" autocomplete="new-password" minlength="8" maxlength="72" aria-describedby="b-pwd-h">
+          <p class="hint" id="b-pwd-h">Almeno 8 caratteri; una frase di tre o quattro parole è facile da ricordare e difficile da indovinare.</p>
+        </div>
+        <div class="fld">
+          <label for="b-pwd2">Ripeti la nuova password</label>
+          <input type="password" id="b-pwd2" autocomplete="new-password" maxlength="72">
+        </div>
+      </fieldset>
+      <p class="ferr" id="b-err" role="alert" hidden></p>
+      <button type="submit" class="btn" id="b-invia">Inizia</button>
+    </form>
+  </div>
+</div>
 
 <main>
   <div class="wrap">
@@ -226,6 +281,99 @@
       <h2>Lista della spesa</h2>
       <p class="lead">Gli ingredienti delle ricette che scegli, sommati e raggruppati per reparto. Lista e spunte restano salvate.</p>
       <div class="panel" id="shop"></div>
+    </section>
+
+    <!-- IMPOSTAZIONI (dall'ingranaggio in alto, non è una scheda) -->
+    <section id="p-impostazioni" aria-labelledby="imp-titolo" hidden>
+      <button type="button" class="back" id="imp-chiudi">‹ Indietro</button>
+      <h2 id="imp-titolo">Impostazioni</h2>
+
+      <div class="panel">
+        <div class="eyebrow">Account</div>
+        <p>Hai effettuato l'accesso come <b id="imp-email"></b>.</p>
+        <button type="button" class="btn line small" id="imp-esci">Esci da questo dispositivo</button>
+      </div>
+
+      <form class="form panel" id="f-nome" novalidate>
+        <div class="eyebrow">Nome visualizzato</div>
+        <div class="fld">
+          <label for="i-nome">Il nome che vedono gli altri</label>
+          <div class="pwdrow">
+            <input type="text" id="i-nome" autocomplete="nickname" maxlength="40" required>
+            <button type="submit" class="btn small">Salva</button>
+          </div>
+        </div>
+        <p class="ferr" id="i-nome-err" role="alert" hidden></p>
+      </form>
+
+      <form class="form panel" id="f-pwd" novalidate>
+        <div class="eyebrow">Cambia password</div>
+        <input type="email" id="i-pwd-user" autocomplete="username" hidden>
+        <div class="fld">
+          <label for="i-pwd-att">Password attuale</label>
+          <input type="password" id="i-pwd-att" autocomplete="current-password" maxlength="72" required>
+        </div>
+        <div class="fld">
+          <label for="i-pwd-nuova">Nuova password</label>
+          <input type="password" id="i-pwd-nuova" autocomplete="new-password" minlength="8" maxlength="72" required aria-describedby="i-pwd-h">
+          <p class="hint" id="i-pwd-h">Almeno 8 caratteri.</p>
+        </div>
+        <div class="fld">
+          <label for="i-pwd-rip">Ripeti la nuova password</label>
+          <input type="password" id="i-pwd-rip" autocomplete="new-password" maxlength="72" required>
+        </div>
+        <p class="ferr" id="i-pwd-err" role="alert" hidden></p>
+        <button type="submit" class="btn line small">Cambia password</button>
+      </form>
+
+      <div class="panel">
+        <div class="eyebrow" id="tema-lbl">Tema</div>
+        <div class="checks" role="radiogroup" aria-labelledby="tema-lbl">
+          <label class="ck"><input type="radio" name="tema" value="auto">Automatico</label>
+          <label class="ck"><input type="radio" name="tema" value="light">Chiaro</label>
+          <label class="ck"><input type="radio" name="tema" value="dark">Scuro</label>
+        </div>
+        <p class="fine">«Automatico» segue l'impostazione del telefono o del computer. La scelta vale per questo dispositivo.</p>
+      </div>
+
+      <form class="form panel" id="f-evitare" novalidate>
+        <div class="eyebrow">Ingredienti da evitare</div>
+        <p class="fine">Le ricette che li contengono sono segnalate e puoi nasconderle con il filtro «Senza ingredienti da evitare». Per esempio fave, piselli, tartufo. L'elenco lo vedi solo tu.</p>
+        <div class="chips" id="evit-lista"></div>
+        <div class="fld">
+          <label for="i-evit">Aggiungi un ingrediente</label>
+          <div class="pwdrow">
+            <input type="text" id="i-evit" maxlength="40" autocomplete="off" list="ing-names">
+            <button type="submit" class="btn small">Aggiungi</button>
+          </div>
+        </div>
+        <p class="ferr" id="i-evit-err" role="alert" hidden></p>
+      </form>
+
+      <div class="panel">
+        <div class="eyebrow">Privacy</div>
+        <p class="fine">Quali dati raccoglie il ricettario, chi li vede e come cancellarli.</p>
+        <a class="btn line small" href="privacy.html">Leggi l'informativa sulla privacy</a>
+      </div>
+
+      <div class="panel danger">
+        <div class="eyebrow">Cancella l'account</div>
+        <p class="fine">Le tue ricette restano nel ricettario come ricette generiche, firmate «Anonimo», e chiunque potrà modificarle; i tuoi commenti restano firmati «Anonimo». Settimana, lista della spesa, archivio e preferenze vengono cancellati. Non si può annullare.</p>
+        <button type="button" class="btn line warn small" id="canc-apri" aria-expanded="false" aria-controls="f-canc">Cancella il mio account…</button>
+        <form class="form" id="f-canc" novalidate hidden>
+          <input type="email" id="c-user" autocomplete="username" hidden>
+          <div class="fld">
+            <label for="c-pwd">Per confermare, scrivi la tua password</label>
+            <input type="password" id="c-pwd" autocomplete="current-password" maxlength="72" required>
+          </div>
+          <label class="ck block"><input type="checkbox" id="c-ok"><span>Ho capito: il mio account sarà cancellato per sempre.</span></label>
+          <p class="ferr" id="c-err" role="alert" hidden></p>
+          <div class="r-actions">
+            <button type="submit" class="btn small warnfill" id="c-invia">Cancella definitivamente</button>
+            <button type="button" class="btn line small" id="canc-annulla">Annulla</button>
+          </div>
+        </form>
+      </div>
     </section>
 
   </div>
