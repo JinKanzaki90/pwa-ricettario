@@ -47,8 +47,9 @@ select pg_temp.verifica(
 select pg_temp.verifica(
   not exists (select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
               where n.nspname = 'public' and p.prosecdef
-                and (has_function_privilege('anon', p.oid, 'execute') or has_function_privilege('authenticated', p.oid, 'execute'))),
-  'funzioni security definer non eseguibili da anon e authenticated');
+                and (has_function_privilege('anon', p.oid, 'execute')
+                     or (has_function_privilege('authenticated', p.oid, 'execute') and p.proname <> 'cancella_account'))),
+  'funzioni security definer non eseguibili da anon e authenticated (salvo cancella_account per authenticated)');
 select pg_temp.verifica(
   not exists (select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
               where n.nspname = 'public' and p.prosecdef
@@ -71,7 +72,8 @@ select pg_temp.verifica(not bool_or(public.ingredienti_senza_carne(ingredienti) 
 -- ---------------------------------------------------------------- senza accesso (anon)
 set role anon;
 select pg_temp.deve_fallire('select * from public.' || t, '42501', 'anon legge ' || t)
-from unnest(array['profili', 'ricette', 'commenti', 'archivio', 'settimana', 'spesa_ricette', 'spesa_voci', 'spesa_spunte']) as t;
+from unnest(array['profili', 'ricette', 'commenti', 'archivio', 'settimana', 'spesa_ricette', 'spesa_voci', 'spesa_spunte', 'preferenze']) as t;
+select pg_temp.deve_fallire('select public.cancella_account()', '42501', 'anon cancella un account');
 select pg_temp.deve_fallire($$insert into public.commenti (ricetta, testo) values ('hummus-di-ceci', 'x')$$, '42501', 'anon scrive');
 reset role;
 
@@ -85,6 +87,11 @@ select pg_temp.verifica(pg_temp.righe($$update public.profili set nome = 'Intrus
 select pg_temp.deve_fallire($$update public.profili set ruolo = 'amministratore' where id = auth.uid()$$, '42501', 'B si dà il ruolo di amministratore');
 select pg_temp.deve_fallire($$update public.profili set nome = '' where id = auth.uid()$$, '23514', 'nome vuoto');
 select pg_temp.deve_fallire($$delete from public.profili where id = auth.uid()$$, '42501', 'B cancella il profilo');
+select pg_temp.deve_fallire($$update public.profili set nome = 'anonimo' where id = auth.uid()$$, '23514', 'B sceglie il nome riservato «Anonimo»');
+insert into public.preferenze (da_evitare) values (array['fave', 'piselli']);
+select pg_temp.verifica((select da_evitare = array['fave', 'piselli'] from public.preferenze where utente = auth.uid()), 'B salva gli ingredienti da evitare');
+select pg_temp.deve_fallire($$insert into public.preferenze (utente, da_evitare) values ('00000000-0000-0000-0000-00000000000c', array['x'])$$, '42501', 'B scrive le preferenze di C');
+select pg_temp.deve_fallire($$update public.preferenze set da_evitare = array['']$$, '23514', 'ingrediente da evitare vuoto');
 
 insert into public.ricette (titolo, pasto, categoria, difficolta, tempo_min, porzioni_base, stagioni, ingredienti, passi)
 values ('Frittata di zucchine', 'cena', 'vegetariana', 'facile', 20, 2, array['estate'],
@@ -168,7 +175,18 @@ select pg_temp.verifica(exists (select 1 from public.ricette where id = 'besciam
 insert into public.ricette (titolo, pasto, categoria, difficolta, tempo_min, porzioni_base, stagioni, ingredienti, passi, autore)
 values ('Spaghetti alle vongole', 'pranzo', 'pesce', 'media', 30, 2, array['tutto_anno'],
   '[{"nome":"Vongole","qta":500,"unita":"g","reparto":"pesce"}]', array['Apri le vongole.'], :B);
-delete from auth.users where id = :B;
+set role authenticated;
+select set_config('request.jwt.claim.sub', :C, false);
+select pg_temp.verifica(not exists (select 1 from public.preferenze), 'C non vede le preferenze di B');
+select pg_temp.verifica(pg_temp.righe($$update public.preferenze set da_evitare = '{}'$$) = 0, 'C non modifica le preferenze di B');
+select set_config('request.jwt.claim.sub', '', false);
+select pg_temp.deve_fallire('select public.cancella_account()', '42501', 'cancellazione senza utente');
+select set_config('request.jwt.claim.sub', :B, false);
+select public.cancella_account();
+reset role;
+select pg_temp.verifica(not exists (select 1 from auth.users where id = :B), 'B cancella il proprio account');
+select pg_temp.verifica(exists (select 1 from auth.users where id = :C) and exists (select 1 from auth.users where id = :A), 'gli altri account restano');
+select pg_temp.verifica(not exists (select 1 from public.preferenze), 'account cancellato: preferenze cancellate');
 select pg_temp.verifica((select autore is null from public.ricette where titolo = 'Spaghetti alle vongole'), 'account cancellato: la ricetta diventa generica');
 select pg_temp.verifica((select count(*) = 1 and bool_and(autore is null) from public.commenti), 'account cancellato: il commento resta firmato «Anonimo»');
 select pg_temp.verifica(not exists (select 1 from public.settimana) and not exists (select 1 from public.spesa_ricette)
