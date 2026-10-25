@@ -22,15 +22,15 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 - [x] Verifica: sito pubblicato raggiungibile (controllato dal job «controlla» di `pubblica.yml`, perché la sessione di Claude non raggiunge `github.io`), app funzionante a 360 px e desktop, chiaro e scuro, console senza errori (`test/prova-app.js`); workflow Pubblica, Migrazioni e Continuità verdi.
 - [x] Revisione di fine passo.
 
-### [~] 2. Schema del database (iniziato il 25/10/2026 alle 16:58 UTC)
-- [ ] Tabelle: profili (nome visualizzato, predefinito «Anonimo», ruolo), ricette (con categoria, autore nullable = generica, eliminata_il/eliminata_da per il cestino, ultima modifica e autore della modifica), commenti (max 500), archivio personale, settimana personale (giorno, pasto, ricetta, dosi, avanzo_di), spesa personale.
-- [ ] Policy RLS secondo `REQUISITI.md` §3–§5 (settimane leggibili da tutti gli autenticati, modificabili solo dal proprietario; spesa e archivio solo del proprietario; ricette con autore modificabili solo dall'autore, generiche da tutti).
-- [ ] Trigger: profilo creato alla creazione dell'utente **e** profili per gli utenti già esistenti; aggiornamento automatico di ultima modifica.
-- [ ] Vincoli: nessuna carne (controllo lato database oltre che nel modulo, per quanto possibile), lunghezze massime.
-- [ ] Svuotamento automatico del cestino dopo 30 giorni (`pg_cron` se disponibile, altrimenti workflow programmato).
-- [ ] Caricamento delle 23 ricette di partenza come generiche, categoria «vegana».
-- [ ] Verifica: migrazione applicata dal workflow; con la sola chiave publishable e senza accesso, nessuna tabella è leggibile.
-- [ ] Revisione di fine passo.
+### [x] 2. Schema del database (fatto il 25/10/2026)
+- [x] Tabelle: `profili` (nome, predefinito «Anonimo», `nome_scelto` per il primo accesso, ruolo), `ricette` (categoria, autore nullo = generica, `eliminata_il`/`eliminata_da` per il cestino, `modificata_il`/`modificata_da`), `commenti` (max 500), `archivio`, `settimana` (giorno, pasto, ricetta, dosi, avanzo_di, nota), spesa in tre tabelle (`spesa_ricette`, `spesa_voci`, `spesa_spunte`) così i dispositivi non si sovrascrivono a vicenda. Migrazione `20261025170000_schema_iniziale.sql`.
+- [x] Policy RLS secondo `REQUISITI.md` §3–§5, più permessi **colonna per colonna**: autore, date e «chi ha modificato/eliminato» li scrive solo il database; il ruolo non si cambia dall'app. Gli utenti non cancellano definitivamente le ricette: «eliminare» = spostare nel cestino.
+- [x] Trigger: profilo alla creazione dell'utente e profili per gli utenti già esistenti; ultima modifica automatica (spostare nel cestino o ripristinare non conta come modifica); una ricetta spostata nel cestino esce dalle liste della spesa di tutti.
+- [x] Vincoli: blocco della carne nel database (`nome_e_carne`, rete di sicurezza: parole chiave, versioni vegetali escluse), struttura e lunghezze di ingredienti, passi, tag, titoli, commenti, nomi.
+- [x] Svuotamento del cestino dopo 30 giorni con `pg_cron`, ogni notte alle 3:23 UTC (`20261025170200_svuota_cestino.sql`).
+- [x] 23 ricette di partenza generiche, categoria «vegana» (`20261025170100_ricette_di_partenza.sql`, generata da `supabase/strumenti/genera_ricette_partenza.py`).
+- [x] Verifica: workflow Migrazioni verde; con la sola chiave publishable tutte le tabelle e le funzioni rispondono «permesso negato» (401/42501), controllato sia dalla sessione sia dal nuovo passo del workflow (`supabase/strumenti/verifica-anonimo.sh`). Regole di accesso provate su PostgreSQL locale con imitazione di Supabase (`test/db/prova-db.sh`: anon, utenti diversi, cestino, svuotamento, cancellazione di un account). App invariata: `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita.
+- [x] Revisione di fine passo.
 
 ### [ ] 3. Accesso e impostazioni
 - [ ] Schermata di accesso (email + password), sessione persistente, uscita.
@@ -67,6 +67,21 @@ Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare
 3. **Revisore esterno.** Il codice è diviso in moduli ma resta molto simile all'originale: HTML costruito a stringhe, stato condiviso in un unico oggetto `S`, dipendenze circolari tra moduli (funzionano perché nessun modulo chiama gli altri durante il caricamento). Accettabile adesso, perché ricette, settimana e spesa verranno riscritte sul database ai passi 4 e 5.
    - Azione (passi 4–5): sostituire `S.usr`/`S.shop` con un modulo dati che parla con Supabase e togliere le dipendenze circolari; aggiornare `test/prova-app.js` a ogni passo.
    - Azione: il pacchetto supabase-js pesa circa 220 KB; caricarlo solo quando serve (dopo la schermata di accesso) e includerlo nel service worker al passo 8.
+
+### Passo 2 (25/10/2026)
+1. **Malintenzionato.** Senza accesso non si legge né si scrive nulla (provato sul progetto vero, tabella per tabella, e ripetuto a ogni migrazione dal workflow). Con un accesso non si può scrivere a nome di altri, appropriarsi di una ricetta generica, darsi il ruolo di amministratore, falsificare date o «modificata da», né toccare settimana, spesa, archivio e commenti altrui (prove locali). Le due funzioni `security definer` (creazione del profilo, pulizia della spesa quando una ricetta va nel cestino) partono solo da trigger, hanno `search_path` vuoto e non sono richiamabili dall'app. Nessun problema grave trovato. Rischi accettati e da tenere d'occhio:
+   - chiunque abbia accesso può modificare o mandare nel cestino tutte le ricette generiche (è la regola di §4): il cestino le salva per 30 giorni, ma una **modifica** sovrascrive il testo senza storico. Azione (passo 4): valutare una tabella delle versioni precedenti, o almeno mostrare «ultima modifica di X» ben visibile;
+   - nessun limite al numero di righe per utente (ricette, commenti): accettabile per un gruppo di amici su invito;
+   - il blocco della carne si aggira con grafie fantasiose: è una rete di sicurezza, il controllo principale resta nel modulo.
+2. **Utente.** Non c'è ancora interfaccia collegata. Gli errori del database arrivano come codici tecnici con il nome del vincolo (per esempio `ricette_senza_carne`).
+   - Azione (passo 4): tradurre i nomi dei vincoli in messaggi chiari in italiano; usare per il modulo lo stesso elenco della carne del database (si può chiamare la funzione `nome_e_carne` da utente collegato), così app e database non danno risposte diverse.
+   - Azione (passo 5): la settimana d'esempio sta nel frontend (`data/settimana.json`): al primo accesso l'app deve copiarla nella settimana dell'utente. Indicare che le note della settimana sono visibili al gruppo.
+   - Azione (passo 4): nel database «tutto l'anno» è `stagioni = {tutto_anno}`, nell'app è la stringa `'tutto_anno'`: convertire al confine.
+3. **Revisore esterno.** Lo schema è ordinato e provato, ma:
+   - l'elenco della carne è fatto a mano; mancano per esempio kebab, chorizo, pastrami, foie gras, «colla di pesce» (spesso di maiale). Azione (passo 4): ampliarlo con una nuova migrazione insieme al modulo;
+   - le prove sui permessi degli utenti collegati girano su un'imitazione locale di Supabase, non sul progetto vero (lì è provato solo l'accesso anonimo). Azione (passo 3, prova congiunta): ripetere sul progetto vero con due utenti le prove principali (leggere e non modificare la settimana altrui, non vedere la spesa altrui);
+   - le ricette di partenza ora esistono due volte (`app/data/ricette.json` e database). Azione (passo 4): quando il ricettario legge dal database, togliere il JSON dal frontend;
+   - `ruolo` per ora non serve a nulla (sono tutti «membro»): usarlo solo se arriva una funzione per l'amministratore, altrimenti toglierlo più avanti.
 
 ## Richieste per Angelo
 
