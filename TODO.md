@@ -65,7 +65,7 @@ Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, so
 - [x] Verifica: migrazione verde; con la sola chiave publishable `profili`, `settimana` e le tre tabelle della spesa rispondono 401 sul progetto vero; prove locali del database superate; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita (copia della settimana d'esempio, passaggio dei dati del browser, aggiungi alla settimana con conferma, cambia/togli/scegli, avanzo che segue il piatto, sostituto di una ricetta nel cestino, spunte e voci sincronizzate, scrittura fallita); Pubblica verde.
 - [x] Revisione di fine passo.
 
-### [ ] 6. Commenti, settimane del gruppo, copia di un giorno
+### [~] 6. Commenti, settimane del gruppo, copia di un giorno (iniziato il 28/10/2026 alle 13:12 UTC)
 
 ### [ ] 7. Guida riscritta e «Acquisti consapevoli»
 Prima di scrivere i contenuti di «Acquisti consapevoli» chiedere ad Angelo criteri e fonti (§5.8): segnare `[!]` se mancano.
