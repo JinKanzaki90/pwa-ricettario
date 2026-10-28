@@ -41,7 +41,7 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 - [x] Revisione di fine passo.
 - [x] **Punto di controllo**: prova congiunta con Angelo il 28/10/2026. Superati: creazione degli utenti, accesso, primo accesso (nome, password, sessione che resta), impostazioni (nome, password, tema, ingredienti da evitare con segnalazione e filtro). Rimandati al passo 9, per decisione di Angelo: password sbagliata, uscita e rientro, cancellazione dell'account di prova.
 
-### [ ] 4. Ricettario collegato al database
+### [~] 4. Ricettario collegato al database (iniziato il 28/10/2026 alle 08:59 UTC)
 Lettura, ricerca, filtri (categoria, autore), inserimento e modifica con categoria e blocco della carne, eliminazione con avviso sulle settimane coinvolte, cestino, archivio personale.
 
 ### [ ] 5. Settimana e spesa personali
