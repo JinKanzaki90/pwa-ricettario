@@ -50,3 +50,36 @@ jobs:
           done
           curl -sS "$BASE" | grep -q '<title>Ricettario di famiglia</title>' || { echo "::error::La pagina pubblicata non è quella attesa"; errori=1; }
           exit $errori
+
+  # La stessa prova funzionale di «Prove», ma sul sito pubblicato: prima controlla che i file serviti
+  # siano quelli di questo commit (la cache di GitHub Pages può tardare qualche minuto).
+  prova-sito:
+    needs: controlla
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      BASE: https://jinkanzaki90.github.io/pwa-ricettario/
+    steps:
+      - uses: actions/checkout@v4
+      - name: Versione pubblicata uguale al repository
+        run: |
+          for prova in 1 2 3 4 5 6 7 8 9 10; do
+            diverse=0
+            for f in index.html sw.js privacy.html manifest.webmanifest js/main.js js/dati.js css/stile.css; do
+              curl -sS -H 'Cache-Control: no-cache' "$BASE$f?v=$GITHUB_SHA" | cmp -s - "app/$f" || { echo "diverso: $f"; diverse=1; }
+            done
+            test $diverse = 0 && { echo "File pubblicati uguali a quelli del commit."; exit 0; }
+            sleep 30
+          done
+          echo "::error::Dopo 5 minuti il sito serve ancora file diversi da quelli del commit"; exit 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Playwright e Chromium
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: Prova dell'app pubblicata
+        env:
+          CARTELLA_SCHERMATE: ${{ runner.temp }}
+        run: node test/prova-app.js "$BASE"
