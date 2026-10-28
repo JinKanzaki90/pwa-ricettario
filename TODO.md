@@ -235,4 +235,6 @@ Verifica: `test/prova-app.js` verde a 360 px e 1280 px, chiaro e scuro, console 
 - **Backup cifrato (passo 1, non bloccante):** per attivare il backup settimanale serve un segreto `BACKUP_PASSPHRASE` (una frase lunga e casuale, da conservare anche fuori da GitHub: senza di essa il backup non si apre) in GitHub → Settings → Secrets and variables → Actions. Finché manca, «Continuità» fa solo la chiamata giornaliera.
 
 - **Prove rimaste del passo 3 (non bloccanti, da fare al passo 9):** password sbagliata, uscita e rientro, cancellazione dell'account di prova (dettagli nel passo 9).
+- **Spunte della spesa senza rete (da decidere, non bloccante):** ora, senza connessione, la spesa si legge ma non si spunta. Se vuoi, aggiungo una coda sul telefono solo per le spunte, che parte quando torna la rete.
+- **Altri siti su GitHub Pages (da sapere):** tutti i siti Pages del tuo account condividono l'indirizzo `jinkanzaki90.github.io` e quindi i dati salvati nel browser (sessione e copia per la lettura senza rete). Non pubblicare lì codice di altri o non controllato; in alternativa il ricettario può passare a un dominio tuo o a Cloudflare Pages.
 - **Password minima (consigliato, non bloccante):** dashboard Supabase → Authentication → Sign In / Providers → Email → «Minimum password length» a 8, così il server chiede lo stesso minimo dell'app.
