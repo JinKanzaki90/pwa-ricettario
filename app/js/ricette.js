@@ -10,6 +10,7 @@ import { show, vista } from './navigazione.js';
 import { renderSett, usiSett, pannelloAggiungi, initPannelloAggiungi } from './settimana.js';
 import { addToShop, renderShop, pruneSpunte, inSpesa } from './spesa.js';
 import { openForm, daRicetta, aggNomi } from './modulo.js';
+import { pannelloCommenti, initCommenti } from './commenti.js';
 import {
   caricaRicette, nelCestino, dalCestino, archivia as archiviaDb, togliArchivio, altreSettimane, msgDb,
   mia, puoModificare, nomeAutore, GIORNI_CESTINO
@@ -184,7 +185,7 @@ export function renderDetail() {
     '<ul class="ing">' + ing + '</ul>' +
     '<button type="button" class="btn" id="add-shop">Aggiungi alla spesa</button></div>' + pannelloAggiungi(r) +
     '<div class="panel"><div class="eyebrow">Procedimento</div><ol class="passi">' + r.passi.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ol></div>' +
-    (r.note_nutrizionali ? '<div class="note">' + esc(r.note_nutrizionali) + '</div>' : '') + azioni;
+    (r.note_nutrizionali ? '<div class="note">' + esc(r.note_nutrizionali) + '</div>' : '') + pannelloCommenti(r) + azioni;
   $('back').onclick = function () {
     const b = S.backTo; S.backTo = null; delArmed = null;
     if (b === 'archivio') { openArch(); return; }
@@ -195,6 +196,7 @@ export function renderDetail() {
   $('p-piu').onclick = function () { if (S.porz < 12) { S.porz++; renderDetail(); } };
   $('add-shop').onclick = function () { addToShop(r, S.porz); };
   initPannelloAggiungi(r);
+  initCommenti(r);
   if ($('d-edit')) $('d-edit').onclick = function () { delArmed = null; openForm(daRicetta(r, false)); };
   $('d-copy').onclick = function () { delArmed = null; openForm(daRicetta(r, true)); };
   if ($('d-arch')) $('d-arch').onclick = function () { azione(function () { return archivia(r); }); };

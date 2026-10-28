@@ -9,7 +9,7 @@ import { show } from './navigazione.js';
 import { openRecipe } from './ricette.js';
 import { renderShop, piuPorzioni, inSpesa } from './spesa.js';
 import { scrivi, ricaricaPersonali } from './personali.js';
-import { salvaPasto, togliPasto, aggiornaAvanzi, avviaSettimana, svuotaSettimana } from './dati.js';
+import { salvaPasto, togliPasto, aggiornaAvanzi, avviaSettimana, svuotaSettimana, caricaSettimaneGruppo, nomeAutore, msgDb } from './dati.js';
 
 export const GIORNI = [['lun', 'Lunedì'], ['mar', 'Martedì'], ['mer', 'Mercoledì'], ['gio', 'Giovedì'], ['ven', 'Venerdì'], ['sab', 'Sabato'], ['dom', 'Domenica']];
 export const SLOT = { colazione: 'Colazione', pranzo: 'Pranzo', cena: 'Cena', spuntino: 'Spuntino' };
@@ -81,6 +81,94 @@ function togli(g, slot) {
   });
 }
 
+/* copia di un giorno intero dalla settimana di un altro: il proprio giorno diventa uguale al suo,
+   ma ogni pasto è un piatto normale a dose singola (niente doppie dosi, avanzi, note);
+   i piatti eliminati non si copiano e gli avanzi che venivano dal proprio giorno diventano piatti normali */
+function copiaGiorno(g, altrui) {
+  const prima = {}, dopo = {};
+  let copiati = 0, esclusi = 0;
+  ORDINE.forEach(function (s) {
+    const k = g + '|' + s, q = altrui[k];
+    prima[s] = S.MIA[k] || null;
+    if (q && q.ricetta && byId(q.ricetta)) { dopo[s] = { ricetta: q.ricetta, dosi: 1, avanzo_di: null, nota: '' }; copiati++; }
+    else { dopo[s] = null; if (q) esclusi++; }
+  });
+  const cucinati = ORDINE.filter(function (s) { return prima[s] && !prima[s].avanzo_di; }).map(function (s) { return prima[s].ricetta; })
+    .filter(function (x, i, a) { return a.indexOf(x) === i; });
+  ORDINE.forEach(function (s) { const k = g + '|' + s; if (dopo[s]) S.MIA[k] = dopo[s]; else delete S.MIA[k]; });
+  cucinati.forEach(function (ric) { seguiAvanzi(g, ric, null); });
+  scrivi(async function () {
+    for (const s of ORDINE) {
+      if (dopo[s]) await salvaPasto(g, s, dopo[s]);
+      else if (prima[s]) await togliPasto(g, s);
+    }
+    for (const ric of cucinati) await aggiornaAvanzi(g, ric, null);
+  });
+  return { copiati: copiati, esclusi: esclusi };
+}
+
+/* ---------- settimane del gruppo (sola lettura) ---------- */
+const DOPO_GRUPPO = 30000;
+let gruppoInLettura = null;
+export function caricaGruppo() {
+  if (!gruppoInLettura) {
+    gruppoInLettura = caricaSettimaneGruppo().then(function (m) {
+      S.GRUPPO = m; S.lettoGruppo = Date.now(); S.erroGruppo = '';
+    }, function (e) {
+      S.erroGruppo = msgDb(e); S.lettoGruppo = Date.now();
+    }).finally(function () { gruppoInLettura = null; renderSett(); });
+  }
+  return gruppoInLettura;
+}
+function forseGruppo() { if (!gruppoInLettura && Date.now() - S.lettoGruppo > DOPO_GRUPPO) caricaGruppo(); }
+
+function altri() {
+  return Object.keys(S.GRUPPO || {}).sort(function (a, b) { return nomeAutore(a).localeCompare(nomeAutore(b), 'it'); });
+}
+function sceltaPersona() {
+  let opz = '<option value="">La mia settimana</option>';
+  if (S.GRUPPO) opz += altri().map(function (u) { return '<option value="' + esc(u) + '"' + (u === S.vedi ? ' selected' : '') + '>Di ' + esc(nomeAutore(u)) + '</option>'; }).join('');
+  else if (!S.erroGruppo) opz += '<option disabled>Caricamento delle altre settimane…</option>';
+  const nota = S.erroGruppo && !S.GRUPPO ? '<p class="fine err">Non riesco a leggere le settimane degli altri. ' + esc(S.erroGruppo) + ' <button type="button" class="linkbtn" id="s-gruppo-riprova">Riprova</button></p>'
+    : S.GRUPPO && !altri().length ? '<p class="fine">Nessun altro del gruppo ha ancora una settimana.</p>'
+    : '<p class="fine">Quelle degli altri sono in sola lettura: puoi aprirne le ricette e copiarne un giorno nella tua.</p>';
+  return '<div class="panel gruppo"><label for="s-chi">Settimana da vedere</label><select id="s-chi">' + opz + '</select>' + nota + '</div>';
+}
+
+function rigaAltrui(m, g, slot) {
+  const p = m[g + '|' + slot];
+  if (!p) return '<div class="meal vuoto"><span class="slot">' + SLOT[slot] + '</span><span class="t">Nessun piatto</span></div>';
+  const r = p.ricetta ? byId(p.ricetta) : null;
+  if (!r) return '<div class="meal gone"><span class="slot">' + SLOT[slot] + '</span><span class="t">Ricetta eliminata</span></div>';
+  let mt = '<span>' + r.tempo_min + ' min</span>';
+  if (p.avanzo_di) mt = '<span class="badge avz">avanzo di ' + esc(nomeGiorno(p.avanzo_di).toLowerCase()) + '</span>';
+  else if (p.dosi > 1) mt += '<span class="badge dose">' + (p.dosi === 2 ? 'doppia dose' : p.dosi + ' dosi') + '</span>';
+  if (!p.avanzo_di && diStagione(r)) mt += '<span class="badge stag">' + ICON_STAG + 'Di stagione</span>';
+  if (hasAlc(r)) mt += '<span class="badge alc">' + ICON_ALC + 'Con alcol</span>';
+  if (p.nota) mt += '<span>' + esc(p.nota) + '</span>';
+  return '<button type="button" class="meal" data-id="' + esc(r.id) + '" data-day="' + g + '"><span class="slot">' + SLOT[slot] + '</span><span class="t">' + esc(r.titolo) + '</span><span class="m">' + mt + '</span></button>';
+}
+
+let copiaArmata = '';
+function renderAltrui(u) {
+  const m = S.GRUPPO[u], nome = nomeAutore(u);
+  let html = sceltaPersona() + '<div class="panel"><p><b>La settimana di ' + esc(nome) + '</b>, in sola lettura.</p>' +
+    '<p class="fine">Tocca un piatto per aprire la ricetta. «Copia nella mia» porta un giorno intero nella tua settimana: ogni pasto arriva a dose singola, senza avanzi né note.</p></div>';
+  html += '<div class="filter-row" role="group" aria-label="Vai al giorno">' + GIORNI.map(function (g) {
+    return '<button type="button" class="fchip' + (g[0] === OGGI ? ' oggi' : '') + '" data-go="' + g[0] + '">' + esc(g[1].slice(0, 3)) + (g[0] === OGGI ? ' · oggi' : '') + '</button>';
+  }).join('') + '</div><div class="days altrui">';
+  html += GIORNI.map(function (g) {
+    const armata = copiaArmata === u + '|' + g[0];
+    const vuoto = !ORDINE.some(function (s) { return m[g[0] + '|' + s]; });
+    return '<div class="panel day' + (g[0] === OGGI ? ' oggi' : '') + '" id="day-' + g[0] + '"><div class="day-h"><h3>' + esc(g[1]) + (g[0] === OGGI ? '<span class="badge stag">oggi</span>' : '') + '</h3>' +
+      (vuoto ? '' : '<button type="button" class="addp' + (armata ? ' armed' : '') + '" data-copia="' + g[0] + '" aria-label="' + (armata ? 'Conferma: sostituisci il tuo ' : 'Copia nella mia settimana il ') + esc(g[1].toLowerCase()) + (armata ? '' : ' di ' + esc(nome)) + '">' +
+        (armata ? 'Conferma: sostituisci il tuo' : 'Copia nella mia') + '</button>') + '</div>' +
+      (armata ? '<p class="warnline" role="status">I pasti del tuo ' + esc(g[1].toLowerCase()) + ' vengono sostituiti da quelli di ' + esc(nome) + ', a dose singola.</p>' : '') +
+      '<div class="meals">' + ORDINE.map(function (s) { return rigaAltrui(m, g[0], s); }).join('') + '</div></div>';
+  }).join('') + '</div>';
+  $('sett').innerHTML = html;
+}
+
 /* ---------- disegno ---------- */
 let inModifica = null, ripartiArmato = false;
 
@@ -124,7 +212,10 @@ export function renderSett() {
       : '<div class="empty">Caricamento della settimana…</div>';
     return;
   }
-  let html = '<div class="panel"><div class="week-ctl"><span class="eyebrow">Persone</span><div class="stepper">' +
+  if (S.GRUPPO === null && !S.erroGruppo) caricaGruppo();
+  if (S.vedi && S.GRUPPO && !S.GRUPPO[S.vedi]) S.vedi = '';
+  if (S.vedi && S.GRUPPO) { renderAltrui(S.vedi); return; }
+  let html = sceltaPersona() + '<div class="panel"><div class="week-ctl"><span class="eyebrow">Persone</span><div class="stepper">' +
     '<button type="button" id="s-meno" aria-label="Una persona in meno"' + (pers <= 1 ? ' disabled' : '') + '>−</button><output aria-live="polite">' + pers + '</output>' +
     '<button type="button" id="s-piu" aria-label="Una persona in più"' + (pers >= 6 ? ' disabled' : '') + '>+</button></div></div>' +
     '<button type="button" class="btn" id="sett-all">Metti tutta la settimana nella spesa</button>' +
@@ -181,6 +272,12 @@ function riparti() {
 export function initSettimana() {
   const el = $('sett');
   el.addEventListener('change', function (e) {
+    if (e.target.id === 's-chi') {
+      S.vedi = e.target.value; copiaArmata = ''; inModifica = null; ripartiArmato = false;
+      renderSett(); forseGruppo();
+      if ($('s-chi')) $('s-chi').focus();
+      return;
+    }
     const k = e.target.dataset && e.target.dataset.sw; if (!k || !e.target.value) return;
     const r = byId(e.target.value); if (!r) return;
     const [g, s] = k.split('|'), p = S.MIA[k];
@@ -189,6 +286,24 @@ export function initSettimana() {
   });
   el.addEventListener('click', function (e) {
     const b = e.target.closest('button'); if (!b) return;
+    if (b.id === 's-gruppo-riprova') { S.erroGruppo = ''; S.lettoGruppo = 0; renderSett(); caricaGruppo(); return; }
+    if (b.dataset.copia && S.vedi && S.GRUPPO && S.GRUPPO[S.vedi]) {
+      const g = b.dataset.copia, chiave = S.vedi + '|' + g, nome = nomeAutore(S.vedi);
+      const occupato = ORDINE.some(function (x) { return S.MIA[g + '|' + x]; });
+      if (occupato && copiaArmata !== chiave) {
+        copiaArmata = chiave; renderSett();
+        const c = document.querySelector('[data-copia="' + g + '"]'); if (c) c.focus();
+        return;
+      }
+      copiaArmata = '';
+      const esito = copiaGiorno(g, S.GRUPPO[S.vedi]);
+      renderSett();
+      const c = document.querySelector('[data-copia="' + g + '"]'); if (c) c.focus();
+      toast(nomeGiorno(g) + ' di ' + nome + ' copiato nella tua settimana' +
+        (esito.esclusi ? ' (' + esito.esclusi + (esito.esclusi === 1 ? ' piatto eliminato non copiato)' : ' piatti eliminati non copiati)') : ''),
+        { label: 'Vai alla mia', fn: function () { S.vedi = ''; renderSett(); const d = $('day-' + g); if (d) d.scrollIntoView(); } });
+      return;
+    }
     if (b.id === 's-meno' || b.id === 's-piu') { S.pers = Math.max(1, Math.min(6, S.pers + (b.id === 's-piu' ? 1 : -1))); store('rv-sett-pers', String(S.pers)); renderSett(); return; }
     if (b.id === 'sett-all') { settToShop(GIORNI.map(function (g) { return g[0]; })); return; }
     if (b.id === 'sett-riparti') { if (ripartiArmato && S.SETT) riparti(); else ripartiArmato = true; renderSett(); if ($('sett-riparti')) $('sett-riparti').focus(); return; }
@@ -215,6 +330,7 @@ export function initSettimana() {
     if (b.classList.contains('meal')) { S.backTo = 'settimana'; S.lastDay = b.dataset.day; show('ricette'); openRecipe(b.dataset.id); }
   });
 }
+document.addEventListener('rv-scheda', function (e) { if (e.detail === 'settimana' && S.personali) forseGruppo(); });
 function focusMod(k) { const b = document.querySelector('[data-mod="' + k + '"]'); if (b) b.focus(); }
 
 /* ---------- «Aggiungi alla settimana» dal dettaglio di una ricetta ---------- */

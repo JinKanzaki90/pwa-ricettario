@@ -292,7 +292,7 @@ ul.consigli { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size
 .meal.gone .t { color: var(--muted); font-style: italic; font-weight: 400; }
 .swap { grid-column: 2; display: grid; gap: 4px; padding-top: 6px; min-width: 0; }
 .swap label { font-size: 0.84rem; font-weight: 700; color: var(--beet); }
-.swap select, .addw select, .form input[type="text"], .form input[type="number"], .form select, .form textarea {
+.swap select, .addw select, .gruppo select, #d-comm textarea, .form input[type="text"], .form input[type="number"], .form select, .form textarea {
   font: inherit; font-size: 1rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line);
   border-radius: 10px; padding: 9px 12px; min-height: 44px; width: 100%; min-width: 0;
 }
@@ -379,3 +379,24 @@ a.back { text-decoration: none; }
 .panel .warnline { font-size: 0.86rem; color: var(--beet); margin: 0; }
 .d-head { display: grid; gap: 8px; }
 #seas-fonte a { color: var(--accent); }
+
+/* commenti (passo 6) */
+.comms { list-style: none; margin: 0; padding: 0; display: grid; }
+.comm { display: grid; gap: 6px; padding: 12px 0; border-top: 1px solid var(--line); min-width: 0; }
+.comm:first-child { border-top: 0; padding-top: 4px; }
+.c-h { font-size: 0.86rem; color: var(--muted); }
+.c-h b { color: var(--fg); }
+.c-t { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+#d-comm textarea { resize: vertical; min-height: 76px; line-height: 1.45; }
+.c-nuovo { display: grid; gap: 6px; padding-top: 12px; border-top: 1px solid var(--line); }
+.c-nuovo label { font-weight: 700; }
+.c-piede { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.c-conta { font-size: 0.84rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* settimane del gruppo (passo 6) */
+.gruppo { display: grid; gap: 4px; }
+.gruppo label { font-weight: 700; }
+.altrui .meal { cursor: pointer; }
+.altrui .meal.gone, .altrui .meal.vuoto { cursor: default; }
+.addp.armed { background: var(--beet); border-color: var(--beet); color: var(--surface); }
+.day > .warnline { margin: 6px 0 0; }

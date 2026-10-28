@@ -122,6 +122,19 @@ async function imitaSupabase(ctx, db) {
     }
     /* chi ha la ricetta in settimana (avviso prima dell'eliminazione): risposta fissa, una persona oltre a chi chiama */
     if (p === '/rest/v1/settimana' && m === 'GET' && u.searchParams.get('ricetta')) return json(200, [{ utente: ALTRO }, { utente: UID }]);
+    /* passo 6: settimane degli altri (sola lettura) */
+    if (p === '/rest/v1/settimana' && m === 'GET' && u.searchParams.get('utente') === 'neq.' + UID) return json(200, db.altre);
+    if (p === '/rest/v1/commenti') {
+      if (m === 'GET') return json(200, filtraTutto(db.commenti, u));
+      if (m === 'POST') {
+        if (!corpo.testo.trim() || corpo.testo.length > 500) return json(400, { code: '23514', message: 'violates check constraint "commenti_testo_lunghezza"' });
+        const c = { id: ++db.idComm, ricetta: corpo.ricetta, autore: UID, testo: corpo.testo, creato_il: new Date().toISOString(), modificato_il: new Date().toISOString() };
+        db.commenti.push(c); return json(201, oggetto ? c : [c]);
+      }
+      const tocc = filtraTutto(db.commenti, u);
+      if (m === 'PATCH') { tocc.forEach(c => Object.assign(c, corpo, { modificato_il: new Date(Date.now() + 120000).toISOString() })); return json(200, tocc); }
+      if (m === 'DELETE') { db.commenti = db.commenti.filter(c => tocc.indexOf(c) < 0); return json(200, tocc); }
+    }
     const tab = p.replace('/rest/v1/', '');
     if (PERSONALI[tab]) {
       if (db.giuPersonali) return json(503, { message: 'non disponibile' });
@@ -156,7 +169,14 @@ async function imitaSupabase(ctx, db) {
   for (const [w, h] of [[360, 760], [1280, 900]]) for (const scheme of ['light', 'dark']) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, colorScheme: scheme });
     const db = { esiste: true, password: 'iniziale-123', profilo: { nome: 'Anonimo', nome_scelto: false, settimana_avviata: false }, preferenze: null, chiamate: [], ricette: ricettario(), archivio: [],
-      settimana: [], spesa_ricette: [], spesa_voci: [], spesa_spunte: [], idVoce: 0 };
+      settimana: [], spesa_ricette: [], spesa_voci: [], spesa_spunte: [], idVoce: 0,
+      commenti: [{ id: 1, ricetta: 'hummus-di-ceci', autore: ALTRO, testo: 'Ottimo <b>con</b> il limone.\nE un po\' di cumino.', creato_il: ORA, modificato_il: ORA }], idComm: 1,
+      altre: [
+        { utente: ALTRO, giorno: 'mar', pasto: 'colazione', ricetta: 'avena-in-ammollo-fichi-pera', dosi: 1, avanzo_di: null, nota: null },
+        { utente: ALTRO, giorno: 'mar', pasto: 'pranzo', ricetta: 'pasta-lenticchie-rosse', dosi: 2, avanzo_di: null, nota: 'Ne avanza per domani' },
+        { utente: ALTRO, giorno: 'mar', pasto: 'cena', ricetta: 'frittata-marta', dosi: 1, avanzo_di: null, nota: null },
+        { utente: ALTRO, giorno: 'mer', pasto: 'pranzo', ricetta: 'pasta-lenticchie-rosse', dosi: 1, avanzo_di: 'mar', nota: null }
+      ] };
     await imitaSupabase(ctx, db);
     const page = await ctx.newPage(); const errs = []; let attesi = 0;
     /* i 400 del token sono voluti (password sbagliata): contati a parte */
@@ -320,6 +340,31 @@ async function imitaSupabase(ctx, db) {
     await page.click('#back'); await page.fill('#r-cerca', '');
     const aggiungiOk = /Al posto di «Riso/.test(avvisoSost) && riga('dom', 'cena').ricetta === 'hummus-di-ceci';
 
+    /* passo 6: commenti (quello di Marta non si modifica; il proprio si pubblica, modifica, elimina) */
+    await page.fill('#r-cerca', 'hummus'); await page.click('.rcard[data-id="hummus-di-ceci"]'); await page.waitForSelector('#d-comm .comm');
+    const commMarta = await testo('#d-comm .comm');
+    const htmlMarta = await page.$eval('#d-comm .c-t', e => e.innerHTML);
+    const martaBloccato = !(await page.$('#d-comm [data-cmod]'));
+    await page.click('#c-form button[type=submit]');
+    const msgVuoto = await testo('#toast');
+    await page.fill('#c-testo', 'Provata con la paprika: buona.');
+    const contatore = await testo('#c-conta');
+    await page.click('#c-form button[type=submit]');
+    await page.waitForFunction(() => document.querySelectorAll('#d-comm .comm').length === 2);
+    const pubblicato = db.commenti.length === 2 && db.commenti[1].testo === 'Provata con la paprika: buona.' && (await page.$eval('#c-testo', e => e.value)) === '';
+    await page.click('#d-comm [data-cmod]'); await page.fill('#c-mod', 'Provata con la paprika affumicata: buonissima.');
+    await page.click('#d-comm [data-csalva]');
+    await page.waitForFunction(() => /affumicata/.test(document.getElementById('d-comm').textContent) && !document.getElementById('c-mod'));
+    const modificato = db.commenti[1].testo === 'Provata con la paprika affumicata: buonissima.' && /modificato/.test(await testo('#d-comm'));
+    await (await page.$('#d-comm')).screenshot({ path: `${dir}/${tag}-commenti.png` });
+    await page.click('#d-comm [data-ctogli]');
+    const armato = await testo('#d-comm [data-ctogli]');
+    await page.click('#d-comm [data-ctogli]');
+    await page.waitForFunction(() => document.querySelectorAll('#d-comm .comm').length === 1);
+    const commOk = /Marta/.test(commMarta) && /<b>con<\/b>/.test(commMarta) && htmlMarta.indexOf('&lt;b&gt;') > -1 && martaBloccato &&
+      /Scrivi qualcosa/.test(msgVuoto) && contatore === '30/500' && pubblicato && modificato && /Conferma/.test(armato) && db.commenti.length === 1;
+    await page.click('#back'); await page.fill('#r-cerca', '');
+
     /* settimana: cambiare un pasto (l'avanzo segue), togliere un pasto, sceglierne uno nuovo */
     await page.click('#t-settimana'); await page.waitForSelector('[data-mod="mar|cena"]');
     await page.click('[data-mod="mar|cena"]');
@@ -351,6 +396,29 @@ async function imitaSupabase(ctx, db) {
     await page.waitForTimeout(300);
     const sostOk = /Ricetta eliminata/.test(eliminata) && /Avanzo di un piatto eliminato/.test(eliminata) &&
       riga('gio', 'cena').ricetta === 'farro-ceci-zucca-rucola' && riga('gio', 'cena').dosi === 2 && riga('ven', 'pranzo').ricetta === 'farro-ceci-zucca-rucola';
+
+    /* passo 6: settimana di Marta in sola lettura, copia del suo martedì nella propria */
+    await page.waitForSelector('#s-chi option[value="' + ALTRO + '"]', { state: 'attached' });
+    await page.selectOption('#s-chi', ALTRO); await page.waitForSelector('.days.altrui');
+    const altrui = await testo('#sett');
+    const solaLettura = !(await page.$('[data-mod]')) && !(await page.$('[data-sw]')) && !(await page.$('#sett-all'));
+    await (await page.$('#day-mar')).screenshot({ path: `${dir}/${tag}-settimana-altrui.png` });
+    await page.click('[data-copia="mar"]');
+    const conferma = await testo('#day-mar .warnline');
+    await page.click('[data-copia="mar"]');
+    await page.waitForTimeout(400);
+    const msgCopia = await testo('#toast');
+    const copiaOk = riga('mar', 'colazione').ricetta === 'avena-in-ammollo-fichi-pera' && riga('mar', 'pranzo').ricetta === 'pasta-lenticchie-rosse' &&
+      riga('mar', 'pranzo').dosi === 1 && !riga('mar', 'pranzo').nota && !riga('mar', 'cena') && !riga('mar', 'spuntino') &&
+      riga('mer', 'pranzo').ricetta === 'pasta-fagioli-borlotti' && !riga('mer', 'pranzo').avanzo_di && /1 piatto eliminato/.test(msgCopia);
+    /* aprire una ricetta dalla settimana di Marta e tornarci */
+    await page.click('#day-mer .meal[data-id]'); await page.waitForSelector('#back');
+    const tornaTesto = await testo('#back');
+    await page.click('#back'); await page.waitForSelector('.days.altrui');
+    await page.selectOption('#s-chi', ''); await page.waitForSelector('[data-mod="mar|cena"]');
+    const mieiVuoti = /Nessun piatto/.test(await page.$eval('[data-mod="mar|cena"]', b => b.parentElement.textContent));
+    const gruppoOk = /La settimana di Marta/.test(altrui) && /Ricetta eliminata/.test(altrui) && /avanzo di martedì/.test(altrui) && /doppia dose/.test(altrui) &&
+      /Ne avanza per domani/.test(altrui) && solaLettura && /sostituiti/.test(conferma) && copiaOk && /settimana/.test(tornaTesto) && mieiVuoti;
 
     /* spesa: spunta, voce a mano tolta, sincronizzate sul database */
     await page.click('#t-spesa'); await page.waitForSelector('#shop .item input');
@@ -397,12 +465,12 @@ async function imitaSupabase(ctx, db) {
     const esito = {
       nascosta, errVuoto: !!errVuoto, errSbagliata, mostrata, errRiservato: !!errRiservato, errDiverse, benvenutoOk,
       nCards, nErr, nVoci, scrollW, scrollWImp, font, email: email === EMAIL, nomeCampo, errPwdAtt, pwdOk, evitOk, temaOk, filtroOk,
-      ricercaOk, errCat, errCarne, salvataOk, avviso, cestinoOk, avvioOk, aggiungiOk, settOk, sostOk, spesaOk, msgScrittura, persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
+      ricercaOk, errCat, errCarne, salvataOk, avviso, cestinoOk, avvioOk, aggiungiOk, settOk, sostOk, commOk, gruppoOk, spesaOk, msgScrittura, persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
     };
     console.log(tag, esito);
     const ok = db.uscite === 2 && !errs.length && scrollW <= w && scrollWImp <= w && nCards && nascosta && esito.errVuoto && /non corretti/.test(errSbagliata) &&
       mostrata === 'text' && esito.errRiservato && /non coincidono/.test(errDiverse) && benvenutoOk && nomeCampo === 'Prova' &&
-      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && ricercaOk && /Vegetariana/.test(errCat) && /carne/.test(errCarne) && salvataOk && cestinoOk && avvioOk && aggiungiOk && settOk && sostOk && spesaOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
+      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && ricercaOk && /Vegetariana/.test(errCat) && /carne/.test(errCarne) && salvataOk && cestinoOk && avvioOk && aggiungiOk && settOk && sostOk && commOk && gruppoOk && spesaOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
     if (!ok) fail++;
     await ctx.close();
   }

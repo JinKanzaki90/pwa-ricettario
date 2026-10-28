@@ -146,6 +146,33 @@ export async function aggiornaAvanzi(giorno, vecchia, nuova) {
   senzaErrore(await q.select('giorno'));
 }
 
+/* settimane degli altri del gruppo, in sola lettura: id utente → mappa dei pasti */
+export async function caricaSettimaneGruppo() {
+  const righe = senzaErrore(await sb.from('settimana').select('utente,' + LEGGI_SETT).neq('utente', io()));
+  const per = {};
+  righe.forEach(function (x) { (per[x.utente] = per[x.utente] || []).push(x); });
+  const out = {};
+  Object.keys(per).forEach(function (u) { out[u] = aMappa(per[u]); });
+  return out;
+}
+
+/* ---------- commenti alle ricette: tutti leggono, ognuno modifica ed elimina i propri ---------- */
+const LEGGI_COMM = 'id,ricetta,autore,testo,creato_il,modificato_il';
+export async function caricaCommenti(ricetta) {
+  return senzaErrore(await sb.from('commenti').select(LEGGI_COMM).eq('ricetta', ricetta).order('creato_il').order('id'));
+}
+export async function nuovoCommento(ricetta, testo) {
+  return senzaErrore(await sb.from('commenti').insert({ ricetta: ricetta, testo: testo }).select(LEGGI_COMM).single());
+}
+export async function cambiaCommento(id, testo) {
+  const d = senzaErrore(await sb.from('commenti').update({ testo: testo }).eq('id', id).eq('autore', io()).select('id'));
+  if (!d.length) throw { code: 'commento_altrui' };
+}
+export async function togliCommento(id) {
+  const d = senzaErrore(await sb.from('commenti').delete().eq('id', id).eq('autore', io()).select('id'));
+  if (!d.length) throw { code: 'commento_altrui' };
+}
+
 /* ---------- lista della spesa personale (tre tabelle: i dispositivi non si sovrascrivono a vicenda) ---------- */
 export async function caricaSpesa() {
   const [r, v, s] = await Promise.all([
@@ -195,6 +222,7 @@ export async function ingredientiDiCarne(ingredienti) {
 
 /* ---------- errori del database in italiano ---------- */
 const VINCOLI = {
+  commenti_testo_lunghezza: 'Il commento deve avere da 1 a 500 caratteri.',
   spesa_porzioni_valide: 'In lista ci stanno da 1 a 60 porzioni per ricetta.',
   spesa_voci_nome_lunghezza: 'La voce deve avere da 1 a 80 caratteri.',
   settimana_dosi_valide: 'Le dosi vanno da 1 a 6.',
@@ -212,6 +240,7 @@ const VINCOLI = {
 export function msgDb(e) {
   if (!e) return 'Qualcosa non ha funzionato. Riprova tra poco.';
   const code = e.code || '', msg = String(e.message || '') + ' ' + String(e.details || '');
+  if (code === 'commento_altrui') return 'Puoi modificare o eliminare solo i tuoi commenti (forse questo non c\'è più).';
   if (code === 'non_permesso' || code === '42501' || /row-level security/i.test(msg)) return 'Non puoi farlo: questa ricetta è di un\'altra persona. Puoi crearne una tua versione.';
   if (code === '23503') return 'La ricetta non esiste più: è stata cancellata del tutto.';
   if (code === '23505') return 'Già fatto, forse da un altro dispositivo: ho riletto i dati.';

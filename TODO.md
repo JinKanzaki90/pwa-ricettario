@@ -66,10 +66,10 @@ Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, so
 - [x] Revisione di fine passo.
 
 ### [~] 6. Commenti, settimane del gruppo, copia di un giorno (iniziato il 28/10/2026 alle 13:12 UTC)
-- [ ] Commenti nel dettaglio della ricetta (§5.5): elenco con autore, data e «modificato»; nuovo commento (testo semplice, massimo 500 caratteri, contatore); modifica ed eliminazione (con conferma) solo dei propri; errori del database in italiano. Lo schema e le policy ci sono già dal passo 2: nessuna migrazione.
-- [ ] Settimane del gruppo (§5.3): nella scheda Settimana la scelta «La mia / di …» (solo chi ha una settimana); la settimana dell'altro in sola lettura, con le ricette apribili (e il ritorno a quella settimana), i piatti eliminati indicati senza sostituto.
-- [ ] Copia di un giorno intero dalla settimana di un altro nella propria, con conferma se il proprio giorno ha già dei pasti: ogni pasto diventa un piatto normale a dose singola (niente doppie dosi, avanzi, note); i piatti eliminati non si copiano; gli avanzi della propria settimana che venivano dal giorno sostituito diventano piatti normali.
-- [ ] Prove: `test/prova-app.js` con commenti e settimana di un'altra persona imitati.
+- [x] Commenti nel dettaglio della ricetta (§5.5): elenco con autore, data e «modificato»; nuovo commento (testo semplice, massimo 500 caratteri, contatore); modifica ed eliminazione (con conferma) solo dei propri; errori del database in italiano. Lo schema e le policy ci sono già dal passo 2: nessuna migrazione.
+- [x] Settimane del gruppo (§5.3): nella scheda Settimana la scelta «La mia / di …» (solo chi ha una settimana); la settimana dell'altro in sola lettura, con le ricette apribili (e il ritorno a quella settimana), i piatti eliminati indicati senza sostituto.
+- [x] Copia di un giorno intero dalla settimana di un altro nella propria, con conferma se il proprio giorno ha già dei pasti: ogni pasto diventa un piatto normale a dose singola (niente doppie dosi, avanzi, note); i piatti eliminati non si copiano; gli avanzi della propria settimana che venivano dal giorno sostituito diventano piatti normali.
+- [x] Prove: `test/prova-app.js` con commenti e settimana di un'altra persona imitati.
 - [ ] Verifica e revisione di fine passo.
 
 ### [ ] 7. Guida riscritta e «Acquisti consapevoli»

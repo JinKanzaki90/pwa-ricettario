@@ -43,6 +43,10 @@ export const S = {
   personali: false,  /* settimana e spesa lette dal database */
   lettoPers: 0,      /* quando sono state lette (ms) */
   erroPers: '',      /* motivo per cui non si sono potute leggere */
+  GRUPPO: null,      /* settimane degli altri (sola lettura): id utente → pasti; null = non ancora lette */
+  lettoGruppo: 0,
+  erroGruppo: '',
+  vedi: '',          /* settimana mostrata: '' = la propria, altrimenti l'id di un altro */
   SETT: null,        /* settimana d'esempio */
   DISP: null,        /* dispensa di base */
   CAL: null,         /* calendario di stagione */

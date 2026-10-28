@@ -63,6 +63,8 @@ function fuori(avviso) {
   /* i dati del ricettario letti con questo account non restano in memoria */
   S.RICETTE = []; S.CESTINO = []; S.ARCH = []; S.AUTORI = {}; S.caricate = false; S.cur = null;
   S.MIA = {}; S.shop = normShop(null); S.personali = false; S.erroPers = '';
+  S.GRUPPO = null; S.lettoGruppo = 0; S.erroGruppo = ''; S.vedi = '';
+  document.dispatchEvent(new CustomEvent('rv-fuori'));
   $('f-accesso').reset(); mostraErr('a-err', '');
   stato('fuori');
   if (avviso) toast(avviso);
