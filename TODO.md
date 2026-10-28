@@ -98,7 +98,11 @@ Manifest, icone, service worker per la lettura offline, «Aggiungi a schermata H
 
 ### [~] 9. Pubblicazione e prova completa (iniziato il 28/10/2026 alle 20:58 UTC)
 Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare gli utenti degli amici.
-- [ ] Prove rimaste dal passo 3, da fare con Angelo: (a) password sbagliata → messaggio «Email o password non corretti»; (b) «Esci da questo dispositivo» e rientro con la nuova password; (c) con l'utente di prova, Impostazioni → «Cancella il mio account…» (password + casella): l'utente deve sparire dall'elenco della dashboard Supabase.
+- [ ] **Prove automatiche a ogni push**: workflow `prove.yml` che esegue le prove del database (`test/db/prova-db.sh` su PostgreSQL) e dell'app (`test/prova-app.js` in Chromium), così un errore si vede prima di arrivare agli amici.
+- [ ] **Prova sul sito pubblicato**: `test/prova-app.js` contro l'indirizzo di GitHub Pages (versione pubblicata uguale a `main`, service worker e manifest serviti), controllo «nessuna tabella leggibile senza accesso» contro il progetto vero.
+- [ ] **Pagina privacy**: rilettura finale rispetto a ciò che l'app fa davvero (Acquisti consapevoli, cestino, copia sul dispositivo), data della versione.
+- [ ] **Istruzioni per Angelo** (`AMMINISTRAZIONE.md`): creare l'utente di un amico, cosa mandargli, reimpostare una password, bloccare o eliminare un utente, Site URL, backup, cosa controllare se qualcosa non va.
+- [ ] **Prova completa con Angelo** (elenco in «Richieste per Angelo»). Prove rimaste dal passo 3: (a) password sbagliata → messaggio «Email o password non corretti»; (b) «Esci da questo dispositivo» e rientro con la nuova password; (c) con l'utente di prova, Impostazioni → «Cancella il mio account…» (password + casella): l'utente deve sparire dall'elenco della dashboard Supabase.
 
 ### [ ] 10. Manutenzione periodica di «Acquisti consapevoli»
 Ultimo passo, dopo il 9 (richiesto da Angelo il 28/10/2026): programmare attività pianificate che tengano aggiornato l'elenco.
