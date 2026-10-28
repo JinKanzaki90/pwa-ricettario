@@ -69,6 +69,20 @@ from unnest(array['Seitan al naturale', 'Salsiccia vegetale', 'Carne di soia', '
   'Acciughe', 'Uova', 'Latte intero', 'Polpo', 'Cavolo cappuccio', 'Cervella di vitello vegana', 'Pollock (merluzzo d''Alaska)', 'Lardellato di zucca']) as t(n);
 select pg_temp.verifica(not bool_or(public.ingredienti_senza_carne(ingredienti) is not true), 'nessuna ricetta di partenza bloccata') from public.ricette;
 
+-- ---------------------------------------------------------------- elenco della carne ampliato (passo 4)
+select pg_temp.verifica(bool_and(public.nome_e_carne(n)), 'riconosce la carne (passo 4): ' || string_agg(n, ', ') filter (where not public.nome_e_carne(n)))
+from unnest(array['Kebab di agnello', 'Chorizo', 'Pastrami', 'Foie gras', 'Colla di pesce', 'Cotenna di maiale', 'Finocchiona',
+  'Ossobuco', 'Roast beef', 'Salamella mantovana', 'Pollame misto', 'Carne di camoscio', 'Maialino da latte']) as t(n);
+select pg_temp.verifica(not bool_or(public.nome_e_carne(n)), 'non scambia per carne (passo 4): ' || string_agg(n, ', ') filter (where public.nome_e_carne(n)))
+from unnest(array['Pomodoro cuore di bue', 'Funghi porcini', 'Hamburger di lenticchie', 'Kebab vegetale', 'Agar agar', 'Carpaccio di zucchine',
+  'Coppa di frutta', 'Polpette di ceci']) as t(n);
+select pg_temp.verifica(public.ingredienti_di_carne('[{"nome":"Ceci"},{"nome":"Chorizo"},{"nome":"Pancetta"},{"nome":"Salsiccia vegetale"}]')
+  = array['Chorizo', 'Pancetta'], 'ingredienti_di_carne indica proprio gli ingredienti di carne, in ordine');
+select pg_temp.verifica(public.ingredienti_di_carne('"non un elenco"') = '{}', 'ingredienti_di_carne accetta un valore non valido senza errore');
+select pg_temp.verifica(not has_function_privilege('anon', 'public.ingredienti_di_carne(jsonb)', 'execute')
+  and has_function_privilege('authenticated', 'public.ingredienti_di_carne(jsonb)', 'execute'), 'ingredienti_di_carne solo per chi ha accesso');
+
+
 -- ---------------------------------------------------------------- senza accesso (anon)
 set role anon;
 select pg_temp.deve_fallire('select * from public.' || t, '42501', 'anon legge ' || t)

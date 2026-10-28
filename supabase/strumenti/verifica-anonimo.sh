@@ -19,7 +19,7 @@ for t in profili ricette commenti archivio settimana spesa_ricette spesa_voci sp
   esac
 done
 # funzioni richiamabili dall'app: senza accesso devono essere rifiutate
-for f in cancella_account; do
+for f in cancella_account ingredienti_di_carne; do
   codice=$(curl -sS -o "$RISPOSTA" -w '%{http_code}' -X POST -H "apikey: $CHIAVE" -H 'Content-Type: application/json' -d '{}' "$URL/rest/v1/rpc/$f")
   case "$codice" in
     401|403) echo "ok: funzione $f non richiamabile senza accesso ($codice)";;
