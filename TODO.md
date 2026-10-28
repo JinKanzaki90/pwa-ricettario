@@ -8,7 +8,7 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 
 - Requisiti approvati: revisione 5 (`REQUISITI.md`).
 - Configurazioni di Angelo verificate il 25/10/2026: GitHub Pages attivo (origine GitHub Actions), segreti `SUPABASE_ACCESS_TOKEN` e `SUPABASE_DB_PASSWORD` validi, registrazione libera disattivata, dominio Supabase raggiungibile dalla sessione.
-- Da verificare nella prova congiunta: utente di Angelo creato, Site URL impostato.
+- Prova congiunta del passo 3 (28/10/2026): utente di Angelo creato, accesso riuscito dal telefono. Da verificare ancora: Site URL impostato.
 
 ## Passi
 
@@ -32,14 +32,14 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 - [x] Verifica: workflow Migrazioni verde; con la sola chiave publishable tutte le tabelle e le funzioni rispondono «permesso negato» (401/42501), controllato sia dalla sessione sia dal nuovo passo del workflow (`supabase/strumenti/verifica-anonimo.sh`). Regole di accesso provate su PostgreSQL locale con imitazione di Supabase (`test/db/prova-db.sh`: anon, utenti diversi, cestino, svuotamento, cancellazione di un account). App invariata: `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita.
 - [x] Revisione di fine passo.
 
-### [!] 3. Accesso e impostazioni (pronto per la prova congiunta il 25/10/2026)
+### [x] 3. Accesso e impostazioni (fatto il 28/10/2026)
 - [x] Schermata di accesso (email + password), sessione persistente (supabase-js, chiave `rv-accesso` sul dispositivo), uscita solo da questo dispositivo. Errori in italiano (credenziali sbagliate, troppi tentativi, account bloccato, rete assente). Senza rete all'avvio la sessione non si perde: messaggio e «Riprova».
 - [x] Primo accesso: nome visualizzato obbligatorio («Anonimo» riservato, anche nel database), cambio password facoltativo.
 - [x] Impostazioni (ingranaggio in alto a destra, la barra resta a 5 voci): nome, password (con verifica di quella attuale), tema (spostato qui dall'intestazione), ingredienti da evitare (tabella `preferenze`, visibile solo al proprietario; ricette segnalate con «Contiene: …» e filtro «Senza ingredienti da evitare»), privacy, cancellazione account (password + casella; funzione `cancella_account()` security definer, solo sull'utente che chiama). Migrazione `20261025190000_accesso_impostazioni.sql`.
 - [x] Pagina `privacy.html` (prima versione; da rivedere al passo 9).
 - [x] Verifica: migrazione verde; con la sola chiave publishable `preferenze` e `rpc/cancella_account` rispondono 401 (anche nel workflow); registrazione libera disattivata (`signup_disabled`); prove locali del database superate (preferenze altrui, nome riservato, cancellazione del proprio account); `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita, con Supabase imitato più una prova reale di credenziali sbagliate.
 - [x] Revisione di fine passo.
-- [!] **Punto di controllo**: prova congiunta con Angelo (istruzioni in «Richieste per Angelo»). Si riprende solo quando Angelo cambia lo stato in `[x]`.
+- [x] **Punto di controllo**: prova congiunta con Angelo il 28/10/2026. Superati: creazione degli utenti, accesso, primo accesso (nome, password, sessione che resta), impostazioni (nome, password, tema, ingredienti da evitare con segnalazione e filtro). Rimandati al passo 9, per decisione di Angelo: password sbagliata, uscita e rientro, cancellazione dell'account di prova.
 
 ### [ ] 4. Ricettario collegato al database
 Lettura, ricerca, filtri (categoria, autore), inserimento e modifica con categoria e blocco della carne, eliminazione con avviso sulle settimane coinvolte, cestino, archivio personale.
@@ -57,6 +57,7 @@ Manifest, icone, service worker per la lettura offline, «Aggiungi a schermata H
 
 ### [ ] 9. Pubblicazione e prova completa
 Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare gli utenti degli amici.
+- [ ] Prove rimaste dal passo 3, da fare con Angelo: (a) password sbagliata → messaggio «Email o password non corretti»; (b) «Esci da questo dispositivo» e rientro con la nuova password; (c) con l'utente di prova, Impostazioni → «Cancella il mio account…» (password + casella): l'utente deve sparire dall'elenco della dashboard Supabase.
 
 ## Spunti dalle revisioni di fine passo
 
@@ -100,12 +101,5 @@ Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare
 
 - **Backup cifrato (passo 1, non bloccante):** per attivare il backup settimanale serve un segreto `BACKUP_PASSPHRASE` (una frase lunga e casuale, da conservare anche fuori da GitHub: senza di essa il backup non si apre) in GitHub → Settings → Secrets and variables → Actions. Finché manca, «Continuità» fa solo la chiamata giornaliera.
 
-- **Prova congiunta del passo 3 (bloccante):** l'app è pronta su https://jinkanzaki90.github.io/pwa-ricettario/ .
-  1. Dalla dashboard Supabase (Authentication → Users → Add user) crea il tuo utente con email e password, spuntando «Auto Confirm User»; creane anche un secondo di prova (servirà per il punto 6).
-  2. Apri l'app dal telefono: deve comparire solo «Accedi». Prova una password sbagliata (messaggio «Email o password non corretti»), poi quella giusta.
-  3. Al primo accesso scegli il nome e, se vuoi, una nuova password; poi chiudi e riapri l'app: devi restare dentro.
-  4. Ingranaggio in alto a destra: cambia nome, password e tema; aggiungi un ingrediente da evitare (per esempio «ceci») e controlla in Ricette la segnalazione e il filtro «Senza ingredienti da evitare».
-  5. «Esci da questo dispositivo» e rientra con la nuova password.
-  6. Con l'utente di prova: accedi, poi Impostazioni → «Cancella il mio account…» (password + casella). L'utente deve sparire dall'elenco della dashboard. Se la cancellazione dà errore, scrivilo qui.
-  7. Se tutto va bene, cambia lo stato del passo 3 in `[x]`; altrimenti annota qui cosa non va.
+- **Prove rimaste del passo 3 (non bloccanti, da fare al passo 9):** password sbagliata, uscita e rientro, cancellazione dell'account di prova (dettagli nel passo 9).
 - **Password minima (consigliato, non bloccante):** dashboard Supabase → Authentication → Sign In / Providers → Email → «Minimum password length» a 8, così il server chiede lo stesso minimo dell'app.
