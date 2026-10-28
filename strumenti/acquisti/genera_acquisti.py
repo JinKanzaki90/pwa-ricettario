@@ -2,7 +2,8 @@
 """Genera app/data/acquisti.json («Acquisti consapevoli», REQUISITI.md §5.8) dalle fonti trascritte qui.
 
 Fonti ammesse (decise da Angelo il 28/10/2026): campagne riconoscibili con criteri scritti (movimento BDS)
-e le fonti primarie che usano (banca dati ONU, Who Profits, AFSC Investigate). Ogni voce: «Segnalata da X per Y» (il campo «da» comprende la preposizione: «dal movimento BDS»).
+e le fonti primarie che usano (banca dati ONU, Who Profits, AFSC Investigate). Le voci spunto di elenchi senza fonte
+(boycott-israel.org…) entrano solo se confermate da una di queste: vedi VOCI_CONFERMATE. Ogni voce: «Segnalata da X per Y» (il campo «da» comprende la preposizione: «dal movimento BDS»).
 Uso: python3 strumenti/acquisti/genera_acquisti.py  (riscrive app/data/acquisti.json)
 """
 import json, os
@@ -28,7 +29,8 @@ SETTORI = [
     ('trasporti', 'Trasporti e logistica'),
     ('energia', 'Energia e carburanti'),
     ('acqua-rifiuti', 'Acqua, rifiuti e riciclo'),
-    ('sicurezza', 'Sicurezza'),
+    ('difesa', 'Armi, difesa e aerospazio'),
+    ('sicurezza', 'Sicurezza e sorveglianza'),
     ('altro', 'Altre imprese'),
 ]
 
@@ -47,6 +49,48 @@ FONTI = {
         'verificata_il': '2026-10-28',
         'nota': 'Per l\'ONU l\'inserimento non è un giudizio di illecito: indica fondati motivi per ritenere che l\'impresa abbia svolto almeno una delle attività elencate tra agosto 2019 e aprile 2026. Il settore lo indichiamo noi in base al nome e all\'attività nota dell\'impresa: il rapporto non lo riporta.',
     },
+    'bds-disinvestimento': {
+        'da': 'dal movimento BDS',
+        'titolo': 'BDS movement, «Get Involved - Divestment» (pagina senza data)',
+        'url': 'https://bdsmovement.net/Get-involved-divestment',
+        'verificata_il': '2026-10-28',
+        'nota': 'Elenco di imprese per cui il BDS chiede a banche, fondi pensione, università ed enti pubblici di disinvestire o di escluderle dagli appalti: non è un invito al boicottaggio dei consumatori. Il BDS lo definisce non completo e in aggiornamento; per le imprese non israeliane si basa su AFSC, ONU, Who Profits e Don\'t Buy Into Occupation.',
+    },
+    'wp-achva': {
+        'da': 'da Who Profits',
+        'titolo': 'Who Profits, scheda «Achdut Factory for Tahini Halva and Sweets (Achdut-Achva)» (dati validi fino al 04/02/2025)',
+        'url': 'https://www.whoprofits.org/companies/company/4088',
+        'verificata_il': '2026-10-28',
+        'nota': 'Who Profits è un centro di ricerca indipendente che documenta le imprese coinvolte nell\'occupazione israeliana; ogni scheda indica fino a quando i dati sono validi.',
+    },
+    'wp-cbc': {
+        'da': 'da Who Profits',
+        'titolo': 'Who Profits, scheda «The Central Bottling Company (Coca Cola Israel)» (dati validi fino al 10/02/2025)',
+        'url': 'https://www.whoprofits.org/companies/company/4081',
+        'verificata_il': '2026-10-28',
+        'nota': 'Who Profits è un centro di ricerca indipendente che documenta le imprese coinvolte nell\'occupazione israeliana; ogni scheda indica fino a quando i dati sono validi.',
+    },
+    'wp-tnuva': {
+        'da': 'da Who Profits',
+        'titolo': 'Who Profits, scheda «Tnuva Group» (dati validi fino al 05/08/2025)',
+        'url': 'https://www.whoprofits.org/companies/company/3994',
+        'verificata_il': '2026-10-28',
+        'nota': 'Who Profits è un centro di ricerca indipendente che documenta le imprese coinvolte nell\'occupazione israeliana; ogni scheda indica fino a quando i dati sono validi.',
+    },
+    'wp-tempo': {
+        'da': 'da Who Profits',
+        'titolo': 'Who Profits, scheda «Tempo Beverages» (dati validi fino al 12/02/2019)',
+        'url': 'https://www.whoprofits.org/companies/company/4102',
+        'verificata_il': '2026-10-28',
+        'nota': 'Who Profits è un centro di ricerca indipendente che documenta le imprese coinvolte nell\'occupazione israeliana; ogni scheda indica fino a quando i dati sono validi. Questa scheda non è aggiornata dal 2019.',
+    },
+    'afsc-cocacola': {
+        'da': 'dall\'AFSC (American Friends Service Committee)',
+        'titolo': 'AFSC Investigate, scheda «Coca-Cola Co» (aggiornata il 14/04/2025)',
+        'url': 'https://investigate.afsc.org/company/coca-cola',
+        'verificata_il': '2026-10-28',
+        'nota': 'AFSC Investigate è la banca dati dell\'organizzazione quacchera statunitense AFSC sulle imprese coinvolte nell\'occupazione e nelle forniture militari a Israele.',
+    },
 }
 
 TIPI = {
@@ -54,7 +98,43 @@ TIPI = {
     'spontaneo': 'Boicottaggio spontaneo sostenuto dal BDS',
     'pressione': 'Campagna di pressione',
     'onu': 'Banca dati ONU',
+    'disinvestimento': 'Obiettivo di disinvestimento (per banche, fondi ed enti)',
+    'whoprofits': 'Banca dati Who Profits',
+    'afsc': 'Banca dati AFSC Investigate',
 }
+
+# elenco disinvestimenti del BDS: motivo per gruppo (riassunto dalla pagina)
+MOTIVI_DIS = {
+    'isr-difesa': 'la complicità con l\'occupazione secondo i criteri del BDS (impresa israeliana del settore militare e della sicurezza)',
+    'isr-tecnologia': 'la complicità con l\'occupazione secondo i criteri del BDS (impresa israeliana di tecnologia e telecomunicazioni)',
+    'isr-energia': 'la complicità con l\'occupazione secondo i criteri del BDS (impresa israeliana dell\'energia)',
+    'isr-finanza': 'la complicità con l\'occupazione secondo i criteri del BDS (banca israeliana)',
+    'isr-farmaci': 'la complicità con l\'occupazione secondo i criteri del BDS (impresa israeliana di farmaci generici)',
+    'isr-agricoltura': 'la complicità con l\'occupazione secondo i criteri del BDS (impresa israeliana di agricoltura e acqua)',
+    'isr-trasporti': 'la complicità con l\'occupazione secondo i criteri del BDS (impresa israeliana di trasporti e logistica)',
+    'isr-altre': 'la complicità con l\'occupazione secondo i criteri del BDS (impresa israeliana)',
+    'difesa': 'le forniture militari a Israele, usate anche nella guerra a Gaza',
+    'tecnologia': 'prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra',
+    'energia': 'le forniture di energia a Israele (campagna «Energy Embargo Now»)',
+    'finanza-armi': 'il finanziamento di imprese che forniscono armi a Israele',
+    'finanza-occupazione': 'il finanziamento di imprese coinvolte nell\'occupazione (rapporto Don\'t Buy Into Occupation)',
+    'trasporti': 'il trasporto di merci per Israele, secondo i rapporti citati dal BDS',
+    'altre': 'la presenza in almeno una delle banche dati sulle imprese coinvolte nell\'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don\'t Buy Into Occupation)',
+}
+
+# voci spunto confermate da una fonte ammessa (nome, marchi, settore, sede, fonte, tipo, motivo); None = si unisce alla voce con quel nome
+VOCI_CONFERMATE = [
+    ('Achva', ['Achdut Factory for Tahini Halva and Sweets', 'Achdut-Achva'], 'cibo', 'insediamento di Ariel (Cisgiordania occupata)', 'wp-achva', 'whoprofits',
+     'la produzione di tahina, halva e prodotti da forno nella zona industriale dell\'insediamento di Ariel, su terre del villaggio palestinese di Salfit, e le forniture all\'esercito israeliano'),
+    ('Central Bottling Company (Coca-Cola Israele)', ['Coca-Cola Israel', 'Prigat', 'Neviot', 'Tabor Winery'], 'cibo', 'Israele', 'wp-cbc', 'whoprofits',
+     'lo stabilimento e il centro di distribuzione nella zona industriale di Atarot, a Gerusalemme Est occupata, e il vino della controllata Tabor Winery prodotto con uve degli insediamenti in Cisgiordania e nel Golan siriano'),
+    ('Tempo Beverages', [], 'cibo', 'Israele', 'wp-tempo', 'whoprofits',
+     'la distribuzione esclusiva di bevande nel Territorio palestinese occupato, un mercato che l\'occupazione rende obbligato (la scheda ricorda anche che la controllata Barkan Winery ha lasciato nel 2007 la zona industriale dell\'insediamento di Barkan)'),
+    ('Tnuva Central Co-operative for the Marketing of Agricultural Produce in Israel Ltd.', ['Tnuva Group'], None, None, 'wp-tnuva', 'whoprofits',
+     'il latte raccolto da allevamenti negli insediamenti in Cisgiordania e nel Golan siriano occupato, le palestre sponsorizzate negli insediamenti e la vendita dei suoi prodotti in Cisgiordania'),
+    ('Coca-Cola', [], None, None, 'afsc-cocacola', 'afsc',
+     'il centro logistico del licenziatario israeliano in un insediamento della Cisgiordania occupata e il vino prodotto con uve degli insediamenti in Cisgiordania e nel Golan siriano'),
+]
 
 # Attività del paragrafo 96 (rapporto della missione d'inchiesta ONU del 2013), in breve
 ATTIVITA = {
@@ -126,6 +206,35 @@ def leggi_onu():
     return righe
 
 
+def leggi_disinvestimento():
+    righe = []
+    with open(os.path.join(QUI, 'bds_disinvestimento.tsv'), encoding='utf-8') as f:
+        for r in f:
+            if not r.strip() or r.startswith('#'):
+                continue
+            gruppo, nome, settore, unisci = r.rstrip('\n').split('\t')
+            assert gruppo in MOTIVI_DIS, gruppo
+            righe.append((gruppo, nome, settore, None if unisci == '-' else unisci))
+    assert len(righe) == 136, 'elenco disinvestimenti incompleto'
+    return righe
+
+
+# note tra parentesi della pagina del BDS: tolte dal nome e riportate in italiano tra i marchi della voce
+NOTE_DIS = {
+    ' (owned by PepsiCo)': 'PepsiCo (proprietaria)',
+    ' (owner of Tnuva)': 'proprietaria di Tnuva',
+    ' (80% owner of Netafim)': 'proprietaria di Netafim',
+    ' (formerly Raytheon)': 'Raytheon (nome precedente)',
+}
+
+
+def pulisci_nome(nome):
+    for inglese, italiano in NOTE_DIS.items():
+        if nome.endswith(inglese):
+            return nome[:-len(inglese)], italiano
+    return nome, None
+
+
 def motivo_onu(lettere):
     base = 'attività legate agli insediamenti israeliani nel Territorio palestinese occupato'
     if not lettere:
@@ -151,7 +260,52 @@ def genera():
             v.setdefault('marchi', []).append(nome)
             v['paese'] = paese
             continue
-        voci.append({'azienda': nome, 'paese': paese, 'settore': settore, 'segnalazioni': [s]})
+        v = {'azienda': nome, 'paese': paese, 'settore': settore, 'segnalazioni': [s]}
+        voci.append(v); per_nome[nome] = v
+    # elenco disinvestimenti del BDS: una segnalazione per voce, con tutti i motivi dei gruppi in cui compare
+    per_voce = {}
+    for gruppo, nome, settore, unisci in leggi_disinvestimento():
+        assert settore in settori, nome
+        breve, nota = pulisci_nome(nome)
+        chiave = unisci or breve
+        if chiave not in per_voce:
+            if unisci:
+                assert unisci in per_nome, unisci
+            per_voce[chiave] = {'nome': breve, 'nota': nota, 'settore': settore, 'gruppi': [], 'israeliana': gruppo.startswith('isr-')}
+        if MOTIVI_DIS[gruppo] not in per_voce[chiave]['gruppi']:
+            per_voce[chiave]['gruppi'].append(MOTIVI_DIS[gruppo])
+    for chiave, x in per_voce.items():
+        s = {'fonte': 'bds-disinvestimento', 'tema': T, 'tipo': 'disinvestimento', 'per': '; '.join(x['gruppi'])}
+        if chiave in per_nome:
+            v = per_nome[chiave]
+            v['segnalazioni'].append(s)
+            if x['nome'].casefold() not in (v['azienda'] + ' ' + ' '.join(v.get('marchi', []))).casefold():
+                v.setdefault('marchi', []).append(x['nome'])
+            if x['nota']:
+                v.setdefault('marchi', []).append(x['nota'])
+            continue
+        v = {'azienda': x['nome'], 'settore': x['settore'], 'segnalazioni': [s]}
+        if x['israeliana']:
+            v['paese'] = 'Israele'
+        if x['nota']:
+            v['marchi'] = [x['nota']]
+        voci.append(v); per_nome[x['nome']] = v
+    # voci spunto confermate
+    for nome, marchi, settore, paese, fonte, tipo, per in VOCI_CONFERMATE:
+        assert fonte in FONTI and tipo in TIPI
+        s = {'fonte': fonte, 'tema': T, 'tipo': tipo, 'per': per}
+        if settore is None:
+            v = per_nome[nome]
+            v['segnalazioni'].append(s)
+            for m in marchi:
+                if m not in v.get('marchi', []):
+                    v.setdefault('marchi', []).append(m)
+            continue
+        assert settore in settori and nome not in per_nome, nome
+        v = {'azienda': nome, 'paese': paese, 'settore': settore, 'segnalazioni': [s]}
+        if marchi:
+            v['marchi'] = marchi
+        voci.append(v); per_nome[nome] = v
     voci.sort(key=lambda v: v['azienda'].casefold())
     return {
         'versione_schema': 2,

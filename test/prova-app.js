@@ -252,6 +252,11 @@ async function imitaSupabase(ctx, db) {
     await page.fill('#acq-cerca', 'booking.com');
     const cerca2 = await page.evaluate(() => Array.prototype.map.call(document.querySelectorAll('#acq .acq-v'), v => v.querySelector('.nome').textContent + ':' + v.querySelectorAll('.acq-s').length));
     await page.screenshot({ path: `${dir}/${tag}-guida-acquisti-vere.png` });
+    await page.fill('#acq-cerca', 'prigat');
+    const cerca4 = await page.evaluate(() => Array.prototype.map.call(document.querySelectorAll('#acq .acq-v'), v => v.querySelector('.nome').textContent + ':' +
+      Array.prototype.map.call(v.querySelectorAll('.badge.tipo'), b => b.textContent).join('+')));
+    await page.fill('#acq-cerca', 'sodastream');
+    const cerca5 = await page.evaluate(() => Array.prototype.map.call(document.querySelectorAll('#acq .acq-v .badge.tipo'), b => b.textContent));
     await page.fill('#acq-cerca', 'nessunamarcaesistente');
     const cerca3 = await page.evaluate(() => /Nessuna voce/.test(document.getElementById('acq-elenco').textContent));
     /* voci imitate: testo come testo, collegamenti solo https, fonte sconosciuta scartata, verifica vecchia */
@@ -277,9 +282,11 @@ async function imitaSupabase(ctx, db) {
     const guidaOk = guida.sezioni === 6 && guida.inBreve && guida.fonti === 5 && guida.voci === 6 && guida.vere > 200 && guida.gruppi > 10 && !guida.vegano &&
       salto.hash === hashPrima && salto.focus === 'g-carne-t' && salto.top >= 0 && salto.top < 120 &&
       cerca1.n === 1 && cerca1.tipo === 'Boicottaggio prioritario' && cerca1.aperto && /1 voce trovata/.test(cerca1.conta) &&
-      cerca2.join() === 'Booking Holdings:2,Booking.com B.V.:1' && cerca3 &&
+      cerca2.join() === 'Booking Holdings:3,Booking.com B.V.:1' && cerca3 &&
+      cerca4.join() === 'Central Bottling Company (Coca-Cola Israele):Banca dati Who Profits' &&
+      cerca5.join() === 'Boicottaggio prioritario,Obiettivo di disinvestimento (per banche, fondi ed enti)' &&
       acq.n === 2 && acq.b === 0 && acq.testoB && acq.link.length === 1 && acq.link[0] === 'https://esempio.invalid/r' && acq.ricontrolla.join() === 'Marchio Due' && acq.frase;
-    if (!guidaOk) console.log('guida', guida, salto, cerca1, cerca2, cerca3, acq);
+    if (!guidaOk) console.log('guida', guida, salto, cerca1, cerca2, cerca3, cerca4, cerca5, acq);
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.click('#t-stagione'); await page.waitForSelector('#seas .seas-g');
     await page.click('#disp .addp');

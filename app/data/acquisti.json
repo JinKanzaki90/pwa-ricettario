@@ -66,8 +66,12 @@
    "nome": "Acqua, rifiuti e riciclo"
   },
   {
+   "id": "difesa",
+   "nome": "Armi, difesa e aerospazio"
+  },
+  {
    "id": "sicurezza",
-   "nome": "Sicurezza"
+   "nome": "Sicurezza e sorveglianza"
   },
   {
    "id": "altro",
@@ -78,7 +82,10 @@
   "prioritario": "Boicottaggio prioritario",
   "spontaneo": "Boicottaggio spontaneo sostenuto dal BDS",
   "pressione": "Campagna di pressione",
-  "onu": "Banca dati ONU"
+  "onu": "Banca dati ONU",
+  "disinvestimento": "Obiettivo di disinvestimento (per banche, fondi ed enti)",
+  "whoprofits": "Banca dati Who Profits",
+  "afsc": "Banca dati AFSC Investigate"
  },
  "fonti": {
   "bds-2024": {
@@ -94,6 +101,48 @@
    "url": "https://www.ohchr.org/sites/default/files/documents/hrbodies/hrcouncil/sessions-regular/session63/advance-versions/a-hrc-63-20-aev.pdf",
    "verificata_il": "2026-10-28",
    "nota": "Per l'ONU l'inserimento non è un giudizio di illecito: indica fondati motivi per ritenere che l'impresa abbia svolto almeno una delle attività elencate tra agosto 2019 e aprile 2026. Il settore lo indichiamo noi in base al nome e all'attività nota dell'impresa: il rapporto non lo riporta."
+  },
+  "bds-disinvestimento": {
+   "da": "dal movimento BDS",
+   "titolo": "BDS movement, «Get Involved - Divestment» (pagina senza data)",
+   "url": "https://bdsmovement.net/Get-involved-divestment",
+   "verificata_il": "2026-10-28",
+   "nota": "Elenco di imprese per cui il BDS chiede a banche, fondi pensione, università ed enti pubblici di disinvestire o di escluderle dagli appalti: non è un invito al boicottaggio dei consumatori. Il BDS lo definisce non completo e in aggiornamento; per le imprese non israeliane si basa su AFSC, ONU, Who Profits e Don't Buy Into Occupation."
+  },
+  "wp-achva": {
+   "da": "da Who Profits",
+   "titolo": "Who Profits, scheda «Achdut Factory for Tahini Halva and Sweets (Achdut-Achva)» (dati validi fino al 04/02/2025)",
+   "url": "https://www.whoprofits.org/companies/company/4088",
+   "verificata_il": "2026-10-28",
+   "nota": "Who Profits è un centro di ricerca indipendente che documenta le imprese coinvolte nell'occupazione israeliana; ogni scheda indica fino a quando i dati sono validi."
+  },
+  "wp-cbc": {
+   "da": "da Who Profits",
+   "titolo": "Who Profits, scheda «The Central Bottling Company (Coca Cola Israel)» (dati validi fino al 10/02/2025)",
+   "url": "https://www.whoprofits.org/companies/company/4081",
+   "verificata_il": "2026-10-28",
+   "nota": "Who Profits è un centro di ricerca indipendente che documenta le imprese coinvolte nell'occupazione israeliana; ogni scheda indica fino a quando i dati sono validi."
+  },
+  "wp-tnuva": {
+   "da": "da Who Profits",
+   "titolo": "Who Profits, scheda «Tnuva Group» (dati validi fino al 05/08/2025)",
+   "url": "https://www.whoprofits.org/companies/company/3994",
+   "verificata_il": "2026-10-28",
+   "nota": "Who Profits è un centro di ricerca indipendente che documenta le imprese coinvolte nell'occupazione israeliana; ogni scheda indica fino a quando i dati sono validi."
+  },
+  "wp-tempo": {
+   "da": "da Who Profits",
+   "titolo": "Who Profits, scheda «Tempo Beverages» (dati validi fino al 12/02/2019)",
+   "url": "https://www.whoprofits.org/companies/company/4102",
+   "verificata_il": "2026-10-28",
+   "nota": "Who Profits è un centro di ricerca indipendente che documenta le imprese coinvolte nell'occupazione israeliana; ogni scheda indica fino a quando i dati sono validi. Questa scheda non è aggiornata dal 2019."
+  },
+  "afsc-cocacola": {
+   "da": "dall'AFSC (American Friends Service Committee)",
+   "titolo": "AFSC Investigate, scheda «Coca-Cola Co» (aggiornata il 14/04/2025)",
+   "url": "https://investigate.afsc.org/company/coca-cola",
+   "verificata_il": "2026-10-28",
+   "nota": "AFSC Investigate è la banca dati dell'organizzazione quacchera statunitense AFSC sulle imprese coinvolte nell'occupazione e nelle forniture militari a Israele."
   }
  },
  "voci": [
@@ -121,6 +170,23 @@
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
     }
+   ]
+  },
+  {
+   "azienda": "Achva",
+   "paese": "insediamento di Ariel (Cisgiordania occupata)",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "wp-achva",
+     "tema": "israele-palestina",
+     "tipo": "whoprofits",
+     "per": "la produzione di tahina, halva e prodotti da forno nella zona industriale dell'insediamento di Ariel, su terre del villaggio palestinese di Salfit, e le forniture all'esercito israeliano"
+    }
+   ],
+   "marchi": [
+    "Achdut Factory for Tahini Halva and Sweets",
+    "Achdut-Achva"
    ]
   },
   {
@@ -159,6 +225,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di agricoltura e acqua)"
     }
    ]
   },
@@ -198,6 +270,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana)"
     }
    ]
   },
@@ -216,12 +294,30 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ],
    "marchi": [
     "Airbnb Inc."
    ],
    "paese": "Stati Uniti"
+  },
+  {
+   "azienda": "Alfried Krupp von Bohlen und Halbach-Stiftung",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
   },
   {
    "azienda": "All-In Trade Israel Ltd.",
@@ -233,6 +329,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Allianz SE",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
     }
    ]
   },
@@ -263,6 +371,18 @@
    ]
   },
   {
+   "azienda": "Alstom",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
    "azienda": "Altice International Ltd.",
    "paese": "Lussemburgo",
    "settore": "telecomunicazioni",
@@ -272,6 +392,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ]
   },
@@ -284,6 +410,12 @@
      "tema": "israele-palestina",
      "tipo": "pressione",
      "per": "il progetto Nimbus: servizi cloud e di intelligenza artificiale al governo e all'esercito israeliani"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
     }
    ],
    "marchi": [
@@ -326,6 +458,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Amundi Asset Management",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
     }
    ]
   },
@@ -416,6 +560,12 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "gli investimenti in aziende che forniscono armi a Israele"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation); la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ]
   },
@@ -433,6 +583,42 @@
    ]
   },
   {
+   "azienda": "BAE Systems",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Banco Bilbao Vizcaya Argentaria (BBVA)",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele; il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "Banco Santander",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele; il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
    "azienda": "Bank Hapoalim Ltd.",
    "paese": "Israele",
    "settore": "finanza",
@@ -442,6 +628,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (banca israeliana)"
     }
    ]
   },
@@ -455,6 +647,24 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (banca israeliana)"
+    }
+   ]
+  },
+  {
+   "azienda": "Bank of America",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
     }
    ]
   },
@@ -511,6 +721,18 @@
    ]
   },
   {
+   "azienda": "Barclays",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
    "azienda": "Bardarian Brothers Ltd.",
    "paese": "Israele",
    "settore": "edilizia",
@@ -546,6 +768,51 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di tecnologia e telecomunicazioni)"
+    }
+   ],
+   "marchi": [
+    "Bezeq Group"
+   ]
+  },
+  {
+   "azienda": "BlackRock",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "BNP Paribas",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "Boeing",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
     }
    ]
   },
@@ -577,6 +844,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ],
    "marchi": [
@@ -596,6 +869,33 @@
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
     }
+   ]
+  },
+  {
+   "azienda": "BP",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
+    }
+   ]
+  },
+  {
+   "azienda": "Bright Dairy & Food Co",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ],
+   "marchi": [
+    "proprietaria di Tnuva"
    ]
   },
   {
@@ -650,6 +950,18 @@
    ]
   },
   {
+   "azienda": "CaixaBank",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
    "azienda": "Caliber 3 Ltd.",
    "paese": "Israele",
    "settore": "sicurezza",
@@ -659,6 +971,30 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi di sicurezza a imprese degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Capital Group",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "Carlsberg",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ]
   },
@@ -684,6 +1020,36 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "il contratto di franchising con imprese attive negli insediamenti, i doni ai soldati israeliani e un punto vendita in un insediamento"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "Caterpillar",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Causeway Capital Management",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
     }
    ]
   },
@@ -698,6 +1064,37 @@
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
     }
+   ]
+  },
+  {
+   "azienda": "Cemex",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "Central Bottling Company (Coca-Cola Israele)",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "wp-cbc",
+     "tema": "israele-palestina",
+     "tipo": "whoprofits",
+     "per": "lo stabilimento e il centro di distribuzione nella zona industriale di Atarot, a Gerusalemme Est occupata, e il vino della controllata Tabor Winery prodotto con uve degli insediamenti in Cisgiordania e nel Golan siriano"
+    }
+   ],
+   "marchi": [
+    "Coca-Cola Israel",
+    "Prigat",
+    "Neviot",
+    "Tabor Winery"
    ]
   },
   {
@@ -722,11 +1119,41 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "l'estrazione del gas rivendicato da Israele nel Mediterraneo orientale, che finanzia le casse dello Stato israeliano"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
     }
    ],
    "marchi": [
     "Caltex",
     "Texaco"
+   ]
+  },
+  {
+   "azienda": "Cisco Systems",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
+    }
+   ]
+  },
+  {
+   "azienda": "Citigroup",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
    ]
   },
   {
@@ -751,7 +1178,22 @@
      "tema": "israele-palestina",
      "tipo": "spontaneo",
      "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano da parte della società o del franchising in Israele durante la guerra a Gaza"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    },
+    {
+     "fonte": "afsc-cocacola",
+     "tema": "israele-palestina",
+     "tipo": "afsc",
+     "per": "il centro logistico del licenziatario israeliano in un insediamento della Cisgiordania occupata e il vino prodotto con uve degli insediamenti in Cisgiordania e nel Golan siriano"
     }
+   ],
+   "marchi": [
+    "Coca Cola"
    ]
   },
   {
@@ -790,6 +1232,24 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "Credit Agricole",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
     }
    ]
   },
@@ -829,6 +1289,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Dana Energy",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
     }
    ]
   },
@@ -881,6 +1353,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana dell'energia); le forniture di energia a Israele (campagna «Energy Embargo Now»)"
     }
    ]
   },
@@ -893,6 +1371,12 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "la fornitura di server e servizi all'esercito israeliano (contratto del 2023)"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
     }
    ]
   },
@@ -932,6 +1416,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Deutsche Bank",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
     }
    ]
   },
@@ -1003,6 +1499,18 @@
    ]
   },
   {
+   "azienda": "eDreams",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
    "azienda": "Egged Transportation Ltd.",
    "paese": "Israele",
    "settore": "trasporti",
@@ -1012,6 +1520,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di trasporti e logistica)"
     }
    ]
   },
@@ -1055,6 +1569,19 @@
    ]
   },
   {
+   "azienda": "Elbit Systems",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana del settore militare e della sicurezza)"
+    }
+   ],
+   "paese": "Israele"
+  },
+  {
    "azienda": "Elco Ltd.",
    "paese": "Israele",
    "settore": "edilizia",
@@ -1090,6 +1617,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana)"
     }
    ]
   },
@@ -1103,6 +1636,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Energean",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
     }
    ]
   },
@@ -1129,6 +1674,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Eni",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
     }
    ]
   },
@@ -1173,6 +1730,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ],
    "marchi": [
@@ -1221,6 +1784,42 @@
    ]
   },
   {
+   "azienda": "ExxonMobil",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
+    }
+   ]
+  },
+  {
+   "azienda": "Fanuc",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Fidelity Management & Research",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
    "azienda": "Field Produce Ltd.",
    "paese": "Israele",
    "settore": "cibo",
@@ -1256,6 +1855,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Ford",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
     }
    ]
   },
@@ -1364,6 +1975,30 @@
    ]
   },
   {
+   "azienda": "General Dynamics",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Genie Energy",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
+    }
+   ]
+  },
+  {
    "azienda": "Geo-Da – Lands & Property Management & Information Ltd.",
    "paese": "Israele",
    "settore": "immobiliare",
@@ -1390,6 +2025,18 @@
    ]
   },
   {
+   "azienda": "Glencore",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
+    }
+   ]
+  },
+  {
    "azienda": "Google",
    "settore": "tecnologia",
    "segnalazioni": [
@@ -1398,7 +2045,16 @@
      "tema": "israele-palestina",
      "tipo": "pressione",
      "per": "il progetto Nimbus: servizi cloud e di intelligenza artificiale al governo e all'esercito israeliani"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
     }
+   ],
+   "marchi": [
+    "Google/Alphabet"
    ]
   },
   {
@@ -1450,6 +2106,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Groupe BPCE",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
     }
    ]
   },
@@ -1558,6 +2226,18 @@
    ]
   },
   {
+   "azienda": "Harris Associates",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
    "azienda": "Harsa Studio – Sanitaryware Manufacturers Ltd.",
    "paese": "Israele",
    "settore": "edilizia",
@@ -1584,6 +2264,18 @@
    ]
   },
   {
+   "azienda": "HD Hyundai",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
    "azienda": "Heidelberg Materials AG",
    "paese": "Germania",
    "settore": "edilizia",
@@ -1593,6 +2285,24 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "HikVision",
+   "settore": "sicurezza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
     }
    ]
   },
@@ -1606,6 +2316,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Honeywell",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
     }
    ]
   },
@@ -1644,11 +2366,55 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "tecnologia e supporto logistico a governo, esercito, carceri e polizia israeliani"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
     }
    ],
    "marchi": [
     "HP Inc.",
-    "Hewlett Packard Enterprise (HPE)"
+    "Hewlett Packard Enterprise (HPE)",
+    "HPE and HP Inc."
+   ]
+  },
+  {
+   "azienda": "HSBC",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "IAI",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana del settore militare e della sicurezza)"
+    }
+   ],
+   "paese": "Israele"
+  },
+  {
+   "azienda": "IBM",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
+    }
    ]
   },
   {
@@ -1661,6 +2427,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "ING Group",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
     }
    ]
   },
@@ -1686,8 +2464,39 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "lo stabilimento di Kiryat Gat, su terre di un villaggio palestinese spopolato, e il contributo all'economia di guerra israeliana"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
     }
    ]
+  },
+  {
+   "azienda": "INVESCO Ltd",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "Israel Chemicals",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana)"
+    }
+   ],
+   "paese": "Israele"
   },
   {
    "azienda": "Israel Discount Bank Ltd.",
@@ -1699,6 +2508,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (banca israeliana)"
     }
    ]
   },
@@ -1738,7 +2553,16 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; forniture di mezzi usati per demolizioni e per distruggere coltivazioni"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
+   ],
+   "marchi": [
+    "JCB"
    ]
   },
   {
@@ -1777,6 +2601,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "JP Morgan Chase",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
     }
    ]
   },
@@ -1859,6 +2695,18 @@
    ]
   },
   {
+   "azienda": "L3 Harris",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
    "azienda": "Land of Olive Premium Oil – Achiya Farm Ltd.",
    "paese": "Israele",
    "settore": "cibo",
@@ -1885,6 +2733,18 @@
    ]
   },
   {
+   "azienda": "Leonardo",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
    "azienda": "Lesico Ltd.",
    "paese": "Israele",
    "settore": "edilizia",
@@ -1894,6 +2754,30 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Lockheed Martin",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Maersk",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il trasporto di merci per Israele, secondo i rapporti citati dal BDS"
     }
    ]
   },
@@ -1920,6 +2804,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "MAN Group",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ]
   },
@@ -2023,6 +2919,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di agricoltura e acqua)"
     }
    ]
   },
@@ -2079,6 +2981,18 @@
    ]
   },
   {
+   "azienda": "Meta",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
+    }
+   ]
+  },
+  {
    "azienda": "Microsoft",
    "settore": "tecnologia",
    "segnalazioni": [
@@ -2087,6 +3001,12 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "i servizi cloud Azure e di intelligenza artificiale forniti all'esercito israeliano"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
     }
    ]
   },
@@ -2195,6 +3115,18 @@
    ]
   },
   {
+   "azienda": "Morgan Stanley",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
    "azienda": "Motorola Solutions Israel Ltd.",
    "paese": "Israele",
    "settore": "tecnologia",
@@ -2217,6 +3149,24 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi di sicurezza a imprese degli insediamenti; servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
+    }
+   ]
+  },
+  {
+   "azienda": "MSC",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il trasporto di merci per Israele, secondo i rapporti citati dal BDS"
     }
    ]
   },
@@ -2247,6 +3197,18 @@
    ]
   },
   {
+   "azienda": "Nammo",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
    "azienda": "Natoon – Nof Yam Security Ltd.",
    "paese": "Israele",
    "settore": "sicurezza",
@@ -2269,6 +3231,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di agricoltura e acqua)"
     }
    ]
   },
@@ -2284,6 +3252,67 @@
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
     }
    ]
+  },
+  {
+   "azienda": "Newport Group",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "Nordea",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "Norges Bank Investment Management",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "Northrop Grumman",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "NSO Group",
+   "settore": "sicurezza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana del settore militare e della sicurezza)"
+    }
+   ],
+   "paese": "Israele"
   },
   {
    "azienda": "Ofertex Industries 1997 Ltd.",
@@ -2312,6 +3341,18 @@
    ]
   },
   {
+   "azienda": "Oracle",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
+    }
+   ]
+  },
+  {
    "azienda": "Orbia Advance Corp Sab de CV",
    "paese": "Messico",
    "settore": "agricoltura",
@@ -2321,7 +3362,16 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
+   ],
+   "marchi": [
+    "proprietaria di Netafim"
    ]
   },
   {
@@ -2347,6 +3397,30 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Oshkosh",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Palantir",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "prodotti tecnologici forniti a Israele che, secondo il BDS, sono usati anche come strumenti di guerra"
     }
    ]
   },
@@ -2385,6 +3459,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana dell'energia)"
     }
    ]
   },
@@ -2495,6 +3575,18 @@
    ]
   },
   {
+   "azienda": "Raven's Wing Asset Management",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
    "azienda": "RE/MAX",
    "settore": "immobiliare",
    "segnalazioni": [
@@ -2509,6 +3601,12 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ],
    "marchi": [
@@ -2530,6 +3628,42 @@
    ]
   },
   {
+   "azienda": "RENK Group",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Rheinmetall",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Rolls-Royce Holdings",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
    "azienda": "Rotshtein Real Estate Ltd.",
    "paese": "Israele",
    "settore": "immobiliare",
@@ -2540,6 +3674,21 @@
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
     }
+   ]
+  },
+  {
+   "azienda": "RTX",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ],
+   "marchi": [
+    "Raytheon (nome precedente)"
    ]
   },
   {
@@ -2621,6 +3770,18 @@
    ]
   },
   {
+   "azienda": "Schroeders",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
    "azienda": "Shahar Co. – Civil Engineering, Construction and Infrastructure Company Ltd.",
    "paese": "Israele",
    "settore": "edilizia",
@@ -2669,6 +3830,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Shell",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
     }
    ]
   },
@@ -2759,6 +3932,36 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "il ruolo di appaltatore principale del cavo elettrico Euro-Asia Interconnector, che collegherebbe gli insediamenti all'Europa"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
+    }
+   ]
+  },
+  {
+   "azienda": "Socar",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
+    }
+   ]
+  },
+  {
+   "azienda": "Societe Generale",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
     }
    ]
   },
@@ -2771,7 +3974,16 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "il ruolo nello spostamento dei beduini palestinesi del Naqab (Negev) e la discriminazione dei lavoratori palestinesi"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana)"
     }
+   ],
+   "marchi": [
+    "PepsiCo (proprietaria)"
    ]
   },
   {
@@ -2784,6 +3996,54 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Standard Chartered",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "State Farm Mutual Automobile Insurance",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "State Street Corporation",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "Sturm Ruger",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
     }
    ]
   },
@@ -2823,6 +4083,18 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Swedbank",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
     }
    ]
   },
@@ -2879,6 +4151,19 @@
    ]
   },
   {
+   "azienda": "Tempo Beverages",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "wp-tempo",
+     "tema": "israele-palestina",
+     "tipo": "whoprofits",
+     "per": "la distribuzione esclusiva di bevande nel Territorio palestinese occupato, un mercato che l'occupazione rende obbligato (la scheda ricorda anche che la controllata Barkan Winery ha lasciato nel 2007 la zona industriale dell'insediamento di Barkan)"
+    }
+   ]
+  },
+  {
    "azienda": "Teperberg Winery 1870 Ltd.",
    "paese": "Israele",
    "settore": "cibo",
@@ -2913,10 +4198,28 @@
      "tema": "israele-palestina",
      "tipo": "prioritario",
      "per": "il sostegno alla guerra di Israele e i profitti ricavati dall'occupazione, anche sul mercato palestinese"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di farmaci generici)"
     }
    ],
    "marchi": [
     "Teva Pharmaceutical Industries"
+   ]
+  },
+  {
+   "azienda": "Textron",
+   "settore": "difesa",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
    ]
   },
   {
@@ -2959,6 +4262,42 @@
    ]
   },
   {
+   "azienda": "The Vanguard Group",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "ThyssenKrupp",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "TKH Security",
+   "settore": "sicurezza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
    "azienda": "Tnufa Transportation Solutions Ltd.",
    "paese": "Israele",
    "settore": "trasporti",
@@ -2981,7 +4320,16 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "wp-tnuva",
+     "tema": "israele-palestina",
+     "tipo": "whoprofits",
+     "per": "il latte raccolto da allevamenti negli insediamenti in Cisgiordania e nel Golan siriano occupato, le palestre sponsorizzate negli insediamenti e la vendita dei suoi prodotti in Cisgiordania"
     }
+   ],
+   "marchi": [
+    "Tnuva Group"
    ]
   },
   {
@@ -2998,6 +4346,30 @@
    ]
   },
   {
+   "azienda": "TotalEnergies",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
+    }
+   ]
+  },
+  {
+   "azienda": "Toyota",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture militari a Israele, usate anche nella guerra a Gaza"
+    }
+   ]
+  },
+  {
    "azienda": "TripAdvisor, Inc.",
    "paese": "Stati Uniti",
    "settore": "turismo",
@@ -3007,6 +4379,24 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "TUI Group",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ]
   },
@@ -3037,6 +4427,18 @@
    ]
   },
   {
+   "azienda": "UniCredit",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese coinvolte nell'occupazione (rapporto Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
    "azienda": "Unikowsky Maoz Ltd.",
    "paese": "Israele",
    "settore": "altro",
@@ -3046,6 +4448,30 @@
      "tema": "israele-palestina",
      "tipo": "onu",
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Union Investment Privatfonds",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "Valero",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "le forniture di energia a Israele (campagna «Energy Embargo Now»)"
     }
    ]
   },
@@ -3063,6 +4489,42 @@
    ]
   },
   {
+   "azienda": "Volvo Group",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
+    }
+   ]
+  },
+  {
+   "azienda": "Wellington",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "Wells Fargo & Company",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "il finanziamento di imprese che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
    "azienda": "Wix",
    "settore": "tecnologia",
    "segnalazioni": [
@@ -3071,6 +4533,37 @@
      "tema": "israele-palestina",
      "tipo": "spontaneo",
      "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano durante la guerra a Gaza"
+    },
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di tecnologia e telecomunicazioni)"
+    }
+   ]
+  },
+  {
+   "azienda": "WIZ",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di tecnologia e telecomunicazioni)"
+    }
+   ],
+   "paese": "Israele"
+  },
+  {
+   "azienda": "WSP Global",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la presenza in almeno una delle banche dati sulle imprese coinvolte nell'occupazione usate dal BDS (ONU, Who Profits, AFSC, Don't Buy Into Occupation)"
     }
    ]
   },
@@ -3177,6 +4670,19 @@
      "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
     }
    ]
+  },
+  {
+   "azienda": "ZIM",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "bds-disinvestimento",
+     "tema": "israele-palestina",
+     "tipo": "disinvestimento",
+     "per": "la complicità con l'occupazione secondo i criteri del BDS (impresa israeliana di trasporti e logistica)"
+    }
+   ],
+   "paese": "Israele"
   },
   {
    "azienda": "Zorganika Ltd.",
