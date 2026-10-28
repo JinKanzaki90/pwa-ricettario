@@ -143,6 +143,21 @@ insert into public.spesa_ricette (ricetta, porzioni) values ('hummus-di-ceci', 4
 insert into public.spesa_voci (nome) values ('Carta da forno');
 insert into public.spesa_spunte (chiave) values ('ceci|g');
 insert into public.archivio (ricetta) values ('ceci-croccanti-paprika');
+-- passo 5: operazioni dell'app su settimana e spesa
+select pg_temp.verifica(pg_temp.righe($$update public.profili set settimana_avviata = true where id = auth.uid()$$) = 1, 'B segna la settimana come avviata');
+select pg_temp.verifica(pg_temp.righe($$update public.profili set settimana_avviata = true where id <> auth.uid()$$) = 0, 'B non tocca la settimana avviata degli altri');
+insert into public.settimana (giorno, pasto, ricetta) values ('lun', 'pranzo', 'hummus-di-ceci') on conflict do nothing;
+select pg_temp.verifica((select ricetta from public.settimana where giorno = 'lun' and pasto = 'pranzo') = 'pasta-lenticchie-rosse', 'copia della settimana d''esempio: i pasti già presenti restano');
+select pg_temp.verifica(pg_temp.righe($$update public.settimana set ricetta = 'ceci-croccanti-paprika', dosi = 2, avanzo_di = null, nota = null where giorno = 'lun' and pasto = 'pranzo'$$) = 1, 'B cambia un pasto della propria settimana');
+select pg_temp.verifica(pg_temp.righe($$update public.settimana set ricetta = 'pasta-lenticchie-rosse', dosi = 1 where giorno = 'lun' and pasto = 'pranzo'$$) = 1, 'B rimette il pasto');
+select pg_temp.deve_fallire($$update public.settimana set utente = '00000000-0000-0000-0000-00000000000c'$$, '42501', 'B sposta la propria settimana a C');
+select pg_temp.deve_fallire($$update public.settimana set dosi = 7 where giorno = 'lun'$$, '23514', 'dosi oltre 6');
+select pg_temp.verifica(pg_temp.righe($$update public.spesa_ricette set porzioni = 6 where ricetta = 'pasta-lenticchie-rosse'$$) = 1, 'B cambia le porzioni in spesa');
+select pg_temp.deve_fallire($$update public.spesa_ricette set ricetta = 'ceci-croccanti-paprika'$$, '42501', 'B cambia la ricetta di una riga di spesa');
+insert into public.spesa_spunte (chiave) values ('ceci|g') on conflict do nothing;
+select pg_temp.verifica((select count(*) from public.spesa_spunte) = 1, 'spunta ripetuta ignorata');
+select pg_temp.verifica(pg_temp.righe($$delete from public.spesa_voci where nome = 'Carta da forno'$$) = 1, 'B toglie una voce a mano');
+insert into public.spesa_voci (nome, reparto) values ('Carta da forno', 'altro');
 reset role;
 
 -- ---------------------------------------------------------------- utente C
@@ -154,6 +169,7 @@ select pg_temp.verifica((select count(*) from public.archivio) = 0, 'C non vede 
 select pg_temp.verifica((select count(*) from public.commenti) = 1, 'C legge i commenti');
 select pg_temp.verifica(pg_temp.righe($$update public.settimana set ricetta = 'ceci-croccanti-paprika'$$) = 0, 'C non modifica la settimana di B');
 select pg_temp.verifica(pg_temp.righe($$delete from public.settimana$$) = 0, 'C non cancella la settimana di B');
+select pg_temp.verifica(pg_temp.righe($$delete from public.spesa_spunte$$) + pg_temp.righe($$update public.spesa_ricette set porzioni = 1$$) = 0, 'C non tocca la spesa di B');
 select pg_temp.deve_fallire($$insert into public.settimana (utente, giorno, pasto, ricetta) values ('00000000-0000-0000-0000-00000000000b', 'dom', 'cena', 'hummus-di-ceci')$$, '42501', 'C scrive nella settimana di B');
 select pg_temp.verifica(pg_temp.righe($$update public.commenti set testo = 'cambiato'$$) = 0, 'C non modifica il commento di B');
 select pg_temp.verifica(pg_temp.righe($$delete from public.commenti$$) = 0, 'C non cancella il commento di B');
