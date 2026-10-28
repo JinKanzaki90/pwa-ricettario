@@ -54,6 +54,7 @@ export const S = {
   NOMI: {},          /* nome ingrediente → reparto, per i suggerimenti */
   cur: null, porz: 2, backTo: null, lastDay: '',
   clearArmed: false,
+  offline: false,    /* senza rete all'avvio: si mostra la copia salvata sul dispositivo (copia.js), in sola lettura */
   evitare: [],       /* ingredienti da evitare dell'utente collegato (Impostazioni) */
   pers: persIniz
 };

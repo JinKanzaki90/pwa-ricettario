@@ -5,16 +5,19 @@ import { S, updUsrSync } from './stato.js';
 import { impostaCalendario } from './dominio.js';
 import { initTema } from './tema.js';
 import { initSchede, show, vista } from './navigazione.js';
-import { initRicette, renderFilters, renderCards, renderDetail, updArchBtn, primaLettura } from './ricette.js';
+import { initRicette, renderFilters, renderCards, renderDetail, updArchBtn, primaLettura, aggiorna } from './ricette.js';
 import { initModulo, aggNomi } from './modulo.js';
 import { initSpesa, renderShop, pruneSpunte } from './spesa.js';
 import { initStagione, renderMesi, renderSeas, renderFonte, renderDisp, updDisp } from './stagione.js';
 import { initSettimana, renderSett } from './settimana.js';
-import { initAccesso } from './accesso.js';
+import { initAccesso, U } from './accesso.js';
 import { initGuida } from './guida.js';
 import { initPersonali, quandoCambiano, primaLetturaPersonali } from './personali.js';
+import { initInstalla } from './installa.js';
+import { segnaCopia } from './copia.js';
 
 initTema();
+initInstalla();
 initSchede();
 initGuida();
 initRicette();
@@ -23,7 +26,7 @@ initSpesa();
 initStagione();
 initSettimana();
 initPersonali();
-quandoCambiano(function () { pruneSpunte(); renderSett(); renderShop(); updDisp(); document.dispatchEvent(new CustomEvent('rv-settimana')); });
+quandoCambiano(function () { pruneSpunte(); renderSett(); renderShop(); updDisp(); document.dispatchEvent(new CustomEvent('rv-settimana')); segnaCopia(U); });
 
 renderFilters(); renderCards(); renderShop(); updUsrSync(); updArchBtn(); renderMesi();
 
@@ -50,8 +53,13 @@ document.addEventListener('rv-evitare', function () {
   if (S.cur && !$('r-detail').hidden) renderDetail();
 });
 
+/* tornata la rete dopo un avvio senza connessione: si rileggono i dati veri */
+document.addEventListener('rv-in-linea', function () { primaLettura(); primaLetturaPersonali(); });
+
 initAccesso(function () {
-  vista('list'); primaLettura(); primaLetturaPersonali();
+  vista('list');
+  if (S.offline) aggiorna(); /* senza rete: la copia salvata sul dispositivo, già in S */
+  else { primaLettura(); primaLetturaPersonali(); }
   renderFilters(); renderCards();
   let start = (location.hash || '').slice(1);
   if (!start) start = store('rv-tab') || '';

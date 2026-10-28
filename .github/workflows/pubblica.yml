@@ -43,7 +43,7 @@ jobs:
         run: |
           sleep 20
           errori=0
-          for f in "" css/stile.css js/main.js config.js js/dati.js js/guida.js data/stagioni.json data/acquisti.json vendor/supabase-js-2.117.3.esm.js fonts/atkinson-hyperlegible-latin-400-normal.woff2; do
+          for f in "" sw.js manifest.webmanifest icone/icona-192.png icone/icona-maskable-512.png js/copia.js js/installa.js css/stile.css js/main.js config.js js/dati.js js/guida.js data/stagioni.json data/acquisti.json vendor/supabase-js-2.117.3.esm.js fonts/atkinson-hyperlegible-latin-400-normal.woff2; do
             codice=$(curl -sS -o /dev/null -w '%{http_code}' --retry 5 --retry-delay 10 --retry-all-errors "$BASE$f")
             echo "$codice $BASE$f"
             test "$codice" = "200" || errori=1

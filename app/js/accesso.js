@@ -6,6 +6,7 @@ import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '../config.js';
 import { $, esc, toast } from './util.js';
 import { S, normShop, togliVecchiDati } from './stato.js';
 import { apriImpostazioni, tornaDaImpostazioni } from './navigazione.js';
+import { copiaDi, togliCopia, segnaCopia, usaCopia, mostraAvviso } from './copia.js';
 
 export const sb = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, storageKey: 'rv-accesso' }
@@ -59,14 +60,15 @@ function stato(s) {
 }
 
 function fuori(avviso) {
-  U.utente = null; U.profilo = null; S.evitare = []; entrato = false;
+  U.utente = null; U.profilo = null; S.evitare = []; entrato = false; S.offline = false;
+  togliCopia(); /* la copia per la lettura senza rete appartiene all'account che esce */
   /* i dati del ricettario letti con questo account non restano in memoria */
   S.RICETTE = []; S.CESTINO = []; S.ARCH = []; S.AUTORI = {}; S.caricate = false; S.cur = null;
   S.MIA = {}; S.shop = normShop(null); S.personali = false; S.erroPers = '';
   S.GRUPPO = null; S.lettoGruppo = 0; S.erroGruppo = ''; S.vedi = '';
   document.dispatchEvent(new CustomEvent('rv-fuori'));
   $('f-accesso').reset(); mostraErr('a-err', '');
-  stato('fuori');
+  stato('fuori'); mostraAvviso();
   if (avviso) toast(avviso);
   setTimeout(function () { $('a-email').focus(); }, 0);
 }
@@ -79,6 +81,7 @@ async function caricaUtente(user) {
   const pr = await sb.from('preferenze').select('da_evitare').eq('utente', user.id).maybeSingle();
   if (pr.error) throw pr.error;
   S.evitare = pr.data ? pr.data.da_evitare.slice() : [];
+  segnaCopia(U);
 }
 
 async function dopoAccesso(user) {
@@ -87,6 +90,7 @@ async function dopoAccesso(user) {
   } catch (e) {
     /* senza rete la sessione resta valida: niente uscita, si propone di riprovare */
     if (senzaRete(e)) {
+      if (entraSenzaRete(user.id)) return;
       stato('avvio');
       $('avvio').querySelector('.wrap').innerHTML = '<div class="panel"><p>' + esc(msgErrore(e)) + '</p>' +
         '<button type="button" class="btn small" id="avvio-riprova">Riprova</button></div>';
@@ -111,7 +115,47 @@ async function dopoAccesso(user) {
 function entra() {
   stato('dentro');
   riempiImpostazioni();
+  mostraAvviso();
   if (!entrato) { entrato = true; quandoDentro(); }
+}
+
+/* ---------- senza rete: la copia salvata su questo dispositivo, in sola lettura ---------- */
+function entraSenzaRete(id) {
+  const c = copiaDi(id);
+  if (!c || !c.profilo || !c.profilo.nome_scelto) return false;
+  U.utente = { id: c.utente.id, email: c.utente.email };
+  U.profilo = { nome: c.profilo.nome, nome_scelto: true };
+  usaCopia(c);
+  S.offline = true;
+  entra();
+  return true;
+}
+
+/* id dell'utente della sessione salvata da supabase-js (serve solo a scegliere la copia giusta) */
+function utenteSalvato() {
+  try { const x = JSON.parse(localStorage.getItem('rv-accesso') || 'null'); return (x && x.user && x.user.id) || '-'; }
+  catch (e) { return '-'; }
+}
+
+/* tornata la rete: si rilegge tutto dal database; se la sessione non vale più, si torna all'accesso */
+let riprovando = false;
+async function riprovaRete(manuale) {
+  if (!S.offline || riprovando) return;
+  riprovando = true;
+  try {
+    const r = await sb.auth.getSession().catch(function (e) { return { error: e, data: {} }; });
+    const sessione = r.data && r.data.session;
+    if (!sessione) {
+      if (r.error && senzaRete(r.error)) { if (manuale) toast(msgErrore(r.error)); return; }
+      fuori('La sessione è terminata: accedi di nuovo.'); return;
+    }
+    try { await caricaUtente(sessione.user); }
+    catch (e) { if (manuale || !senzaRete(e)) toast(msgErrore(e)); return; }
+    S.offline = false;
+    riempiImpostazioni(); mostraAvviso();
+    document.dispatchEvent(new CustomEvent('rv-in-linea'));
+    if (manuale) toast('Connessione tornata: dati aggiornati.');
+  } finally { riprovando = false; }
 }
 
 /* ---------- accesso ---------- */
@@ -137,6 +181,7 @@ async function salvaNome(nome) {
   if (r.error) throw r.error;
   U.profilo = r.data;
   S.AUTORI[U.utente.id] = r.data.nome;
+  segnaCopia(U);
 }
 async function inviaBenvenuto(ev) {
   ev.preventDefault();
@@ -232,6 +277,7 @@ async function salvaEvitare(nuovo) {
     if (ins.error) throw ins.error;
   }
   S.evitare = nuovo;
+  segnaCopia(U);
   renderEvitare();
   document.dispatchEvent(new CustomEvent('rv-evitare'));
 }
@@ -319,8 +365,16 @@ export async function initAccesso(dentro) {
     if (evento === 'SIGNED_OUT' && U.utente) setTimeout(function () { fuori('La sessione è terminata: accedi di nuovo.'); }, 0);
   });
 
+  /* connessione persa e ritrovata */
+  window.addEventListener('online', function () { if (S.offline) riprovaRete(false); else mostraAvviso(); });
+  window.addEventListener('offline', mostraAvviso);
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && S.offline && navigator.onLine !== false) riprovaRete(false); });
+  document.addEventListener('click', function (e) { if (e.target.id === 'senza-rete-riprova') riprovaRete(true); });
+
   const r = await sb.auth.getSession().catch(function (e) { return { error: e, data: {} }; });
   const sessione = r.data && r.data.session;
   if (sessione && sessione.user) await dopoAccesso(sessione.user);
+  /* sessione salvata ma non rinnovabile perché manca la rete: si apre la copia, se c'è */
+  else if (r.error && senzaRete(r.error) && entraSenzaRete(utenteSalvato())) return;
   else fuori();
 }

@@ -34,6 +34,11 @@ export function puoModificare(r) { return !!r && (!r.autore || mia(r)); }
 export function nomeAutore(id) { return id ? (S.AUTORI[id] || 'Anonimo') : 'Anonimo'; }
 export function generica(r) { return !r.autore; }
 
+/* senza rete (copia sul dispositivo, S.offline) nessuna scrittura parte: si avvisa e basta */
+function inLinea() {
+  if (S.offline) throw { code: 'senza_rete' };
+}
+
 /* ---------- lettura ---------- */
 export async function caricaRicette() {
   const [ric, aut, arc] = await Promise.all([
@@ -58,6 +63,7 @@ export async function caricaRicette() {
 /* ---------- scrittura ---------- */
 /* nuova ricetta (senza id) o modifica; restituisce la ricetta salvata */
 export async function salvaRicetta(r, id) {
+  inLinea();
   const riga = aDb(r);
   const q = id ? sb.from('ricette').update(riga).eq('id', id) : sb.from('ricette').insert(riga);
   const res = await q.select(LEGGI);
@@ -68,6 +74,7 @@ export async function salvaRicetta(r, id) {
 
 /* cestino: il database registra data e autore dell'eliminazione */
 async function cambiaCestino(id, dentro) {
+  inLinea();
   const res = await sb.from('ricette').update({ eliminata_il: dentro ? new Date().toISOString() : null }).eq('id', id).select('id');
   if (res.error) throw res.error;
   if (!res.data || !res.data.length) throw { code: 'non_permesso' };
@@ -76,11 +83,13 @@ export function nelCestino(id) { return cambiaCestino(id, true); }
 export function dalCestino(id) { return cambiaCestino(id, false); }
 
 export async function archivia(id) {
+  inLinea();
   const res = await sb.from('archivio').upsert({ ricetta: id }, { onConflict: 'utente,ricetta', ignoreDuplicates: true });
   if (res.error) throw res.error;
   if (S.ARCH.indexOf(id) < 0) S.ARCH.push(id);
 }
 export async function togliArchivio(id) {
+  inLinea();
   const res = await sb.from('archivio').delete().eq('ricetta', id);
   if (res.error) throw res.error;
   S.ARCH = S.ARCH.filter(function (x) { return x !== id; });
@@ -110,6 +119,7 @@ export async function caricaSettimana() {
 }
 /* prima volta: copia la settimana d'esempio (i pasti già presenti, per esempio da un altro dispositivo, restano) */
 export async function avviaSettimana(esempio) {
+  inLinea();
   const righe = [];
   esempio.giorni.forEach(function (g) {
     g.pasti.forEach(function (p) {
@@ -129,18 +139,22 @@ export async function settimanaAvviata() {
 }
 /* scrive un pasto (nuovo o sostituito); un pasto vuoto si toglie */
 export async function salvaPasto(giorno, pasto, v) {
+  inLinea();
   const riga = { ricetta: v.ricetta, dosi: v.dosi || 1, avanzo_di: v.avanzo_di || null, nota: v.nota || null };
   const agg = senzaErrore(await sb.from('settimana').update(riga).eq('utente', io()).eq('giorno', giorno).eq('pasto', pasto).select('giorno'));
   if (!agg.length) senzaErrore(await sb.from('settimana').insert(Object.assign({ giorno: giorno, pasto: pasto }, riga)));
 }
 export async function svuotaSettimana() {
+  inLinea();
   senzaErrore(await sb.from('settimana').delete().eq('utente', io()));
 }
 export async function togliPasto(giorno, pasto) {
+  inLinea();
   senzaErrore(await sb.from('settimana').delete().eq('utente', io()).eq('giorno', giorno).eq('pasto', pasto));
 }
 /* gli avanzi cucinati in «giorno» seguono il piatto nuovo (o diventano piatti normali se il piatto non c'è più) */
 export async function aggiornaAvanzi(giorno, vecchia, nuova) {
+  inLinea();
   let q = sb.from('settimana').update(nuova ? { ricetta: nuova } : { avanzo_di: null, nota: null }).eq('utente', io()).eq('avanzo_di', giorno);
   q = vecchia ? q.eq('ricetta', vecchia) : q.is('ricetta', null);
   senzaErrore(await q.select('giorno'));
@@ -168,13 +182,16 @@ export async function caricaCommenti(ricetta) {
   return senzaErrore(await sb.from('commenti').select(LEGGI_COMM).eq('ricetta', ricetta).order('creato_il').order('id'));
 }
 export async function nuovoCommento(ricetta, testo) {
+  inLinea();
   return senzaErrore(await sb.from('commenti').insert({ ricetta: ricetta, testo: testo }).select(LEGGI_COMM).single());
 }
 export async function cambiaCommento(id, testo) {
+  inLinea();
   const d = senzaErrore(await sb.from('commenti').update({ testo: testo }).eq('id', id).eq('autore', io()).select('id'));
   if (!d.length) throw { code: 'commento_altrui' };
 }
 export async function togliCommento(id) {
+  inLinea();
   const d = senzaErrore(await sb.from('commenti').delete().eq('id', id).eq('autore', io()).select('id'));
   if (!d.length) throw { code: 'commento_altrui' };
 }
@@ -194,26 +211,33 @@ export async function caricaSpesa() {
 }
 /* porzioni di una ricetta in lista: aggiorna la riga se c'è, altrimenti la crea */
 export async function porzioniInSpesa(ricetta, porzioni) {
+  inLinea();
   const agg = senzaErrore(await sb.from('spesa_ricette').update({ porzioni: porzioni }).eq('utente', io()).eq('ricetta', ricetta).select('ricetta'));
   if (!agg.length) senzaErrore(await sb.from('spesa_ricette').insert({ ricetta: ricetta, porzioni: porzioni }));
 }
 export async function togliDaSpesa(ricetta) {
+  inLinea();
   senzaErrore(await sb.from('spesa_ricette').delete().eq('utente', io()).eq('ricetta', ricetta));
 }
 export async function aggiungiVoce(nome, reparto) {
+  inLinea();
   return senzaErrore(await sb.from('spesa_voci').insert({ nome: nome, reparto: reparto }).select('id,nome,reparto').single());
 }
 export async function togliVoce(id) {
+  inLinea();
   senzaErrore(await sb.from('spesa_voci').delete().eq('utente', io()).eq('id', id));
 }
 export async function spunta(chiave, si) {
+  inLinea();
   if (si) senzaErrore(await sb.from('spesa_spunte').upsert({ chiave: chiave }, { onConflict: 'utente,chiave', ignoreDuplicates: true }));
   else senzaErrore(await sb.from('spesa_spunte').delete().eq('utente', io()).eq('chiave', chiave));
 }
 export async function togliSpunte(chiavi) {
+  inLinea();
   if (chiavi.length) senzaErrore(await sb.from('spesa_spunte').delete().eq('utente', io()).in('chiave', chiavi));
 }
 export async function svuotaSpesa() {
+  inLinea();
   await Promise.all(['spesa_ricette', 'spesa_voci', 'spesa_spunte'].map(async function (t) {
     senzaErrore(await sb.from(t).delete().eq('utente', io()));
   }));
@@ -246,6 +270,7 @@ const VINCOLI = {
 export function msgDb(e) {
   if (!e) return 'Qualcosa non ha funzionato. Riprova tra poco.';
   const code = e.code || '', msg = String(e.message || '') + ' ' + String(e.details || '');
+  if (code === 'senza_rete') return 'Senza connessione: per modificare serve la rete.';
   if (code === 'commento_altrui') return 'Puoi modificare o eliminare solo i tuoi commenti (forse questo non c\'è più).';
   if (code === 'non_permesso' || code === '42501' || /row-level security/i.test(msg)) return 'Non puoi farlo: questa ricetta è di un\'altra persona. Puoi crearne una tua versione.';
   if (code === '23503') return 'La ricetta non esiste più: è stata cancellata del tutto.';

@@ -8,6 +8,14 @@
 <meta name="description" content="Guida alimentare, ricettario condiviso, settimana e lista della spesa per un gruppo di amici.">
 <meta name="theme-color" content="#f1f4ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111713" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icone/icona.svg" type="image/svg+xml">
+<link rel="icon" href="icone/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="icone/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Ricettario">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preload" href="fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/stile.css">
 <script>/* tema salvato applicato subito, prima del disegno della pagina */try{var t=localStorage.getItem('rv-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
@@ -82,6 +90,7 @@
 
 <main>
   <div class="wrap">
+    <p class="senza-rete" id="senza-rete" role="status" hidden></p>
 
     <!-- GUIDA -->
     <section role="tabpanel" id="p-guida" aria-labelledby="t-guida">
@@ -467,6 +476,18 @@
           <label class="ck"><input type="radio" name="tema" value="dark">Scuro</label>
         </div>
         <p class="fine">«Automatico» segue l'impostazione del telefono o del computer. La scelta vale per questo dispositivo.</p>
+      </div>
+
+      <div class="panel" id="inst">
+        <div class="eyebrow">App sul telefono</div>
+        <p class="fine" id="inst-gia" hidden>Stai usando il ricettario come app installata su questo dispositivo.</p>
+        <div id="inst-da-fare">
+          <p class="fine">Aggiungi il ricettario alla schermata Home: si apre come un'app, a schermo intero.</p>
+          <button type="button" class="btn small" id="inst-btn" hidden>Installa l'app</button>
+          <p class="fine" id="inst-ios" hidden>Su iPhone e iPad: apri il ricettario con <b>Safari</b>, tocca <b>Condividi</b> (il quadrato con la freccia in su), poi <b>Aggiungi alla schermata Home</b> e <b>Aggiungi</b>.</p>
+          <p class="fine" id="inst-altro" hidden>Apri il menu del browser (⋮ o ☰) e scegli <b>Installa app</b> o <b>Aggiungi a schermata Home</b>. Su iPhone usa Safari: <b>Condividi</b> → <b>Aggiungi alla schermata Home</b>.</p>
+        </div>
+        <p class="fine">Senza connessione puoi consultare guida, ricette, settimana e spesa come erano l'ultima volta che li hai aperti su questo dispositivo; per modificarli serve la rete.</p>
       </div>
 
       <form class="form panel" id="f-evitare" novalidate>

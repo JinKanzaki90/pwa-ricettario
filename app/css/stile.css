@@ -426,3 +426,8 @@ a.back { text-decoration: none; }
 .altrui .meal.gone, .altrui .meal.vuoto { cursor: default; }
 .addp.armed { background: var(--beet); border-color: var(--beet); color: var(--surface); }
 .day > .warnline { margin: 6px 0 0; }
+
+/* avviso «senza connessione» (passo 8): in cima al contenuto, sopra la scheda aperta */
+.senza-rete { margin: 12px 0 0; padding: 10px 14px; border-radius: var(--radius); background: var(--sun-soft); color: var(--fg); border: 1px solid var(--sun); font-size: 0.92rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.senza-rete .linkbtn { min-height: 32px; }
+body:not([data-stato="dentro"]) .senza-rete { display: none; }

@@ -163,9 +163,27 @@ async function imitaSupabase(ctx, db) {
   });
 }
 
+/* passo 8: l'elenco dei file salvati dal service worker deve corrispondere ai file del sito (licenze e note escluse) */
+function controllaGuscio() {
+  const fs = require('fs'), app = path.join(__dirname, '../app');
+  const sw = fs.readFileSync(path.join(app, 'sw.js'), 'utf8');
+  const elenco = JSON.parse(sw.match(/const GUSCIO = (\[[\s\S]*?\]);/)[1].replace(/'/g, '"'));
+  const file = [];
+  (function giro(d) {
+    fs.readdirSync(path.join(app, d), { withFileTypes: true }).forEach(function (x) {
+      const rel = d ? d + '/' + x.name : x.name;
+      if (x.isDirectory()) giro(rel);
+      else if (!/LICENSE|\.md$|\.txt$/.test(x.name) && rel !== 'sw.js') file.push(rel);
+    });
+  })('');
+  const mancano = file.filter(f => elenco.indexOf(f) < 0), inPiu = elenco.filter(f => f !== './' && file.indexOf(f) < 0);
+  console.log('elenco del service worker:', mancano.length || inPiu.length ? { mancano, inPiu } : 'ok (' + elenco.length + ' voci)');
+  return !mancano.length && !inPiu.length && elenco.indexOf('./') > -1;
+}
+
 (async () => {
   const browser = await chromium.launch();
-  let fail = 0;
+  let fail = controllaGuscio() ? 0 : 1;
   for (const [w, h] of [[360, 760], [1280, 900]]) for (const scheme of ['light', 'dark']) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, colorScheme: scheme });
     const db = { esiste: true, password: 'iniziale-123', profilo: { nome: 'Anonimo', nome_scelto: false, settimana_avviata: false }, preferenze: null, chiamate: [], ricette: ricettario(), archivio: [],
@@ -181,7 +199,7 @@ async function imitaSupabase(ctx, db) {
     const page = await ctx.newPage(); const errs = []; let attesi = 0;
     /* i 400 del token sono voluti (password sbagliata): contati a parte */
     const voluto = function (url) { return url.indexOf('/auth/v1/token') > -1 || url.indexOf('/rest/v1/profili') > -1; };
-    page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') { if (voluto(m.location().url || '') || /status of 503/.test(m.text())) attesi++; else errs.push(m.type() + ': ' + m.text()); } });
+    page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') { if (voluto(m.location().url || '') || /status of 503/.test(m.text()) || (db.giu && /ERR_INTERNET_DISCONNECTED/.test(m.text()) && (m.location().url || '').indexOf(SB) === 0)) attesi++; else errs.push(m.type() + ': ' + m.text() + ' ' + (m.location().url || '')); } });
     page.on('pageerror', e => errs.push('pageerror: ' + e.message));
     /* rete giù simulata e l'uscita, che non legge la risposta (204): con l'imitazione Chromium la segna «interrotta», non è un errore dell'app */
     page.on('requestfailed', r => { if (r.url().indexOf('/auth/v1/logout') < 0 && !db.giu) errs.push('requestfailed: ' + r.url() + ' ' + (r.failure() || {}).errorText); });
@@ -498,19 +516,62 @@ async function imitaSupabase(ctx, db) {
     await page.waitForSelector('nav.tabs', { state: 'visible' });
     const persist = await page.$eval('#shop-count', e => e.textContent);
 
-    /* senza rete all'avvio la sessione non si perde: messaggio e «Riprova» */
+    /* passo 8, PWA: manifest, icone, service worker attivo */
+    const pwa = await page.evaluate(async function () {
+      const m = await (await fetch('manifest.webmanifest')).json();
+      const icone = await Promise.all(m.icons.map(function (i) { return fetch(i.src).then(function (r) { return r.ok; }); }));
+      const reg = await navigator.serviceWorker.ready;
+      return { nome: m.name, avvio: m.start_url, display: m.display, icone: icone.length >= 3 && icone.every(Boolean),
+        maskable: m.icons.some(function (i) { return i.purpose === 'maskable'; }), attivo: !!reg.active, controlla: !!navigator.serviceWorker.controller };
+    });
+    const pwaOk = pwa.nome === 'Ricettario di famiglia' && pwa.avvio === './' && pwa.display === 'standalone' && pwa.icone && pwa.maskable && pwa.attivo && pwa.controlla;
+    const instOk = await page.evaluate(function () {
+      document.getElementById('imp-btn').click();
+      const v = function (id) { return !document.getElementById(id).hidden; };
+      const r = v('inst-da-fare') && !v('inst-gia') && !v('inst-btn') && (v('inst-ios') !== v('inst-altro'));
+      document.getElementById('imp-chiudi').click();
+      return r;
+    });
+
+    /* avvio senza rete vera (pagina dal service worker, Supabase irraggiungibile): copia salvata, sola lettura */
+    const contaSpesa = await page.$eval('#shop-count', e => e.textContent);
+    await page.click('#t-ricette');
+    const nCardsOn = await page.$$eval('#cards .rcard', l => l.length);
+    db.giu = true; await ctx.setOffline(true);
+    await page.reload({ waitUntil: 'load' });
+    await page.waitForSelector('#senza-rete:not([hidden])');
+    const avvisoRete = await testo('#senza-rete');
+    await page.click('#t-ricette');
+    const nCardsOff = await page.$$eval('#cards .rcard', l => l.length);
+    await page.click('#t-spesa');
+    const spesaOff = await page.$eval('#shop-count', e => e.textContent);
+    await page.screenshot({ path: `${dir}/${tag}-senza-rete.png` });
+    const primaSpunta = await page.$eval('#shop .item input', e => e.checked);
+    await page.click('#shop .item input');
+    await page.waitForFunction(() => /Senza connessione/.test(document.getElementById('toast').textContent));
+    await page.waitForTimeout(300);
+    const dopoSpunta = await page.$eval('#shop .item input', e => e.checked);
+    const offlineOk = /Senza connessione/.test(avvisoRete) && nCardsOff === nCardsOn && nCardsOn > 0 && spesaOff === contaSpesa && primaSpunta === dopoSpunta;
+    /* torna la rete: si rilegge da sola e l'avviso sparisce */
+    db.giu = false; await ctx.setOffline(false);
+    await page.waitForSelector('#senza-rete', { state: 'hidden' });
+    const tornataOk = await page.evaluate(() => !document.body.textContent.includes('Senza connessione.'));
+
+    /* senza rete e senza copia la sessione non si perde: messaggio e «Riprova» */
+    await page.evaluate(() => localStorage.removeItem('rv-copia'));
     db.giu = true;
     await page.reload({ waitUntil: 'networkidle' });
     await page.waitForSelector('#avvio-riprova');
     const msgRete = await testo('#avvio');
     db.giu = false;
     await page.click('#avvio-riprova'); await page.waitForSelector('nav.tabs', { state: 'visible' });
-    const reteOk = /connessione/.test(msgRete);
+    const reteOk = /connessione/.test(msgRete) && pwaOk && instOk && offlineOk && tornataOk;
+    if (!reteOk) console.log('pwa', pwa, instOk, avvisoRete, nCardsOn, nCardsOff, spesaOff, contaSpesa, primaSpunta, dopoSpunta, tornataOk);
 
     /* uscita e cancellazione dell'account */
     await page.click('#imp-btn'); await page.click('#imp-esci');
     await page.waitForSelector('#f-accesso', { state: 'visible' });
-    const uscitoOk = await page.evaluate(() => !Object.keys(localStorage).some(k => k === 'rv-accesso'));
+    const uscitoOk = await page.evaluate(() => !Object.keys(localStorage).some(k => k === 'rv-accesso' || k === 'rv-copia'));
     await page.fill('#a-email', EMAIL); await page.fill('#a-pwd', 'altra-password-2'); await page.click('#a-invia');
     await page.waitForSelector('nav.tabs', { state: 'visible' });
     await page.click('#imp-btn'); await page.click('#canc-apri');

@@ -1,6 +1,8 @@
 /* Scheda Ricette: elenco con ricerca e filtri, dettaglio, archivio personale, cestino condiviso.
    I dati stanno su Supabase (dati.js); dopo ogni scrittura si rileggono, così si vedono anche le modifiche degli altri. */
 import { $, esc, toast } from './util.js';
+import { segnaCopia } from './copia.js';
+import { U } from './accesso.js';
 import { S } from './stato.js';
 import {
   diStagione, ingStagione, hasCal, hasAlc, scale, fmtQ, ICON_STAG, ICON_VEG, ICON_CAL, ICON_ALC,
@@ -19,6 +21,7 @@ import {
 /* ---------- lettura dal database ---------- */
 let inLettura = null;
 export function ricarica() {
+  if (S.offline) return Promise.resolve(); /* senza rete si resta sulla copia salvata */
   if (!inLettura) {
     inLettura = caricaRicette().then(function () { inLettura = null; aggiorna(); }, function (e) { inLettura = null; throw e; });
   }
@@ -33,6 +36,7 @@ export function primaLettura() {
 
 /* ridisegna tutto ciò che dipende dalle ricette */
 export function aggiorna() {
+  segnaCopia(U);
   renderFilters(); renderCards(); renderSett(); pruneSpunte(); renderShop(); updArchBtn(); aggNomi();
   if (!$('r-detail').hidden && S.cur) {
     const c = byId(S.cur.id);

@@ -3,6 +3,8 @@
    Se una scrittura fallisce si mostra il motivo e si rilegge dal database, così lo schermo torna a dire il vero. */
 import { carica, toast } from './util.js';
 import { S, normShop, vecchiDati, togliVecchiDati } from './stato.js';
+import { U } from './accesso.js';
+import { segnaCopia, ripristinaPersonali } from './copia.js';
 import { caricaSettimana, avviaSettimana, settimanaAvviata, caricaSpesa, porzioniInSpesa, aggiungiVoce, spunta, msgDb } from './dati.js';
 
 let ridisegna = function () {};
@@ -65,9 +67,12 @@ export function primaLetturaPersonali() {
 /* scritture in fila: l'ordine dei tocchi è l'ordine sul database */
 let fila = Promise.resolve();
 export function scrivi(fn) {
-  fila = fila.then(fn).catch(function (e) {
+  fila = fila.then(fn).then(function () { segnaCopia(U); }).catch(function (e) {
     toast(msgDb(e));
-    return ricaricaPersonali(false).catch(function () { /* resta quello che si vede */ });
+    /* lo schermo torna a dire il vero: dal database o, senza rete, dall'ultima copia salvata */
+    const daCopia = function () { if (U.utente && ripristinaPersonali(U.utente.id)) ridisegna(); };
+    if (S.offline) { daCopia(); return; }
+    return ricaricaPersonali(false).catch(daCopia);
   });
   return fila;
 }
@@ -75,7 +80,7 @@ export function scrivi(fn) {
 /* modifiche fatte da un altro dispositivo: si rileggono tornando su Settimana o Spesa, o sull'app */
 const DOPO = 30000;
 function forseRileggi() {
-  if (S.personali && Date.now() - S.lettoPers > DOPO) ricaricaPersonali(false).catch(function () { /* resta la copia letta */ });
+  if (!S.offline && S.personali && Date.now() - S.lettoPers > DOPO) ricaricaPersonali(false).catch(function () { /* resta la copia letta */ });
 }
 export function initPersonali() {
   document.addEventListener('click', function (e) {
