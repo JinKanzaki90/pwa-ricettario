@@ -73,7 +73,7 @@ Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, so
 - [x] Verifica: nessuna migrazione nuova (schema e policy dal passo 2); con la sola chiave publishable `commenti` e `settimana` (e tutte le altre tabelle e funzioni) rispondono 401 sul progetto vero; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita (commento altrui non modificabile e mostrato come testo, pubblica/modifica/elimina il proprio, contatore, testo vuoto rifiutato; settimana di Marta in sola lettura con avanzo, doppia dose, nota e piatto eliminato; copia di un giorno con conferma, dose singola, piatto eliminato escluso, avanzo proprio che diventa piatto normale; ritorno dalla ricetta alla settimana dell'altro); Pubblica verde.
 - [x] Revisione di fine passo.
 
-### [ ] 7. Guida riscritta e «Acquisti consapevoli»
+### [~] 7. Guida riscritta e «Acquisti consapevoli» (iniziato il 28/10/2026 alle 15:00 UTC)
 Prima di scrivere i contenuti di «Acquisti consapevoli» chiedere ad Angelo criteri e fonti (§5.8): segnare `[!]` se mancano.
 
 ### [ ] 8. PWA
