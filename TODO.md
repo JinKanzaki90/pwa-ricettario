@@ -65,12 +65,13 @@ Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, so
 - [x] Verifica: migrazione verde; con la sola chiave publishable `profili`, `settimana` e le tre tabelle della spesa rispondono 401 sul progetto vero; prove locali del database superate; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita (copia della settimana d'esempio, passaggio dei dati del browser, aggiungi alla settimana con conferma, cambia/togli/scegli, avanzo che segue il piatto, sostituto di una ricetta nel cestino, spunte e voci sincronizzate, scrittura fallita); Pubblica verde.
 - [x] Revisione di fine passo.
 
-### [~] 6. Commenti, settimane del gruppo, copia di un giorno (iniziato il 28/10/2026 alle 13:12 UTC)
+### [x] 6. Commenti, settimane del gruppo, copia di un giorno (fatto il 28/10/2026)
 - [x] Commenti nel dettaglio della ricetta (§5.5): elenco con autore, data e «modificato»; nuovo commento (testo semplice, massimo 500 caratteri, contatore); modifica ed eliminazione (con conferma) solo dei propri; errori del database in italiano. Lo schema e le policy ci sono già dal passo 2: nessuna migrazione.
 - [x] Settimane del gruppo (§5.3): nella scheda Settimana la scelta «La mia / di …» (solo chi ha una settimana); la settimana dell'altro in sola lettura, con le ricette apribili (e il ritorno a quella settimana), i piatti eliminati indicati senza sostituto.
 - [x] Copia di un giorno intero dalla settimana di un altro nella propria, con conferma se il proprio giorno ha già dei pasti: ogni pasto diventa un piatto normale a dose singola (niente doppie dosi, avanzi, note); i piatti eliminati non si copiano; gli avanzi della propria settimana che venivano dal giorno sostituito diventano piatti normali.
 - [x] Prove: `test/prova-app.js` con commenti e settimana di un'altra persona imitati.
-- [ ] Verifica e revisione di fine passo.
+- [x] Verifica: nessuna migrazione nuova (schema e policy dal passo 2); con la sola chiave publishable `commenti` e `settimana` (e tutte le altre tabelle e funzioni) rispondono 401 sul progetto vero; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita (commento altrui non modificabile e mostrato come testo, pubblica/modifica/elimina il proprio, contatore, testo vuoto rifiutato; settimana di Marta in sola lettura con avanzo, doppia dose, nota e piatto eliminato; copia di un giorno con conferma, dose singola, piatto eliminato escluso, avanzo proprio che diventa piatto normale; ritorno dalla ricetta alla settimana dell'altro); Pubblica verde.
+- [x] Revisione di fine passo.
 
 ### [ ] 7. Guida riscritta e «Acquisti consapevoli»
 Prima di scrivere i contenuti di «Acquisti consapevoli» chiedere ad Angelo criteri e fonti (§5.8): segnare `[!]` se mancano.
@@ -152,6 +153,21 @@ Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare
    - l'avanzo si riconosce dalla ricetta uguale nel giorno indicato: se in quel giorno la stessa ricetta compare due volte la scelta è ambigua (innocuo: entrambe uguali). Uno schema con riferimento al pasto d'origine sarebbe più solido, ma non vale una migrazione adesso;
    - `pruneSpunte` toglie dal database le spunte di voci non più in lista calcolandole sullo schermo: se le ricette fossero lette solo in parte potrebbe togliere spunte valide (perdita minima: una spunta). Accettato;
    - le dipendenze circolari restano (`settimana` ↔ `ricette`, `spesa` → `personali` → `dati`), ma l'accesso ai dati di settimana e spesa ora sta tutto in `dati.js` come previsto al passo 4.
+
+### Passo 6 (28/10/2026)
+1. **Malintenzionato.** Nessuna migrazione e nessuna funzione nuova: commenti e settimane passano dalle policy del passo 2 (tutti leggono; ognuno scrive, modifica ed elimina solo i propri commenti e la propria settimana, provato in locale: C non modifica né cancella il commento di B, non commenta a nome di B, non scrive nella settimana di B). L'app filtra anche per autore nelle modifiche, ma la regola vera è nel database. Il testo dei commenti è mostrato solo tramite `esc()` (provato con `<b>` nel testo: compare come testo); la CSP del passo 4 resta. Nessun problema grave trovato. Da sapere:
+   - nessun limite al numero di commenti per persona (accettato per un gruppo su invito, come per le ricette);
+   - la vista del gruppo scarica le settimane di tutti, note comprese: è la regola di §3, ricordata sotto la propria settimana.
+2. **Utente.** Commenti e settimane del gruppo si usano da telefono e da computer nei due temi; la copia chiede conferma se il proprio giorno ha già dei pasti e avvisa dei piatti eliminati non copiati. Limiti e azioni:
+   - la copia di un giorno non ha «Annulla» (si rimedia a mano o con «Riparti dal piano d'esempio»). Azione (passo 9, se serve): conservare il giorno sostituito per un annullamento;
+   - i commenti nuovi degli altri compaiono riaprendo la ricetta dopo 30 secondi; le settimane degli altri tornando sulla scheda dopo 30 secondi o cambiando persona;
+   - a 360 px la scelta «Settimana da vedere» aggiunge un riquadro sopra la settimana. Azione (passo 9): valutare con Angelo se spostarla in una riga più compatta;
+   - restano dal passo 5: le note dei pasti non si scrivono dall'app e non c'è il comando «questo pasto è l'avanzo di…». Azione (passo 9): proporli ad Angelo.
+3. **Revisore esterno.**
+   - Prove con Supabase imitato; le policy di commenti e settimane sono provate su PostgreSQL locale, non sul progetto vero con account reali. Azione (passo 9, prova con Angelo): da due account, commentare la stessa ricetta e controllare che l'altro non possa modificare il commento; vedere la settimana dell'altro e copiarne un giorno;
+   - la copia di un giorno sono fino a otto scritture in fila, non un'unica operazione: se una fallisce l'app lo dice e rilegge, e il giorno può restare copiato a metà (si rifà la copia). Accettato: una funzione nel database costerebbe di più del rischio;
+   - i nomi delle persone arrivano con le ricette; ora la lettura delle settimane del gruppo li aggiorna, così chi è entrato da poco non compare come «Anonimo»;
+   - `commenti.js` tiene in memoria solo i commenti della ricetta aperta e li toglie all'uscita (evento `rv-fuori`), senza nuove dipendenze circolari con `accesso.js`.
 
 ## Richieste per Angelo
 

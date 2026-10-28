@@ -148,7 +148,13 @@ export async function aggiornaAvanzi(giorno, vecchia, nuova) {
 
 /* settimane degli altri del gruppo, in sola lettura: id utente → mappa dei pasti */
 export async function caricaSettimaneGruppo() {
-  const righe = senzaErrore(await sb.from('settimana').select('utente,' + LEGGI_SETT).neq('utente', io()));
+  const [sett, prof] = await Promise.all([
+    sb.from('settimana').select('utente,' + LEGGI_SETT).neq('utente', io()),
+    sb.from('profili').select('id,nome')
+  ]);
+  const righe = senzaErrore(sett);
+  /* nomi aggiornati: chi è entrato da poco compare con il suo nome, non come «Anonimo» */
+  senzaErrore(prof).forEach(function (p) { S.AUTORI[p.id] = p.nome; });
   const per = {};
   righe.forEach(function (x) { (per[x.utente] = per[x.utente] || []).push(x); });
   const out = {};
