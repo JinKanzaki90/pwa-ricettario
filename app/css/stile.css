@@ -254,6 +254,22 @@ ul.fonti a { color: var(--accent); overflow-wrap: anywhere; }
 .week-ctl { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 ul.consigli { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 0.92rem; }
 @media (max-width: 400px) { .meal { grid-template-columns: 1fr; } .meal .m { grid-column: 1; } }
+/* passo 5: settimana personale modificabile */
+.meal-r { display: flex; align-items: flex-start; gap: 4px; border-top: 1px solid var(--line); min-width: 0; }
+.meals > :first-child { border-top: 0; }
+.meal-r > .meal { border-top: 0; flex: 1; }
+.mod { appearance: none; border: 0; background: none; color: var(--accent); font: inherit; font-weight: 700; font-size: 0.84rem; text-decoration: underline; padding: 8px 2px 8px 8px; min-height: 44px; cursor: pointer; flex: none; }
+.meal.vuoto { cursor: default; }
+.meal.vuoto .t { color: var(--muted); font-weight: 400; font-style: italic; }
+.meal.edit { cursor: default; }
+.meal.edit .swap { gap: 10px; }
+.meal.edit .swap label:not(.ck) { color: var(--fg); }
+.meal.edit .ck { justify-self: start; }
+.addw { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.addw select { width: auto; flex: 1 1 110px; }
+.addw #w-giorno { flex-basis: 160px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+#w-avviso:empty { display: none; }
 
 /* seconda fase: alcolici, azioni, archivio, modulo nuova ricetta */
 .badge.alc { background: var(--beet-soft); color: var(--beet); }
@@ -276,7 +292,7 @@ ul.consigli { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size
 .meal.gone .t { color: var(--muted); font-style: italic; font-weight: 400; }
 .swap { grid-column: 2; display: grid; gap: 4px; padding-top: 6px; min-width: 0; }
 .swap label { font-size: 0.84rem; font-weight: 700; color: var(--beet); }
-.swap select, .form input[type="text"], .form input[type="number"], .form select, .form textarea {
+.swap select, .addw select, .form input[type="text"], .form input[type="number"], .form select, .form textarea {
   font: inherit; font-size: 1rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line);
   border-radius: 10px; padding: 9px 12px; min-height: 44px; width: 100%; min-width: 0;
 }

@@ -1,8 +1,8 @@
 /* Scheda Stagione: calendario di frutta e verdura e dispensa di base (collegata alla spesa). */
 import { $, esc, toast } from './util.js';
-import { S, saveShop } from './stato.js';
+import { S } from './stato.js';
 import { MESE, MESI } from './dominio.js';
-import { renderShop, pruneSpunte } from './spesa.js';
+import { renderShop, inListaAMano as inLista, aggiungiAMano, togliAMano } from './spesa.js';
 
 /* ---------- calendario di stagione ---------- */
 let meseSel = MESE;
@@ -37,7 +37,6 @@ export function renderFonte(d) {
 }
 
 /* ---------- dispensa di base, collegata alla spesa come voci a mano ---------- */
-function inLista(nome) { const n = nome.toLowerCase(); return S.shop.extra.some(function (x) { return x.nome.toLowerCase() === n; }); }
 export function renderDisp() {
   if (!S.DISP) return;
   $('disp').innerHTML = S.DISP.gruppi.map(function (g, gi) {
@@ -66,8 +65,9 @@ export function initStagione() {
   $('disp').addEventListener('click', function (e) {
     const b = e.target.closest('.addp'); if (!b) return;
     const nome = b.dataset.dn;
-    if (inLista(nome)) { S.shop.extra = S.shop.extra.filter(function (x) { return x.nome.toLowerCase() !== nome.toLowerCase(); }); pruneSpunte(); toast(nome + ' tolto dalla lista'); }
-    else { S.shop.extra.push({ nome: nome, reparto: b.dataset.dr || 'dispensa' }); toast(nome + ' aggiunto alla spesa'); }
-    S.clearArmed = false; saveShop(); renderShop();
+    if (!S.personali) { toast('La lista non è ancora stata letta: riprova tra poco.'); return; }
+    if (inLista(nome)) { togliAMano(nome); toast(nome + ' tolto dalla lista'); }
+    else { aggiungiAMano(nome, b.dataset.dr || 'dispensa'); toast(nome + ' aggiunto alla spesa'); }
+    S.clearArmed = false; renderShop();
   });
 }

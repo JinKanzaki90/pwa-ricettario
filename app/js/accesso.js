@@ -4,7 +4,7 @@
 import { createClient } from '../vendor/supabase-js-2.117.3.esm.js';
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '../config.js';
 import { $, esc, toast } from './util.js';
-import { S } from './stato.js';
+import { S, normShop, togliVecchiDati } from './stato.js';
 import { apriImpostazioni, tornaDaImpostazioni } from './navigazione.js';
 
 export const sb = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
@@ -62,6 +62,7 @@ function fuori(avviso) {
   U.utente = null; U.profilo = null; S.evitare = []; entrato = false;
   /* i dati del ricettario letti con questo account non restano in memoria */
   S.RICETTE = []; S.CESTINO = []; S.ARCH = []; S.AUTORI = {}; S.caricate = false; S.cur = null;
+  S.MIA = {}; S.shop = normShop(null); S.personali = false; S.erroPers = '';
   $('f-accesso').reset(); mostraErr('a-err', '');
   stato('fuori');
   if (avviso) toast(avviso);
@@ -251,6 +252,7 @@ async function togliEvitare(i) {
 /* uscita: solo da questo dispositivo */
 async function esci() {
   U.utente = null;
+  togliVecchiDati(); /* eventuali dati delle versioni precedenti rimasti sul browser */
   await sb.auth.signOut({ scope: 'local' }).catch(function () {});
   fuori('Sei uscito. A presto!');
 }

@@ -1,13 +1,13 @@
 /* Scheda Ricette: elenco con ricerca e filtri, dettaglio, archivio personale, cestino condiviso.
    I dati stanno su Supabase (dati.js); dopo ogni scrittura si rileggono, così si vedono anche le modifiche degli altri. */
 import { $, esc, toast } from './util.js';
-import { S, saveShop } from './stato.js';
+import { S } from './stato.js';
 import {
   diStagione, ingStagione, hasCal, hasAlc, scale, fmtQ, ICON_STAG, ICON_VEG, ICON_CAL, ICON_ALC,
   PASTI, ALTRI, CATEGORIE, NOME_PASTO, byId, archiviata, attive, daEvitare, trova
 } from './dominio.js';
 import { show, vista } from './navigazione.js';
-import { renderSett, usiSett } from './settimana.js';
+import { renderSett, usiSett, pannelloAggiungi, initPannelloAggiungi } from './settimana.js';
 import { addToShop, renderShop, pruneSpunte, inSpesa } from './spesa.js';
 import { openForm, daRicetta, aggNomi } from './modulo.js';
 import {
@@ -145,7 +145,8 @@ async function preparaElimina(r) {
 }
 async function elimina(r) {
   await nelCestino(r.id);
-  if (inSpesa(r.id)) { S.shop.selezione = S.shop.selezione.filter(function (x) { return x.id !== r.id; }); saveShop(); }
+  /* dalla spesa (di tutti) la toglie il database: qui si aggiorna solo lo schermo */
+  S.shop.selezione = S.shop.selezione.filter(function (x) { return x.id !== r.id; });
   delArmed = null;
   await ricarica();
   toast('«' + r.titolo + '» nel cestino', { label: 'Annulla', fn: function () { azione(function () { return ripristina(r, true); }); } });
@@ -181,7 +182,7 @@ export function renderDetail() {
     '<button type="button" id="p-meno" aria-label="Una porzione in meno"' + (porz <= 1 ? ' disabled' : '') + '>−</button><output id="p-val" aria-live="polite">' + porz + '</output>' +
     '<button type="button" id="p-piu" aria-label="Una porzione in più"' + (porz >= 12 ? ' disabled' : '') + '>+</button></div></div>' +
     '<ul class="ing">' + ing + '</ul>' +
-    '<button type="button" class="btn" id="add-shop">Aggiungi alla spesa</button></div>' +
+    '<button type="button" class="btn" id="add-shop">Aggiungi alla spesa</button></div>' + pannelloAggiungi(r) +
     '<div class="panel"><div class="eyebrow">Procedimento</div><ol class="passi">' + r.passi.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ol></div>' +
     (r.note_nutrizionali ? '<div class="note">' + esc(r.note_nutrizionali) + '</div>' : '') + azioni;
   $('back').onclick = function () {
@@ -193,6 +194,7 @@ export function renderDetail() {
   $('p-meno').onclick = function () { if (S.porz > 1) { S.porz--; renderDetail(); } };
   $('p-piu').onclick = function () { if (S.porz < 12) { S.porz++; renderDetail(); } };
   $('add-shop').onclick = function () { addToShop(r, S.porz); };
+  initPannelloAggiungi(r);
   if ($('d-edit')) $('d-edit').onclick = function () { delArmed = null; openForm(daRicetta(r, false)); };
   $('d-copy').onclick = function () { delArmed = null; openForm(daRicetta(r, true)); };
   if ($('d-arch')) $('d-arch').onclick = function () { azione(function () { return archivia(r); }); };
@@ -307,6 +309,8 @@ export function initRicette() {
     ricarica().catch(function (e) { toast(msgDb(e)); });
   });
   $('new-recipe').addEventListener('click', function () { openForm(null); });
+  /* dopo «Aggiungi alla settimana» il dettaglio mostra dove compare la ricetta */
+  document.addEventListener('rv-settimana', function () { if (!$('r-detail').hidden && S.cur) { const y = window.scrollY; renderDetail(); window.scrollTo(0, y); } });
   /* tornando sulla scheda Ricette dopo un po', si rileggono le ricette (modifiche degli altri) */
   document.addEventListener('rv-scheda', function (e) {
     if (e.detail === 'ricette' && S.caricate && Date.now() - S.letto > 120000) ricarica().catch(function () { /* resta la copia già letta */ });

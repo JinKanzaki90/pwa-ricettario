@@ -1,8 +1,17 @@
-/* Lista della spesa: ricette scelte + voci a mano + spunte, salvate su questo browser. */
+/* Lista della spesa personale: ricette scelte + voci a mano + spunte, sul database (sincronizzata tra i propri dispositivi).
+   Ogni tocco cambia subito lo schermo e poi scrive sul database (in fila, vedi personali.js). */
 import { $, esc, toast } from './util.js';
-import { S, normShop, saveShop, updSync } from './stato.js';
+import { S, normShop } from './stato.js';
 import { scale, fmtQ, REPARTI, byId } from './dominio.js';
 import { updDisp } from './stagione.js';
+import { scrivi } from './personali.js';
+import { porzioniInSpesa, togliDaSpesa, aggiungiVoce, togliVoce, spunta, togliSpunte, svuotaSpesa } from './dati.js';
+
+export function updSync() {
+  const el = $('shop-sync'); if (!el) return;
+  el.textContent = S.personali ? 'Salvata nel tuo account: la ritrovi su ogni tuo dispositivo.' : '';
+  el.className = 'fine sync';
+}
 
 function vuota(s) { return !s.selezione.length && !s.extra.length; }
 function chiave(nome, unita) { return nome.toLowerCase().trim() + '|' + unita; }
@@ -11,6 +20,8 @@ export function inSpesa(id) { return S.shop.selezione.some(function (x) { return
 /* in spesa le dosi a cucchiai e pizzichi non si sommano: sono prodotti da avere in dispensa (q.b.);
    i rametti si arrotondano all'intero per eccesso */
 const DA_DISPENSA = { cucchiaio: 1, cucchiaino: 1, pizzico: 1 };
+/* un reparto sconosciuto (per esempio «altro», il predefinito del database) finisce in Dispensa: nessuna voce resta invisibile */
+function noto(rep) { return REPARTI.some(function (r) { return r[0] === rep; }) ? rep : 'dispensa'; }
 function vociSpesa() {
   const m = {}, out = [], nomi = {};
   S.shop.selezione.forEach(function (s) {
@@ -20,7 +31,7 @@ function vociSpesa() {
       const u = DA_DISPENSA[i.unita] ? 'q.b.' : i.unita;
       const k = chiave(i.nome, u), q = (i.qta == null || u === 'q.b.') ? null : i.qta * f;
       let v = m[k];
-      if (!v) { v = m[k] = { k: k, nome: i.nome, unita: u, raw: q, reparto: i.reparto || 'dispensa', calabrese: i.calabrese || null }; out.push(v); }
+      if (!v) { v = m[k] = { k: k, nome: i.nome, unita: u, raw: q, reparto: noto(i.reparto), calabrese: i.calabrese || null }; out.push(v); }
       else if (q != null && v.raw != null) v.raw += q;
       if (!v.calabrese && i.calabrese) v.calabrese = i.calabrese;
       nomi[i.nome.toLowerCase().trim()] = true;
@@ -30,20 +41,51 @@ function vociSpesa() {
   S.shop.extra.forEach(function (x) {
     const n = x.nome.toLowerCase().trim(), k = 'mano|' + n;
     if (nomi[n]) return; /* già presente dalle ricette: niente doppione */
-    if (!m[k]) { m[k] = { k: k, nome: x.nome, reparto: x.reparto || 'dispensa', manuale: true }; out.push(m[k]); }
+    if (!m[k]) { m[k] = { k: k, nome: x.nome, reparto: noto(x.reparto), manuale: true }; out.push(m[k]); }
   });
   return out;
 }
 
+/* aggiunge porzioni di una ricetta (somma se è già in lista); restituisce la riga */
+export function piuPorzioni(r, p) {
+  let s = S.shop.selezione.filter(function (x) { return x.id === r.id; })[0];
+  if (s) s.porzioni = Math.min(60, s.porzioni + p); else { s = { id: r.id, porzioni: Math.min(60, p) }; S.shop.selezione.push(s); }
+  const n = s.porzioni;
+  scrivi(function () { return porzioniInSpesa(r.id, n); });
+  return s;
+}
 export function addToShop(r, p) {
-  const s = S.shop.selezione.filter(function (x) { return x.id === r.id; })[0];
-  if (s) { s.porzioni = Math.min(48, s.porzioni + p); toast(r.titolo + ': ora ' + s.porzioni + ' porzioni in lista'); }
-  else { S.shop.selezione.push({ id: r.id, porzioni: p }); toast(r.titolo + ' in lista (' + p + (p > 1 ? ' porzioni)' : ' porzione)')); }
-  S.clearArmed = false; saveShop(); renderShop();
+  if (!S.personali) { toast('La lista non è ancora stata letta: riprova tra poco.'); return; }
+  const gia = inSpesa(r.id), s = piuPorzioni(r, p);
+  toast(gia ? r.titolo + ': ora ' + s.porzioni + ' porzioni in lista' : r.titolo + ' in lista (' + p + (p > 1 ? ' porzioni)' : ' porzione)'));
+  S.clearArmed = false; renderShop();
+}
+
+/* voci a mano (anche dalla dispensa nella scheda Stagione) */
+export function inListaAMano(nome) { const n = nome.toLowerCase(); return S.shop.extra.some(function (x) { return x.nome.toLowerCase() === n; }); }
+export function aggiungiAMano(nome, reparto) {
+  if (inListaAMano(nome)) return;
+  const v = { id: null, nome: nome, reparto: reparto || 'dispensa' };
+  S.shop.extra.push(v);
+  scrivi(function () { return aggiungiVoce(v.nome, v.reparto).then(function (d) { v.id = d.id; }); });
+}
+export function togliAMano(nome) {
+  const n = nome.toLowerCase();
+  const via = S.shop.extra.filter(function (x) { return x.nome.toLowerCase() === n; });
+  S.shop.extra = S.shop.extra.filter(function (x) { return x.nome.toLowerCase() !== n; });
+  /* l'id arriva dopo l'inserimento: si legge quando tocca a questa scrittura */
+  scrivi(function () { return Promise.all(via.map(function (v) { return v.id ? togliVoce(v.id) : null; })); });
+  pruneSpunte();
 }
 
 export function renderShop() {
   const c = $('shop-count'), shop = S.shop;
+  if (!S.personali) {
+    c.hidden = true;
+    $('shop').innerHTML = S.erroPers ? '<div class="empty err">Non riesco a leggere la lista. ' + esc(S.erroPers) + ' <button type="button" class="linkbtn" data-riprova-pers>Riprova</button></div>'
+      : '<div class="empty">Caricamento della lista…</div>';
+    return;
+  }
   if (vuota(shop)) {
     c.hidden = true; S.clearArmed = false;
     updDisp();
@@ -88,10 +130,14 @@ function formAdd() {
     '<select id="shop-rep" aria-label="Reparto">' + REPARTI.map(function (r) { return '<option value="' + r[0] + '"' + (r[0] === 'dispensa' ? ' selected' : '') + '>' + r[1] + '</option>'; }).join('') + '</select>' +
     '<button type="submit" class="btn small">Aggiungi</button></div></form>';
 }
+/* spunte di voci che non sono più in lista: via anche dal database */
 export function pruneSpunte() {
-  if (!S.caricate) return;
+  if (!S.caricate || !S.personali) return;
   const keys = {}; vociSpesa().forEach(function (v) { keys[v.k] = true; });
+  const via = S.shop.spunte.filter(function (k) { return !keys[k]; });
+  if (!via.length) return;
   S.shop.spunte = S.shop.spunte.filter(function (k) { return keys[k]; });
+  scrivi(function () { return togliSpunte(via); });
 }
 
 export function initSpesa() {
@@ -99,24 +145,31 @@ export function initSpesa() {
   el.addEventListener('change', function (e) {
     const k = e.target.dataset && e.target.dataset.k; if (!k) return;
     const i = S.shop.spunte.indexOf(k);
-    if (e.target.checked && i < 0) S.shop.spunte.push(k);
-    if (!e.target.checked && i > -1) S.shop.spunte.splice(i, 1);
-    S.clearArmed = false; saveShop(); renderShop();
+    const si = e.target.checked;
+    if (si && i < 0) S.shop.spunte.push(k);
+    if (!si && i > -1) S.shop.spunte.splice(i, 1);
+    scrivi(function () { return spunta(k, si); });
+    S.clearArmed = false; renderShop();
   });
   el.addEventListener('click', function (e) {
     const b = e.target.closest('button'); if (!b) return;
     if (b.id === 'shop-clear') {
       if (!S.clearArmed) { S.clearArmed = true; renderShop(); return; }
-      S.shop = normShop(null); S.clearArmed = false; saveShop(); renderShop(); toast('Lista svuotata'); return;
+      S.shop = normShop(null); S.clearArmed = false; scrivi(svuotaSpesa); renderShop(); updDisp(); toast('Lista svuotata'); return;
     }
-    if (b.dataset.rm) { S.shop.selezione = S.shop.selezione.filter(function (x) { return x.id !== b.dataset.rm; }); pruneSpunte(); saveShop(); renderShop(); return; }
-    if (b.dataset.rmx) { const nm = b.dataset.rmx; S.shop.extra = S.shop.extra.filter(function (x) { return x.nome !== nm; }); pruneSpunte(); saveShop(); renderShop(); }
+    if (b.dataset.rm) {
+      const id = b.dataset.rm;
+      S.shop.selezione = S.shop.selezione.filter(function (x) { return x.id !== id; });
+      scrivi(function () { return togliDaSpesa(id); }); pruneSpunte(); renderShop(); return;
+    }
+    if (b.dataset.rmx) { togliAMano(b.dataset.rmx); renderShop(); }
   });
   el.addEventListener('submit', function (e) {
     e.preventDefault();
     const inp = $('shop-new'), nome = (inp.value || '').replace(/\s+/g, ' ').trim(); if (!nome) { inp.focus(); return; }
-    if (!S.shop.extra.some(function (x) { return x.nome.toLowerCase() === nome.toLowerCase(); })) S.shop.extra.push({ nome: nome, reparto: $('shop-rep').value });
-    saveShop(); renderShop(); toast(nome + ' aggiunto alla lista');
+    if (!S.personali) { toast('La lista non è ancora stata letta: riprova tra poco.'); return; }
+    aggiungiAMano(nome.slice(0, 80), $('shop-rep').value);
+    renderShop(); toast(nome + ' aggiunto alla lista');
     const ni = $('shop-new'); if (ni) ni.focus();
   });
 }

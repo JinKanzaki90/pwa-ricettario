@@ -95,6 +95,97 @@ export async function altreSettimane(id) {
   return Object.keys(visti).length;
 }
 
+/* ---------- settimana personale ----------
+   una riga per pasto: chiave 'giorno|pasto' → {ricetta, dosi, avanzo_di, nota}; ricetta nulla = cancellata per sempre */
+const LEGGI_SETT = 'giorno,pasto,ricetta,dosi,avanzo_di,nota';
+function io() { return U.utente && U.utente.id; }
+function senzaErrore(res) { if (res.error) throw res.error; return res.data; }
+function aMappa(righe) {
+  const m = {};
+  righe.forEach(function (x) { m[x.giorno + '|' + x.pasto] = { ricetta: x.ricetta, dosi: x.dosi || 1, avanzo_di: x.avanzo_di || null, nota: x.nota || '' }; });
+  return m;
+}
+export async function caricaSettimana() {
+  return aMappa(senzaErrore(await sb.from('settimana').select(LEGGI_SETT).eq('utente', io())));
+}
+/* prima volta: copia la settimana d'esempio (i pasti già presenti, per esempio da un altro dispositivo, restano) */
+export async function avviaSettimana(esempio) {
+  const righe = [];
+  esempio.giorni.forEach(function (g) {
+    g.pasti.forEach(function (p) {
+      righe.push({ giorno: g.id, pasto: p.slot, ricetta: p.id, dosi: p.dosi || 1, avanzo_di: p.avanzo_di || null, nota: p.nota || null });
+    });
+  });
+  /* una ricetta d'esempio cancellata per sempre diventa un pasto «eliminato» con la scelta del sostituto */
+  const ids = righe.map(function (x) { return x.ricetta; }).filter(function (x, i, a) { return a.indexOf(x) === i; });
+  const esistenti = senzaErrore(await sb.from('ricette').select('id').in('id', ids)).map(function (x) { return x.id; });
+  righe.forEach(function (x) { if (esistenti.indexOf(x.ricetta) < 0) x.ricetta = null; });
+  senzaErrore(await sb.from('settimana').upsert(righe, { onConflict: 'utente,giorno,pasto', ignoreDuplicates: true }));
+  senzaErrore(await sb.from('profili').update({ settimana_avviata: true }).eq('id', io()));
+}
+export async function settimanaAvviata() {
+  const d = senzaErrore(await sb.from('profili').select('settimana_avviata').eq('id', io()).single());
+  return !!d.settimana_avviata;
+}
+/* scrive un pasto (nuovo o sostituito); un pasto vuoto si toglie */
+export async function salvaPasto(giorno, pasto, v) {
+  const riga = { ricetta: v.ricetta, dosi: v.dosi || 1, avanzo_di: v.avanzo_di || null, nota: v.nota || null };
+  const agg = senzaErrore(await sb.from('settimana').update(riga).eq('utente', io()).eq('giorno', giorno).eq('pasto', pasto).select('giorno'));
+  if (!agg.length) senzaErrore(await sb.from('settimana').insert(Object.assign({ giorno: giorno, pasto: pasto }, riga)));
+}
+export async function svuotaSettimana() {
+  senzaErrore(await sb.from('settimana').delete().eq('utente', io()));
+}
+export async function togliPasto(giorno, pasto) {
+  senzaErrore(await sb.from('settimana').delete().eq('utente', io()).eq('giorno', giorno).eq('pasto', pasto));
+}
+/* gli avanzi cucinati in «giorno» seguono il piatto nuovo (o diventano piatti normali se il piatto non c'è più) */
+export async function aggiornaAvanzi(giorno, vecchia, nuova) {
+  let q = sb.from('settimana').update(nuova ? { ricetta: nuova } : { avanzo_di: null, nota: null }).eq('utente', io()).eq('avanzo_di', giorno);
+  q = vecchia ? q.eq('ricetta', vecchia) : q.is('ricetta', null);
+  senzaErrore(await q.select('giorno'));
+}
+
+/* ---------- lista della spesa personale (tre tabelle: i dispositivi non si sovrascrivono a vicenda) ---------- */
+export async function caricaSpesa() {
+  const [r, v, s] = await Promise.all([
+    sb.from('spesa_ricette').select('ricetta,porzioni,aggiunta_il').eq('utente', io()).order('aggiunta_il'),
+    sb.from('spesa_voci').select('id,nome,reparto').eq('utente', io()).order('id'),
+    sb.from('spesa_spunte').select('chiave').eq('utente', io())
+  ]);
+  return {
+    selezione: senzaErrore(r).map(function (x) { return { id: x.ricetta, porzioni: x.porzioni }; }),
+    extra: senzaErrore(v).map(function (x) { return { id: x.id, nome: x.nome, reparto: x.reparto }; }),
+    spunte: senzaErrore(s).map(function (x) { return x.chiave; })
+  };
+}
+/* porzioni di una ricetta in lista: aggiorna la riga se c'è, altrimenti la crea */
+export async function porzioniInSpesa(ricetta, porzioni) {
+  const agg = senzaErrore(await sb.from('spesa_ricette').update({ porzioni: porzioni }).eq('utente', io()).eq('ricetta', ricetta).select('ricetta'));
+  if (!agg.length) senzaErrore(await sb.from('spesa_ricette').insert({ ricetta: ricetta, porzioni: porzioni }));
+}
+export async function togliDaSpesa(ricetta) {
+  senzaErrore(await sb.from('spesa_ricette').delete().eq('utente', io()).eq('ricetta', ricetta));
+}
+export async function aggiungiVoce(nome, reparto) {
+  return senzaErrore(await sb.from('spesa_voci').insert({ nome: nome, reparto: reparto }).select('id,nome,reparto').single());
+}
+export async function togliVoce(id) {
+  senzaErrore(await sb.from('spesa_voci').delete().eq('utente', io()).eq('id', id));
+}
+export async function spunta(chiave, si) {
+  if (si) senzaErrore(await sb.from('spesa_spunte').upsert({ chiave: chiave }, { onConflict: 'utente,chiave', ignoreDuplicates: true }));
+  else senzaErrore(await sb.from('spesa_spunte').delete().eq('utente', io()).eq('chiave', chiave));
+}
+export async function togliSpunte(chiavi) {
+  if (chiavi.length) senzaErrore(await sb.from('spesa_spunte').delete().eq('utente', io()).in('chiave', chiavi));
+}
+export async function svuotaSpesa() {
+  await Promise.all(['spesa_ricette', 'spesa_voci', 'spesa_spunte'].map(async function (t) {
+    senzaErrore(await sb.from(t).delete().eq('utente', io()));
+  }));
+}
+
 /* ingredienti che il database considera carne: stesso elenco del vincolo ricette_senza_carne */
 export async function ingredientiDiCarne(ingredienti) {
   const res = await sb.rpc('ingredienti_di_carne', { ing: ingredienti });
@@ -104,6 +195,10 @@ export async function ingredientiDiCarne(ingredienti) {
 
 /* ---------- errori del database in italiano ---------- */
 const VINCOLI = {
+  spesa_porzioni_valide: 'In lista ci stanno da 1 a 60 porzioni per ricetta.',
+  spesa_voci_nome_lunghezza: 'La voce deve avere da 1 a 80 caratteri.',
+  settimana_dosi_valide: 'Le dosi vanno da 1 a 6.',
+  settimana_nota_lunghezza: 'La nota può avere al massimo 200 caratteri.',
   ricette_senza_carne: 'Un ingrediente risulta carne: il ricettario non ammette carne, salumi, strutto, brodo di carne o gelatina animale.',
   ricette_titolo_lunghezza: 'Il titolo deve avere da 3 a 120 caratteri.',
   ricette_ingredienti_validi: 'Controlla gli ingredienti: da 1 a 60, con nomi fino a 80 caratteri.',
@@ -118,6 +213,8 @@ export function msgDb(e) {
   if (!e) return 'Qualcosa non ha funzionato. Riprova tra poco.';
   const code = e.code || '', msg = String(e.message || '') + ' ' + String(e.details || '');
   if (code === 'non_permesso' || code === '42501' || /row-level security/i.test(msg)) return 'Non puoi farlo: questa ricetta è di un\'altra persona. Puoi crearne una tua versione.';
+  if (code === '23503') return 'La ricetta non esiste più: è stata cancellata del tutto.';
+  if (code === '23505') return 'Già fatto, forse da un altro dispositivo: ho riletto i dati.';
   if (code === '23514') {
     const k = Object.keys(VINCOLI).filter(function (n) { return msg.indexOf(n) > -1; })[0];
     return k ? VINCOLI[k] : 'Alcuni dati non sono validi: controlla il modulo.';

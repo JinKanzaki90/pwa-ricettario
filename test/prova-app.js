@@ -40,6 +40,39 @@ function filtra(righe, u) {
   return righe;
 }
 
+/* filtri PostgREST usati dall'app: eq., is.null, in.(…) */
+function valoriIn(v) { return v.slice(4, -1).match(/"(?:[^"\\]|\\.)*"|[^,]+/g).map(x => x[0] === '"' ? x.slice(1, -1) : x); }
+function filtraTutto(righe, u) {
+  const salta = { select: 1, order: 1, on_conflict: 1, limit: 1, columns: 1 };
+  u.searchParams.forEach(function (v, k) {
+    if (salta[k]) return;
+    if (v.indexOf('eq.') === 0) righe = righe.filter(r => String(r[k]) === v.slice(3));
+    else if (v === 'is.null') righe = righe.filter(r => r[k] == null);
+    else if (v.indexOf('in.(') === 0) { const l = valoriIn(v); righe = righe.filter(r => l.indexOf(String(r[k])) > -1); }
+  });
+  return righe;
+}
+/* tabelle personali (settimana e spesa): chiave primaria oltre all'utente */
+const PERSONALI = { settimana: ['giorno', 'pasto'], spesa_ricette: ['ricetta'], spesa_voci: ['id'], spesa_spunte: ['chiave'] };
+function tabellaPersonale(db, nome, m, u, corpo, prefer) {
+  const t = db[nome], pk = PERSONALI[nome];
+  if (m === 'GET') return [200, filtraTutto(t, u)];
+  if (m === 'POST') {
+    const nuove = [];
+    (Array.isArray(corpo) ? corpo : [corpo]).forEach(function (x) {
+      const r = Object.assign({ utente: UID, dosi: nome === 'settimana' ? 1 : undefined }, x);
+      if (nome === 'spesa_voci') r.id = ++db.idVoce;
+      const gia = t.filter(y => pk.every(k => String(y[k]) === String(r[k])))[0];
+      if (gia) { if (prefer.indexOf('ignore-duplicates') < 0) throw { code: '23505' }; return; }
+      if (nome === 'spesa_ricette') r.aggiunta_il = new Date().toISOString();
+      t.push(r); nuove.push(r);
+    });
+    return [201, nuove];
+  }
+  if (m === 'PATCH') { const tocc = filtraTutto(t, u); tocc.forEach(r => Object.assign(r, corpo)); return [200, tocc]; }
+  if (m === 'DELETE') { const via = filtraTutto(t, u); db[nome] = t.filter(r => via.indexOf(r) < 0); return [200, via]; }
+}
+
 function b64(o) { return Buffer.from(JSON.stringify(o)).toString('base64url'); }
 function jwt() {
   const now = Math.floor(Date.now() / 1000);
@@ -87,13 +120,22 @@ async function imitaSupabase(ctx, db) {
       if (m === 'POST') { if (db.archivio.indexOf(corpo.ricetta) < 0) db.archivio.push(corpo.ricetta); return json(201); }
       if (m === 'DELETE') { const id = (u.searchParams.get('ricetta') || '').slice(3); db.archivio = db.archivio.filter(function (x) { return x !== id; }); return route.fulfill({ status: 204, body: '' }); }
     }
-    if (p === '/rest/v1/settimana') return json(200, [{ utente: ALTRO }, { utente: UID }]);
+    /* chi ha la ricetta in settimana (avviso prima dell'eliminazione): risposta fissa, una persona oltre a chi chiama */
+    if (p === '/rest/v1/settimana' && m === 'GET' && u.searchParams.get('ricetta')) return json(200, [{ utente: ALTRO }, { utente: UID }]);
+    const tab = p.replace('/rest/v1/', '');
+    if (PERSONALI[tab]) {
+      if (db.giuPersonali) return json(503, { message: 'non disponibile' });
+      try {
+        const [st, righe] = tabellaPersonale(db, tab, m, u, corpo, req.headers()['prefer'] || '');
+        return json(st, oggetto ? righe[0] : righe);
+      } catch (e) { return json(409, { code: e.code, message: 'duplicate key' }); }
+    }
     if (p === '/rest/v1/rpc/ingredienti_di_carne') {
       return json(200, corpo.ing.filter(function (i) { return RE_CARNE.test(i.nome); }).map(function (i) { return i.nome; }));
     }
     if (p === '/rest/v1/profili') {
       if (m === 'PATCH') {
-        if (corpo.nome.toLowerCase() === 'anonimo') return json(400, { code: '23514', message: 'violates check constraint "profili_nome_non_riservato"' });
+        if (corpo.nome && corpo.nome.toLowerCase() === 'anonimo') return json(400, { code: '23514', message: 'violates check constraint "profili_nome_non_riservato"' });
         Object.assign(db.profilo, corpo);
       }
       return json(200, oggetto ? db.profilo : [db.profilo]);
@@ -113,16 +155,17 @@ async function imitaSupabase(ctx, db) {
   let fail = 0;
   for (const [w, h] of [[360, 760], [1280, 900]]) for (const scheme of ['light', 'dark']) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, colorScheme: scheme });
-    const db = { esiste: true, password: 'iniziale-123', profilo: { nome: 'Anonimo', nome_scelto: false }, preferenze: null, chiamate: [], ricette: ricettario(), archivio: [] };
+    const db = { esiste: true, password: 'iniziale-123', profilo: { nome: 'Anonimo', nome_scelto: false, settimana_avviata: false }, preferenze: null, chiamate: [], ricette: ricettario(), archivio: [],
+      settimana: [], spesa_ricette: [], spesa_voci: [], spesa_spunte: [], idVoce: 0 };
     await imitaSupabase(ctx, db);
     const page = await ctx.newPage(); const errs = []; let attesi = 0;
     /* i 400 del token sono voluti (password sbagliata): contati a parte */
     const voluto = function (url) { return url.indexOf('/auth/v1/token') > -1 || url.indexOf('/rest/v1/profili') > -1; };
-    page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') { if (voluto(m.location().url || '')) attesi++; else errs.push(m.type() + ': ' + m.text()); } });
+    page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') { if (voluto(m.location().url || '') || /status of 503/.test(m.text())) attesi++; else errs.push(m.type() + ': ' + m.text()); } });
     page.on('pageerror', e => errs.push('pageerror: ' + e.message));
     /* rete giù simulata e l'uscita, che non legge la risposta (204): con l'imitazione Chromium la segna «interrotta», non è un errore dell'app */
     page.on('requestfailed', r => { if (r.url().indexOf('/auth/v1/logout') < 0 && !db.giu) errs.push('requestfailed: ' + r.url() + ' ' + (r.failure() || {}).errorText); });
-    page.on('response', r => { if (r.status() >= 400 && !voluto(r.url())) errs.push('HTTP ' + r.status() + ' ' + r.url()); });
+    page.on('response', r => { if (r.status() >= 400 && !voluto(r.url()) && r.status() !== 503) errs.push('HTTP ' + r.status() + ' ' + r.url()); });
     const tag = `${w}-${scheme}`;
     const testo = sel => page.$eval(sel, e => e.textContent.trim());
 
@@ -139,6 +182,11 @@ async function imitaSupabase(ctx, db) {
     const errSbagliata = await testo('#a-err');
     await page.click('[data-mostra="a-pwd"]');
     const mostrata = await page.$eval('#a-pwd', e => e.type);
+    /* dati di una versione precedente salvati sul browser: vanno sul database al primo accesso */
+    await page.evaluate(() => {
+      localStorage.setItem('rv-spesa', JSON.stringify({ selezione: [{ id: 'hummus-di-ceci', porzioni: 2 }], extra: [{ nome: 'Tovaglioli di carta', reparto: 'altro' }], spunte: [] }));
+      localStorage.setItem('rv-ricettario', JSON.stringify({ sostituzioni: { 'lun|pranzo': 'hummus-di-ceci' } }));
+    });
     await page.fill('#a-pwd', 'iniziale-123'); await page.click('#a-invia');
 
     /* primo accesso: nome riservato, password diverse, poi giusto */
@@ -152,6 +200,13 @@ async function imitaSupabase(ctx, db) {
     await page.fill('#b-pwd2', 'nuova-password-1'); await page.click('#b-invia');
     await page.waitForSelector('#p-guida', { state: 'visible' });
     const benvenutoOk = db.profilo.nome === 'Prova' && db.profilo.nome_scelto && db.password === 'nuova-password-1';
+    /* passo 5: settimana d'esempio copiata una volta, dati del browser portati sul database */
+    await page.waitForFunction(() => !/Caricamento/.test(document.getElementById('shop').textContent));
+    const riga = (g, s) => db.settimana.filter(r => r.giorno === g && r.pasto === s)[0];
+    const avvioOk = db.profilo.settimana_avviata && db.settimana.length === 28 && riga('lun', 'pranzo').ricetta === 'hummus-di-ceci' &&
+      riga('mer', 'pranzo').avanzo_di === 'mar' && riga('mar', 'cena').dosi === 2 &&
+      db.spesa_ricette.length === 1 && db.spesa_voci.length === 1 &&
+      await page.evaluate(() => !localStorage.getItem('rv-spesa') && !localStorage.getItem('rv-ricettario'));
 
     /* le schede funzionano come prima */
     await page.screenshot({ path: `${dir}/${tag}-guida.png` });
@@ -243,8 +298,8 @@ async function imitaSupabase(ctx, db) {
     await page.screenshot({ path: `${dir}/${tag}-nuova.png`, fullPage: true });
 
     /* eliminazione: avviso sulle settimane degli altri, cestino, ripristino */
-    await page.click('#d-del'); await page.waitForFunction(() => /altra persona/.test((document.querySelector('.warnline') || {}).textContent || ''));
-    const avviso = await testo('.warnline');
+    await page.click('#d-del'); await page.waitForFunction(() => /altra persona/.test((document.querySelector('.warnline:not(#w-avviso)') || {}).textContent || ''));
+    const avviso = await testo('.warnline:not(#w-avviso)');
     await page.click('#d-del'); await page.waitForSelector('#r-list:not([hidden])');
     const nelCestino = !!salvata.eliminata_il;
     await page.click('#open-cest'); await page.waitForSelector('[data-crest]');
@@ -253,6 +308,64 @@ async function imitaSupabase(ctx, db) {
     await page.click('[data-crest]'); await page.waitForFunction(() => !document.querySelector('[data-crest]'));
     const cestinoOk = nelCestino && !salvata.eliminata_il && /solo Marta/.test(cestino) && /Frittata di zucchine/.test(cestino) && /1 altra persona/.test(avviso);
     await page.click('#cest-back');
+
+    /* passo 5: «Aggiungi alla settimana» dal dettaglio, con conferma se il pasto è occupato */
+    await page.fill('#r-cerca', 'hummus'); await page.click('.rcard[data-id="hummus-di-ceci"]'); await page.waitForSelector('#w-add');
+    await page.selectOption('#w-giorno', 'dom'); await page.selectOption('#w-pasto', 'cena');
+    await page.click('#w-add');
+    const avvisoSost = await testo('#w-avviso');
+    await page.click('#w-add');
+    await page.waitForFunction(() => /domenica a cena/.test(document.getElementById('r-detail').textContent));
+    await page.screenshot({ path: `${dir}/${tag}-aggiungi-settimana.png`, fullPage: true });
+    await page.click('#back'); await page.fill('#r-cerca', '');
+    const aggiungiOk = /Al posto di «Riso/.test(avvisoSost) && riga('dom', 'cena').ricetta === 'hummus-di-ceci';
+
+    /* settimana: cambiare un pasto (l'avanzo segue), togliere un pasto, sceglierne uno nuovo */
+    await page.click('#t-settimana'); await page.waitForSelector('[data-mod="mar|cena"]');
+    await page.click('[data-mod="mar|cena"]');
+    await page.selectOption('#mod-mar-cena', 'pasta-fagioli-borlotti');
+    const doppiaGia = await page.isChecked('#mod-mar-cena-d');
+    await page.screenshot({ path: `${dir}/${tag}-settimana-cambia.png` });
+    await page.click('.meal.edit [data-salva]');
+    await page.click('[data-mod="lun|spuntino"]'); await page.click('.meal.edit [data-togli]');
+    await page.waitForSelector('[data-mod="lun|spuntino"]');
+    const vuoto = /Nessun piatto/.test(await page.$eval('[data-mod="lun|spuntino"]', b => b.parentElement.textContent));
+    await page.click('[data-mod="lun|spuntino"]'); await page.click('.meal.edit [data-salva]');
+    const serveRicetta = await page.$('.meal.edit') !== null;
+    await page.selectOption('#mod-lun-spuntino', 'ceci-croccanti-paprika'); await page.click('.meal.edit [data-salva]');
+    await page.waitForFunction(() => !document.querySelector('.meal.edit'));
+    await page.waitForTimeout(300);
+    const settOk = doppiaGia && riga('mar', 'cena').ricetta === 'pasta-fagioli-borlotti' && riga('mar', 'cena').dosi === 2 &&
+      riga('mer', 'pranzo').ricetta === 'pasta-fagioli-borlotti' && riga('mer', 'pranzo').avanzo_di === 'mar' &&
+      vuoto && serveRicetta && riga('lun', 'spuntino').ricetta === 'ceci-croccanti-paprika';
+
+    /* ricetta nel cestino: «Ricetta eliminata» e sostituto, l'avanzo lo segue */
+    riga('gio', 'cena').ricetta = 'frittata-marta'; riga('ven', 'pranzo').ricetta = 'frittata-marta';
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.click('#t-settimana'); await page.waitForSelector('[data-sw="gio|cena"]');
+    const eliminata = await page.$eval('#day-gio', e => e.textContent) + await page.$eval('#day-ven', e => e.textContent);
+    await (await page.$('#day-gio')).screenshot({ path: `${dir}/${tag}-settimana-eliminata.png` });
+    await (await page.$('#day-ven')).screenshot({ path: `${dir}/${tag}-settimana-avanzo.png` });
+    await page.selectOption('[data-sw="gio|cena"]', 'farro-ceci-zucca-rucola');
+    await page.waitForFunction(() => !document.querySelector('[data-sw]'));
+    await page.waitForTimeout(300);
+    const sostOk = /Ricetta eliminata/.test(eliminata) && /Avanzo di un piatto eliminato/.test(eliminata) &&
+      riga('gio', 'cena').ricetta === 'farro-ceci-zucca-rucola' && riga('gio', 'cena').dosi === 2 && riga('ven', 'pranzo').ricetta === 'farro-ceci-zucca-rucola';
+
+    /* spesa: spunta, voce a mano tolta, sincronizzate sul database */
+    await page.click('#t-spesa'); await page.waitForSelector('#shop .item input');
+    await page.click('#shop .item input');
+    await page.click('[data-rmx="Tovaglioli di carta"]');
+    await page.waitForTimeout(300);
+    const spesaOk = db.spesa_spunte.length === 1 && !db.spesa_voci.some(v => v.nome === 'Tovaglioli di carta') &&
+      db.spesa_ricette.some(r => r.ricetta === 'hummus-di-ceci') && db.spesa_ricette.length > 5;
+    /* errore di scrittura: messaggio e lista riletta dal database */
+    db.giuPersonali = true;
+    await page.click('#shop .item input:not(:checked)');
+    await page.waitForFunction(() => /Riprova|riprova|server|Qualcosa/.test(document.getElementById('toast').textContent));
+    const msgScrittura = await testo('#toast');
+    await page.waitForTimeout(800); /* anche la rilettura fallisce: resta ciò che si vede, senza errori nella pagina */
+    db.giuPersonali = false;
 
     /* la sessione resta dopo il ricaricamento */
     await page.reload({ waitUntil: 'networkidle' });
@@ -284,12 +397,12 @@ async function imitaSupabase(ctx, db) {
     const esito = {
       nascosta, errVuoto: !!errVuoto, errSbagliata, mostrata, errRiservato: !!errRiservato, errDiverse, benvenutoOk,
       nCards, nErr, nVoci, scrollW, scrollWImp, font, email: email === EMAIL, nomeCampo, errPwdAtt, pwdOk, evitOk, temaOk, filtroOk,
-      ricercaOk, errCat, errCarne, salvataOk, avviso, cestinoOk, persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
+      ricercaOk, errCat, errCarne, salvataOk, avviso, cestinoOk, avvioOk, aggiungiOk, settOk, sostOk, spesaOk, msgScrittura, persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
     };
     console.log(tag, esito);
     const ok = db.uscite === 2 && !errs.length && scrollW <= w && scrollWImp <= w && nCards && nascosta && esito.errVuoto && /non corretti/.test(errSbagliata) &&
       mostrata === 'text' && esito.errRiservato && /non coincidono/.test(errDiverse) && benvenutoOk && nomeCampo === 'Prova' &&
-      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && ricercaOk && /Vegetariana/.test(errCat) && /carne/.test(errCarne) && salvataOk && cestinoOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
+      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && ricercaOk && /Vegetariana/.test(errCat) && /carne/.test(errCarne) && salvataOk && cestinoOk && avvioOk && aggiungiOk && settOk && sostOk && spesaOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
     if (!ok) fail++;
     await ctx.close();
   }
