@@ -11,10 +11,12 @@ import { initSpesa, renderShop, pruneSpunte } from './spesa.js';
 import { initStagione, renderMesi, renderSeas, renderFonte, renderDisp, updDisp } from './stagione.js';
 import { initSettimana, renderSett } from './settimana.js';
 import { initAccesso } from './accesso.js';
+import { initGuida } from './guida.js';
 import { initPersonali, quandoCambiano, primaLetturaPersonali } from './personali.js';
 
 initTema();
 initSchede();
+initGuida();
 initRicette();
 initModulo();
 initSpesa();

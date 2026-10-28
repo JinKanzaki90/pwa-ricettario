@@ -195,6 +195,27 @@ ol.tappe li:first-child { border-top: 0; }
 ol.tappe li::before { content: counter(t); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem; font-weight: 700; color: var(--accent); border: 1.5px solid var(--accent); font-variant-numeric: tabular-nums; }
 ul.fonti { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 0.92rem; }
 ul.fonti a { color: var(--accent); overflow-wrap: anywhere; }
+/* guida: indice, riassunti, fonti per sezione, acquisti consapevoli */
+.indice ol { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+.indice a, p.su a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.indice a:hover, p.su a:hover { text-decoration: underline; }
+.g-sez, #g-titolo { scroll-margin-top: 72px; }
+.g-sez h3:focus, #g-titolo:focus { outline: none; }
+.g-sez + .g-sez { padding-top: 20px; border-top: 1px solid var(--line); }
+.inbreve { margin: 0; max-width: 62ch; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); }
+.inbreve b { color: var(--accent); }
+.g-fonti { display: grid; gap: 6px; }
+ul.freq { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; max-width: 62ch; }
+p.su { margin: 0; font-size: 0.92rem; }
+.acq { display: grid; gap: 0; }
+.acq-v { display: grid; gap: 4px; padding: 12px 0; border-top: 1px solid var(--line); min-width: 0; }
+.acq-v:first-child { border-top: 0; padding-top: 0; }
+.acq-v:last-child { padding-bottom: 0; }
+.acq-v .nome { font-weight: 700; overflow-wrap: anywhere; }
+.acq-v p { margin: 0; overflow-wrap: anywhere; }
+.acq-v .meta { font-size: 0.84rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.acq-v .meta a { color: var(--accent); overflow-wrap: anywhere; }
+.badge.ricontrolla { background: var(--sun-soft); color: var(--sun); }
 
 /* spesa: ricette in lista, voci a mano, stato salvataggio */
 .rsel { display: grid; gap: 6px; min-width: 0; }

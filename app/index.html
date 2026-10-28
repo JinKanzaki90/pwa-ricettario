@@ -85,142 +85,264 @@
 
     <!-- GUIDA -->
     <section role="tabpanel" id="p-guida" aria-labelledby="t-guida">
-      <h2>Mangiare vegetale, un passo alla volta</h2>
-      <p class="lead">Una guida pratica per ridurre la carne e arrivare a un'alimentazione vegana completa, con ricette e spesa nello stesso posto.</p>
-      <div class="panel">
-        <div class="eyebrow">Il tuo profilo</div>
-        <div class="chips">
-          <span class="chip">Solo vegano</span>
-          <span class="chip">Transizione graduale</span>
-          <span class="chip">2 porzioni, regolabili</span>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="eyebrow">Come leggere le ricette</div>
-        <div class="legend">
-          <span class="badge veg"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Vegana</span><span>Nessun ingrediente di origine animale: niente uova, latte e derivati, miele o pesce. Le altre ricette sono segnate «Vegetariana» o «Con pesce»; la carne non è ammessa.</span>
-        </div>
-        <div class="legend">
-          <span class="badge stag"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="13" height="13" rx="2"/><path d="M3 12h13M7 6v4M12 6v4"/><circle cx="19" cy="5" r="2.2"/><path d="M19 1v.6M19 8.4V9M23 5h-.6M15.6 5H15M21.8 2.2l-.4.4M21.8 7.8l-.4-.4"/></svg>Di stagione</span><span>Più di metà della frutta e verdura stagionale della ricetta è di stagione questo mese, secondo il calendario della scheda <button type="button" class="linkbtn" data-goto="stagione">Stagione</button>; non contano i prodotti che si trovano tutto l'anno e gli aromi (aglio, limone, sedano).</span>
-        </div>
-        <div class="legend">
-          <span class="badge cal"><svg viewBox="0 0 24 24"><path d="M16.2 8.2c1.9.9 2.6 3 1.6 5.6-1.5 3.9-5.9 6.8-12.3 7.2 3.3-1.6 5.7-4.1 6.8-7.6.8-2.7 2.1-4.6 3.9-5.2z"/><path d="M13.6 8.6c.9-1.3 2.9-1.8 4.4-.8"/><path d="M16.2 7.4c0-2 .9-3.4 2.8-4.1"/></svg>Calabria</span><span>C'è un prodotto calabrese consigliato, con marca e dove trovarlo.</span>
-        </div>
-        <div class="legend">
-          <span class="badge alc"><svg viewBox="0 0 24 24"><path d="M7 3h10l-1 6.5a4 4 0 0 1-8 0z"/><path d="M12 13.5V20M8.5 21h7"/></svg>Con alcol</span><span>La ricetta usa vino, birra o superalcolici; aceto e salsa di soia non contano. Per restare vegano scegli vini e birre con dicitura vegana: alcuni sono chiarificati con albume, caseina o colla di pesce.</span>
-        </div>
-      </div>
-      <div class="panel alert">
-        <div class="eyebrow">Da sapere subito</div>
-        <p><strong>La vitamina B12 va integrata.</strong> Gli alimenti vegetali non ne forniscono in modo affidabile, quindi chi segue un'alimentazione vegana deve assumerla con un integratore o con alimenti fortificati. Conviene iniziare già mentre riduci i prodotti animali. Dose e forma si concordano con il medico o il dietista.</p>
-        <p class="fine">Questa guida riassume indicazioni di enti scientifici e non sostituisce il parere di un medico o di un dietista, a cui rivolgerti per esami e integrazioni.</p>
-      </div>
+      <h2 id="g-titolo" tabindex="-1">Mangiare bene, senza carne</h2>
+      <p class="lead">Una guida pratica per un'alimentazione senza carne, vegana, vegetariana o con pesce, con ricette e spesa nello stesso posto.</p>
+      <nav class="panel indice" aria-labelledby="g-indice-t">
+        <div class="eyebrow" id="g-indice-t">In questa guida</div>
+        <ol>
+          <li><a href="#g-leggere" data-salta>Come leggere le ricette</a></li>
+          <li><a href="#g-piatto" data-salta>Il piatto bilanciato</a></li>
+          <li><a href="#g-nutrienti" data-salta>Nutrienti da tenere d'occhio</a></li>
+          <li><a href="#g-carne" data-salta>Perché ridurre la carne rossa</a></li>
+          <li><a href="#g-tappe" data-salta>Togliere la carne, per tappe</a></li>
+          <li><a href="#g-acquisti" data-salta>Acquisti consapevoli</a></li>
+        </ol>
+        <p class="fine">Ogni sezione si apre con un riassunto; i dettagli si aprono toccando le voci con il segno +. Questa guida riassume indicazioni di enti scientifici e non sostituisce il parere di un medico o di un dietista.</p>
+      </nav>
 
-      <div class="g-block">
-        <h3>Nutrienti da tenere d'occhio</h3>
-        <p class="lead">Un'alimentazione vegana ben pianificata copre i fabbisogni di un adulto. Questi sono i punti che richiedono più attenzione. I valori sono i fabbisogni di riferimento per adulti (LARN 2024, salvo dove indicato).</p>
+      <!-- 1. COME LEGGERE LE RICETTE -->
+      <section class="g-block g-sez" id="g-leggere" aria-labelledby="g-leggere-t">
+        <h3 id="g-leggere-t" tabindex="-1">Come leggere le ricette</h3>
+        <p class="inbreve"><b>In breve.</b> Ogni ricetta è vegana, vegetariana o con pesce: la carne non è ammessa. I simboli dicono se è vegana, se è di stagione questo mese, se usa un prodotto calabrese e se contiene alcol.</p>
+        <div class="panel">
+          <div class="legend">
+            <span class="badge veg"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Vegana</span><span>Nessun ingrediente di origine animale: niente uova, latte e derivati, miele o pesce. Le altre ricette sono segnate «Vegetariana» (con uova, latte e derivati o miele) o «Con pesce».</span>
+          </div>
+          <div class="legend">
+            <span class="badge stag"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="13" height="13" rx="2"/><path d="M3 12h13M7 6v4M12 6v4"/><circle cx="19" cy="5" r="2.2"/><path d="M19 1v.6M19 8.4V9M23 5h-.6M15.6 5H15M21.8 2.2l-.4.4M21.8 7.8l-.4-.4"/></svg>Di stagione</span><span>Più di metà della frutta e verdura stagionale della ricetta è di stagione questo mese, secondo il calendario della scheda <button type="button" class="linkbtn" data-goto="stagione">Stagione</button>; non contano i prodotti che si trovano tutto l'anno e gli aromi (aglio, limone, sedano).</span>
+          </div>
+          <div class="legend">
+            <span class="badge cal"><svg viewBox="0 0 24 24"><path d="M16.2 8.2c1.9.9 2.6 3 1.6 5.6-1.5 3.9-5.9 6.8-12.3 7.2 3.3-1.6 5.7-4.1 6.8-7.6.8-2.7 2.1-4.6 3.9-5.2z"/><path d="M13.6 8.6c.9-1.3 2.9-1.8 4.4-.8"/><path d="M16.2 7.4c0-2 .9-3.4 2.8-4.1"/></svg>Calabria</span><span>C'è un prodotto calabrese consigliato, con marca e dove trovarlo.</span>
+          </div>
+          <div class="legend">
+            <span class="badge alc"><svg viewBox="0 0 24 24"><path d="M7 3h10l-1 6.5a4 4 0 0 1-8 0z"/><path d="M12 13.5V20M8.5 21h7"/></svg>Con alcol</span><span>La ricetta usa vino, birra o superalcolici; aceto e salsa di soia non contano. Chi mangia vegano scelga vini e birre con dicitura vegana: alcuni sono chiarificati con albume, caseina o colla di pesce.</span>
+          </div>
+          <p class="fine">Se nelle Impostazioni hai indicato degli ingredienti da evitare, le ricette che li contengono sono segnalate con «Contiene: …».</p>
+        </div>
+        <div class="g-fonti">
+          <div class="eyebrow">Fonti</div>
+          <ul class="fonti">
+            <li><a href="https://www.aslvco.it/wp-content/uploads/2026/01/6.CALENDARIO-FRUTTA-E-VERDURA-DI-STAGIONE.pdf" target="_blank" rel="noopener">Ministero delle politiche agricole, calendario di frutta e verdura di stagione «Sai quel che mangi» (pubblicato dall'ASL VCO)</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 2. IL PIATTO BILANCIATO -->
+      <section class="g-block g-sez" id="g-piatto" aria-labelledby="g-piatto-t">
+        <h3 id="g-piatto-t" tabindex="-1">Il piatto bilanciato</h3>
+        <p class="inbreve"><b>In breve.</b> Nei pasti principali metti verdura in abbondanza, cereali (meglio integrali), una fonte di proteine e grassi buoni. Al posto della carne: legumi, uova, latticini o pesce, alternandoli nella settimana.</p>
+        <div class="plate">
+          <div class="pl veg"><b>Verdura</b><span>di stagione, cruda e cotta</span></div>
+          <div class="pl cer"><b>Cereali</b><span>pasta, riso, farro, orzo, pane, meglio integrali</span></div>
+          <div class="pl pro"><b>Proteine</b><span>legumi, tofu, tempeh, seitan; uova, latticini, pesce</span></div>
+          <div class="pl fat"><b>Grassi buoni</b><span>olio extravergine, frutta secca, semi</span></div>
+        </div>
+        <div class="nutr">
+          <details>
+            <summary><span class="nn">Quanto spesso, in una settimana</span><span class="nk">indicazioni di massima</span></summary>
+            <div class="nb">
+              <ul class="freq">
+                <li><b>Legumi:</b> almeno 3–4 porzioni (150 g freschi o in scatola, 50 g secchi), anche di più.</li>
+                <li><b>Pesce:</b> 3–4 porzioni da 150 g, se lo mangi; il pesce conservato al massimo una volta.</li>
+                <li><b>Uova:</b> da 2 a 4.</li>
+                <li><b>Carne rossa:</b> da 0 a 1 porzione da 100 g; <b>salumi</b> da evitare. In questo ricettario la carne non c'è.</li>
+              </ul>
+              <p>Frutta fresca, frutta secca e yogurt (anche di soia) sono la base degli spuntini; l'acqua è la bevanda abituale.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Non solo formaggio</span><span class="nk">l'errore più comune</span></summary>
+            <div class="nb">
+              <p>Chi toglie la carne tende a sostituirla con formaggi e pasta. I formaggi danno proteine e calcio, ma anche molti grassi saturi e sale: usali come uno degli ingredienti proteici della settimana, non come l'unico. I legumi sono la base più economica e più completa.</p>
+            </div>
+          </details>
+        </div>
+        <div class="g-fonti">
+          <div class="eyebrow">Fonti</div>
+          <ul class="fonti">
+            <li><a href="https://www.epicentro.iss.it/alimentazione/linee-guida-sana-alimentazione-crea-2018" target="_blank" rel="noopener">CREA, Linee guida per una sana alimentazione 2018 (scheda ISS EpiCentro)</a></li>
+            <li><a href="https://www.smartfood.ieo.it/media/dlvn1qvf/smartfood-tab-porzioni-e-frequenze-semplificata.pdf" target="_blank" rel="noopener">Istituto Europeo di Oncologia, Smartfood: porzioni e frequenze di consumo (su LARN 2024, CREA 2018, WCRF 2018)</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 3. NUTRIENTI -->
+      <section class="g-block g-sez" id="g-nutrienti" aria-labelledby="g-nutrienti-t">
+        <h3 id="g-nutrienti-t" tabindex="-1">Nutrienti da tenere d'occhio</h3>
+        <p class="inbreve"><b>In breve.</b> Un'alimentazione senza carne ben organizzata copre i fabbisogni di un adulto. I punti da curare sono proteine, ferro, zinco, omega-3, calcio e iodio. Chi mangia solo vegano deve in più assumere la vitamina B12 con un integratore.</p>
+        <p class="fine">Valori di riferimento per adulti: LARN 2024, salvo dove indicato.</p>
         <div class="nutr">
           <details class="must">
-            <summary><span class="nn">Vitamina B12</span><span class="nk">integratore indispensabile</span></summary>
+            <summary><span class="nn">Vitamina B12</span><span class="nk">se mangi solo vegano: integratore</span></summary>
             <div class="nb">
-              <p>Serve al sistema nervoso e alla formazione dei globuli rossi. Nei vegetali non è presente in forma utile: alghe, lieviti e cibi fermentati non sono fonti affidabili.</p>
-              <p><b>Cosa fare:</b> integratore con regolarità, più eventuali alimenti fortificati (alcune bevande vegetali e cereali da colazione, leggi l'etichetta). Chiedi al medico un controllo periodico.</p>
+              <p>Si trova solo negli alimenti di origine animale: uova, latte e derivati, pesce. Chi li mangia con regolarità in genere ne assume abbastanza; chi ne mangia pochi ne parli con il medico.</p>
+              <p><b>Se mangi solo vegano:</b> serve un integratore, più eventuali alimenti fortificati (alcune bevande vegetali e cereali da colazione); alghe e cibi fermentati non sono fonti affidabili. Dose, forma e controlli si concordano con il medico.</p>
               <p class="ref">Riferimento EFSA per adulti: 4 µg al giorno come assunzione adeguata.</p>
             </div>
           </details>
           <details>
-            <summary><span class="nn">Vitamina D</span><span class="nk">sole e, se serve, integratore</span></summary>
+            <summary><span class="nn">Proteine</span><span class="nk">una fonte in ogni pasto</span></summary>
             <div class="nb">
-              <p>La fonte principale è l'esposizione al sole; pochi alimenti ne contengono, tra questi alcune bevande vegetali fortificate.</p>
-              <p><b>Cosa fare:</b> in autunno e inverno, o se stai poco all'aperto, valuta con il medico se misurarla e integrarla.</p>
+              <p><b>Fonti:</b> legumi di ogni tipo, soia e derivati (tofu, tempeh, bevanda di soia), seitan, frutta secca e semi; uova e latticini; pesce.</p>
+              <p><b>Cosa fare:</b> porta una fonte proteica in ogni pasto principale e varia nel corso della settimana. Chi mangia solo vegetale ne ha bisogno un po' di più, perché le proteine vegetali sono meno digeribili: legumi ogni giorno.</p>
             </div>
           </details>
           <details>
             <summary><span class="nn">Ferro</span><span class="nk">legumi + vitamina C</span></summary>
             <div class="nb">
-              <p><b>Fonti:</b> legumi (lenticchie, ceci, fagioli), tofu, cereali integrali, semi di zucca e di sesamo, frutta secca, verdure a foglia verde.</p>
-              <p><b>Cosa fare:</b> abbina nello stesso pasto una fonte di vitamina C (agrumi, kiwi, peperoni, prezzemolo, cavoli); tieni tè e caffè lontani dai pasti. Ammollo dei legumi, germogli e pane a lievitazione naturale migliorano l'assorbimento.</p>
+              <p><b>Fonti:</b> legumi (lenticchie, ceci, fagioli), tofu, cereali integrali, semi di zucca e di sesamo, frutta secca, verdure a foglia verde; ne contengono anche uova, pesce e molluschi.</p>
+              <p><b>Cosa fare:</b> il ferro dei vegetali si assorbe meno di quello della carne: abbina nello stesso pasto una fonte di vitamina C (agrumi, kiwi, peperoni, prezzemolo, cavoli) e tieni tè e caffè lontani dai pasti. Ammollo dei legumi, germogli e pane a lievitazione naturale aiutano.</p>
               <p class="ref">10 mg al giorno per gli uomini, 18 mg per le donne in età fertile.</p>
             </div>
           </details>
           <details>
-            <summary><span class="nn">Calcio</span><span class="nk">cavoli, tofu, acque calciche</span></summary>
+            <summary><span class="nn">Zinco</span><span class="nk">legumi, semi, integrali</span></summary>
             <div class="nb">
-              <p><b>Fonti:</b> verdure della famiglia dei cavoli (cavolo nero, broccoli, cime di rapa, rucola), tofu preparato con sali di calcio, bevande vegetali fortificate con calcio, mandorle, sesamo e tahina, acque minerali ricche di calcio.</p>
-              <p><b>Cosa fare:</b> scegli le bevande vegetali con calcio aggiunto. Spinaci e bietole ne contengono, ma lo cedono poco per via degli ossalati.</p>
+              <p><b>Fonti:</b> legumi, tofu e tempeh, semi di zucca, sesamo, frutta secca, cereali integrali, avena; formaggi, uova, frutti di mare.</p>
+              <p><b>Cosa fare:</b> valgono gli stessi accorgimenti del ferro: ammollo, germogli, lievito madre.</p>
+              <p class="ref">12 mg al giorno per gli uomini, 9 mg per le donne.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Omega-3</span><span class="nk">pesce azzurro, noci, semi di lino</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> il pesce, soprattutto quello azzurro piccolo (alici, sardine, sgombro), dà gli omega-3 a catena lunga. Per chi non mangia pesce: noci, semi di lino macinati, semi di chia, olio di lino (solo a crudo, in frigo).</p>
+              <p><b>Cosa fare:</b> se non mangi pesce, una porzione al giorno di una di queste fonti vegetali. Come condimento abituale preferisci l'olio extravergine d'oliva.</p>
+              <p><b>Mercurio:</b> varia le specie. Pesce spada, tonno e luccio, se mangiati spesso, sono i più ricchi di mercurio: chi è in età fertile, in gravidanza e i bambini scelgano soprattutto specie piccole.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Calcio</span><span class="nk">latticini, cavoli, acque calciche</span></summary>
+            <div class="nb">
+              <p><b>Fonti:</b> latte, yogurt e formaggi; verdure della famiglia dei cavoli (cavolo nero, broccoli, cime di rapa, rucola), tofu preparato con sali di calcio, bevande vegetali fortificate, mandorle, sesamo e tahina, acque minerali ricche di calcio.</p>
+              <p><b>Cosa fare:</b> se non usi latticini scegli bevande e yogurt vegetali con calcio aggiunto. Spinaci e bietole ne contengono, ma lo cedono poco per via degli ossalati.</p>
               <p class="ref">950 mg al giorno per gli adulti.</p>
             </div>
           </details>
           <details>
             <summary><span class="nn">Iodio</span><span class="nk">poco sale, ma iodato</span></summary>
             <div class="nb">
-              <p>Serve alla tiroide. In Italia il modo più semplice per assumerlo è il sale iodato, come raccomandano il Ministero della Salute e l'ISS.</p>
+              <p>Serve alla tiroide. Pesce e latticini ne contengono; il modo più semplice per assumerne abbastanza è il sale iodato, come raccomandano il Ministero della Salute e l'ISS.</p>
               <p><b>Cosa fare:</b> usa solo sale iodato, in quantità moderata, anche in cottura.</p>
               <p class="ref">150 µg al giorno per gli adulti.</p>
             </div>
           </details>
           <details>
-            <summary><span class="nn">Omega-3</span><span class="nk">noci e semi di lino</span></summary>
+            <summary><span class="nn">Vitamina D</span><span class="nk">sole e, se serve, integratore</span></summary>
             <div class="nb">
-              <p><b>Fonti:</b> noci, semi di lino macinati, semi di chia, olio di lino (solo a crudo, in frigo).</p>
-              <p><b>Cosa fare:</b> una porzione al giorno di una di queste fonti; come condimento abituale preferisci l'olio extravergine d'oliva e limita olio di mais e di girasole.</p>
-            </div>
-          </details>
-          <details>
-            <summary><span class="nn">Zinco</span><span class="nk">legumi, semi, integrali</span></summary>
-            <div class="nb">
-              <p><b>Fonti:</b> legumi, tofu e tempeh, semi di zucca, sesamo, frutta secca, cereali integrali, avena.</p>
-              <p><b>Cosa fare:</b> valgono gli stessi accorgimenti del ferro: ammollo, germogli, lievito madre.</p>
-              <p class="ref">12 mg al giorno per gli uomini, 9 mg per le donne.</p>
-            </div>
-          </details>
-          <details>
-            <summary><span class="nn">Proteine</span><span class="nk">legumi ogni giorno</span></summary>
-            <div class="nb">
-              <p><b>Fonti:</b> legumi di ogni tipo, soia e derivati (tofu, tempeh, bevanda di soia), seitan, cereali, frutta secca e semi.</p>
-              <p><b>Cosa fare:</b> porta una fonte proteica in ogni pasto principale e varia nel corso della giornata. Le proteine vegetali sono un po' meno digeribili di quelle animali, per questo la SINU indica che il fabbisogno può essere leggermente più alto.</p>
+              <p>La fonte principale è l'esposizione al sole; tra gli alimenti ne contengono il pesce grasso, le uova e alcune bevande vegetali fortificate.</p>
+              <p><b>Cosa fare:</b> in autunno e inverno, o se stai poco all'aperto, valuta con il medico se misurarla e integrarla.</p>
             </div>
           </details>
         </div>
-      </div>
-
-      <div class="g-block">
-        <h3>Il piatto bilanciato</h3>
-        <p class="lead">Nei pasti principali cerca di avere sempre questi quattro elementi. La verdura è la parte più abbondante.</p>
-        <div class="plate">
-          <div class="pl veg"><b>Verdura</b><span>di stagione, cruda e cotta</span></div>
-          <div class="pl cer"><b>Cereali</b><span>pasta, riso, farro, orzo, pane, meglio integrali</span></div>
-          <div class="pl pro"><b>Proteine vegetali</b><span>legumi, tofu, tempeh, seitan</span></div>
-          <div class="pl fat"><b>Grassi buoni</b><span>olio extravergine, frutta secca, semi</span></div>
+        <div class="g-fonti">
+          <div class="eyebrow">Fonti</div>
+          <ul class="fonti">
+            <li><a href="https://pubmed.ncbi.nlm.nih.gov/39923894/" target="_blank" rel="noopener">Academy of Nutrition and Dietetics, <i>Vegetarian Dietary Patterns for Adults</i>, position paper 2025</a></li>
+            <li><a href="https://doi.org/10.1016/j.numecd.2017.10.020" target="_blank" rel="noopener">SINU, <i>Position paper on vegetarian diets</i> (Agnoli et al., NMCD 2017)</a></li>
+            <li><a href="https://sinu.it/larn/" target="_blank" rel="noopener">SINU, LARN – Livelli di assunzione di riferimento, V revisione (2024)</a></li>
+            <li><a href="https://www.efsa.europa.eu/en/press/news/150709" target="_blank" rel="noopener">EFSA, valori di riferimento per la vitamina B12 (2015)</a></li>
+            <li><a href="https://www.epicentro.iss.it/iodio/documentazione-italia" target="_blank" rel="noopener">ISS EpiCentro, iodio e iodoprofilassi in Italia</a></li>
+            <li><a href="https://www.efsa.europa.eu/en/press/news/150122" target="_blank" rel="noopener">EFSA, pesce: benefici e rischi del metilmercurio (2015)</a></li>
+          </ul>
         </div>
-        <p class="fine">Frutta fresca, frutta secca e yogurt di soia sono la base degli spuntini. Acqua come bevanda abituale.</p>
-      </div>
+      </section>
 
-      <div class="g-block">
-        <h3>La transizione, per tappe</h3>
-        <p class="lead">Cambiare un'abitudine alla volta funziona meglio che cambiare tutto insieme. Ogni tappa dura quanto ti serve.</p>
+      <!-- 4. CARNE ROSSA -->
+      <section class="g-block g-sez" id="g-carne" aria-labelledby="g-carne-t">
+        <h3 id="g-carne-t" tabindex="-1">Perché ridurre la carne rossa</h3>
+        <p class="inbreve"><b>In breve.</b> Per l'Agenzia internazionale per la ricerca sul cancro la carne lavorata (salumi, würstel, carne in scatola) è cancerogena e la carne rossa probabilmente cancerogena, soprattutto per il tumore del colon-retto. Produrla pesa molto sul clima: a parità di proteine, la carne di manzo emette decine di volte i gas serra dei legumi.</p>
+        <div class="nutr">
+          <details>
+            <summary><span class="nn">Effetti sulla salute</span><span class="nk">IARC, WCRF</span></summary>
+            <div class="nb">
+              <p>Nel 2015 l'IARC (Organizzazione mondiale della sanità) ha classificato la <b>carne lavorata</b> nel gruppo 1, «cancerogena per l'uomo», e la <b>carne rossa</b> (manzo, vitello, maiale, agnello, cavallo, capra) nel gruppo 2A, «probabilmente cancerogena».</p>
+              <p>Ogni 50 g di carne lavorata mangiati al giorno aumentano il rischio di tumore del colon-retto del 18%. Per la carne rossa le prove più solide riguardano lo stesso tumore; sono emerse associazioni anche con quelli del pancreas e della prostata.</p>
+              <p>Il gruppo indica quanto sono solide le prove, non quanto è grande il rischio: essere nella stessa classe del fumo non vuol dire essere pericolosi quanto il fumo.</p>
+              <p><b>Quanta al massimo:</b> il World Cancer Research Fund consiglia non più di tre porzioni di carne rossa a settimana (circa 350–500 g cotta) e poca o nessuna carne lavorata. Le tabelle italiane di Smartfood (IEO) indicano da 0 a 1 porzione da 100 g a settimana e salumi da evitare.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Impatto sull'ambiente</span><span class="nk">FAO, Poore e Nemecek</span></summary>
+            <div class="nb">
+              <p>Secondo la FAO le filiere degli allevamenti producono circa il <b>12%</b> dei gas serra emessi dalle attività umane (dati 2015); circa il 62% di questa quota viene dai bovini, tra carne e latte.</p>
+              <p>Il confronto più ampio sugli alimenti (Poore e Nemecek, <i>Science</i> 2018, quasi 40.000 aziende agricole) dà, in media, questi chili di CO₂ equivalente per 100 g di proteine:</p>
+              <ul class="freq">
+                <li>manzo da allevamento da carne: circa 50</li>
+                <li>agnello: circa 20</li>
+                <li>formaggio: circa 11</li>
+                <li>maiale: circa 8</li>
+                <li>pollame: circa 6</li>
+                <li>uova: circa 4</li>
+                <li>tofu: circa 2</li>
+                <li>piselli: meno di 0,5</li>
+              </ul>
+              <p>Lo stesso studio stima che carne, latticini, uova e acquacoltura occupino circa l'83% dei terreni agricoli del mondo, dando il 37% delle proteine e il 18% delle calorie.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span class="nn">Salute e pianeta insieme</span><span class="nk">EAT-Lancet 2025</span></summary>
+            <div class="nb">
+              <p>La commissione EAT-Lancet (2025) ha aggiornato la «dieta della salute planetaria», pensata per far stare bene le persone restando nei limiti del pianeta: è ricca di vegetali e legumi e prevede circa 14 g di carne rossa al giorno, un centinaio di grammi a settimana. Secondo la commissione, i sistemi alimentari producono circa il 30% delle emissioni di gas serra.</p>
+            </div>
+          </details>
+        </div>
+        <div class="g-fonti">
+          <div class="eyebrow">Fonti</div>
+          <ul class="fonti">
+            <li><a href="https://www.iarc.who.int/wp-content/uploads/2018/07/pr240_E.pdf" target="_blank" rel="noopener">IARC, <i>Monographs evaluate consumption of red meat and processed meat</i>, comunicato n. 240 (26/10/2015)</a></li>
+            <li><a href="https://www.wcrf.org/about-us/news-and-blogs/confused-about-red-meat-headlines-in-the-news" target="_blank" rel="noopener">World Cancer Research Fund, raccomandazioni su carne rossa e lavorata</a></li>
+            <li><a href="https://www.smartfood.ieo.it/media/dlvn1qvf/smartfood-tab-porzioni-e-frequenze-semplificata.pdf" target="_blank" rel="noopener">Istituto Europeo di Oncologia, Smartfood: porzioni e frequenze di consumo</a></li>
+            <li><a href="https://doi.org/10.4060/cc9029en" target="_blank" rel="noopener">FAO, <i>Pathways towards lower emissions</i> (2023)</a></li>
+            <li><a href="https://doi.org/10.1126/science.aaq0216" target="_blank" rel="noopener">Poore e Nemecek, <i>Reducing food's environmental impacts through producers and consumers</i>, Science 2018</a></li>
+            <li><a href="https://ourworldindata.org/less-meat-or-sustainable-meat" target="_blank" rel="noopener">Our World in Data, <i>Less meat is nearly always better than sustainable meat</i> (2020), dati di Poore e Nemecek</a></li>
+            <li><a href="https://doi.org/10.1016/S0140-6736(25)01201-2" target="_blank" rel="noopener">The Lancet, <i>The EAT–Lancet Commission on healthy, sustainable, and just food systems</i> (2025)</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5. TAPPE -->
+      <section class="g-block g-sez" id="g-tappe" aria-labelledby="g-tappe-t">
+        <h3 id="g-tappe-t" tabindex="-1">Togliere la carne, per tappe</h3>
+        <p class="inbreve"><b>In breve.</b> Cambiare un'abitudine alla volta funziona meglio che cambiare tutto insieme. Si parte dai salumi e dai piatti che già si conoscono; ogni tappa dura quanto serve.</p>
         <ol class="tappe">
-          <li><span><b>Comincia la B12.</b> È l'unico integratore che serve a tutti i vegani: impostalo con il medico prima di eliminare i prodotti animali.</span></li>
-          <li><span><b>Parti dai piatti che conosci.</b> Pasta e fagioli, pasta e ceci, minestre di lenticchie, ragù di legumi: la cucina italiana ha molti piatti già vegani o quasi.</span></li>
-          <li><span><b>Togli la carne un giorno alla volta.</b> Prima due o tre giorni a settimana, poi di più, sostituendola con legumi, tofu o tempeh.</span></li>
+          <li><span><b>Parti dai piatti che conosci.</b> Pasta e fagioli, pasta e ceci, minestre di lenticchie, frittate, pesce al forno: la cucina italiana ha molti piatti già senza carne.</span></li>
+          <li><span><b>Togli prima i salumi.</b> Sono la carne con le prove più solide di danno alla salute e quella che si sostituisce più facilmente.</span></li>
+          <li><span><b>Togli la carne un giorno alla volta.</b> Prima due o tre giorni a settimana, poi di più, al posto della carne legumi, uova, pesce, tofu o tempeh.</span></li>
           <li><span><b>Aumenta i legumi gradualmente.</b> Se all'inizio ti appesantiscono, parti da porzioni piccole, lenticchie decorticate e legumi passati; tieni l'ammollo lungo e cambia l'acqua.</span></li>
-          <li><span><b>Sostituisci latte e latticini.</b> Bevande vegetali e yogurt di soia arricchiti con calcio; creme di frutta secca e hummus al posto dei formaggi spalmabili.</span></li>
-          <li><span><b>Organizza la dispensa.</b> Legumi secchi e in barattolo, cereali integrali, semi, frutta secca, sale iodato: con questi pronti il pasto vegano diventa la scelta più comoda.</span></li>
+          <li><span><b>Organizza la dispensa.</b> Legumi secchi e in barattolo, cereali integrali, semi, frutta secca, sale iodato: con questi pronti, il pasto senza carne diventa la scelta più comoda.</span></li>
+          <li><span><b>Se vuoi arrivare al vegano.</b> Prima di togliere uova, latticini e pesce, imposta con il medico l'integratore di vitamina B12; poi bevande e yogurt vegetali con calcio al posto di latte e yogurt.</span></li>
         </ol>
-      </div>
+        <div class="g-fonti">
+          <div class="eyebrow">Fonti</div>
+          <ul class="fonti">
+            <li><a href="https://www.epicentro.iss.it/alimentazione/linee-guida-sana-alimentazione-crea-2018" target="_blank" rel="noopener">CREA, Linee guida per una sana alimentazione 2018 (scheda ISS EpiCentro)</a></li>
+            <li><a href="https://doi.org/10.1016/j.numecd.2017.10.020" target="_blank" rel="noopener">SINU, <i>Position paper on vegetarian diets</i> (Agnoli et al., NMCD 2017)</a></li>
+          </ul>
+        </div>
+      </section>
 
-      <div class="g-block">
-        <h3>Fonti</h3>
-        <ul class="fonti">
-          <li><a href="https://pubmed.ncbi.nlm.nih.gov/39923894/" target="_blank" rel="noopener">Academy of Nutrition and Dietetics, <i>Vegetarian Dietary Patterns for Adults</i>, position paper 2025</a></li>
-          <li><a href="https://doi.org/10.1016/j.numecd.2017.10.020" target="_blank" rel="noopener">SINU, <i>Position paper on vegetarian diets</i> (Agnoli et al., NMCD 2017)</a></li>
-          <li><a href="https://sinu.it/larn/" target="_blank" rel="noopener">SINU, LARN – Livelli di assunzione di riferimento, V revisione (2024)</a></li>
-          <li><a href="https://www.epicentro.iss.it/alimentazione/linee-guida-sana-alimentazione-crea-2018" target="_blank" rel="noopener">CREA, Linee guida per una sana alimentazione 2018 (scheda ISS EpiCentro)</a></li>
-          <li><a href="https://www.efsa.europa.eu/en/press/news/150709" target="_blank" rel="noopener">EFSA, valori di riferimento per la vitamina B12 (2015)</a></li>
-          <li><a href="https://www.epicentro.iss.it/iodio/documentazione-italia" target="_blank" rel="noopener">ISS EpiCentro, iodio e iodoprofilassi in Italia</a></li>
-          <li><a href="https://www.aslvco.it/wp-content/uploads/2026/01/6.CALENDARIO-FRUTTA-E-VERDURA-DI-STAGIONE.pdf" target="_blank" rel="noopener">Ministero delle politiche agricole, calendario di frutta e verdura di stagione «Sai quel che mangi» (pubblicato dall'ASL VCO)</a></li>
-        </ul>
-      </div>
+      <!-- 6. ACQUISTI CONSAPEVOLI (voci in data/acquisti.json, vedi REQUISITI.md §5.8) -->
+      <section class="g-block g-sez" id="g-acquisti" aria-labelledby="g-acquisti-t">
+        <h3 id="g-acquisti-t" tabindex="-1">Acquisti consapevoli</h3>
+        <p class="inbreve"><b>In breve.</b> Aziende e marchi segnalati da enti o campagne riconoscibili, ognuno con il motivo, la fonte e la data dell'ultima verifica. Non sono giudizi del gruppo: si riporta chi ha fatto la segnalazione e perché.</p>
+        <div id="acq"><p class="empty">Caricamento…</p></div>
+        <div class="nutr">
+          <details>
+            <summary><span class="nn">Come sono scelte le voci</span><span class="nk">criteri</span></summary>
+            <div class="nb">
+              <ul class="freq">
+                <li>Ogni voce indica azienda o marchio, motivo, fonte e data della verifica.</li>
+                <li>Si riportano solo segnalazioni di enti o campagne riconoscibili, scritte come «segnalata da … per …», senza giudizi propri.</li>
+                <li>Le voci senza verifica da più di 12 mesi sono indicate come «da ricontrollare».</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+        <p class="fine">Le fonti sono indicate in ogni voce.</p>
+      </section>
+
+      <p class="su"><a href="#g-titolo" data-salta>Torna all'inizio della guida</a></p>
     </section>
 
     <!-- STAGIONE -->

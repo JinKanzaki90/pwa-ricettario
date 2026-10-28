@@ -230,6 +230,38 @@ async function imitaSupabase(ctx, db) {
 
     /* le schede funzionano come prima */
     await page.screenshot({ path: `${dir}/${tag}-guida.png` });
+    /* passo 7: guida con indice, riassunti, fonti per sezione; salti senza cambiare l'indirizzo; acquisti consapevoli */
+    await page.waitForFunction(() => !/Caricamento/.test(document.getElementById('acq').textContent));
+    const guida = await page.evaluate(() => {
+      const sez = Array.prototype.slice.call(document.querySelectorAll('#p-guida .g-sez'));
+      return { sezioni: sez.length, inBreve: sez.every(x => x.querySelector('.inbreve')), fonti: sez.filter(x => x.querySelector('.g-fonti a[href^="https://"]')).length,
+        voci: document.querySelectorAll('#p-guida .indice a[data-salta]').length, vuota: /in preparazione/.test(document.getElementById('acq').textContent),
+        vegano: /arrivare a un'alimentazione vegana completa|Solo vegano/.test(document.getElementById('p-guida').textContent) };
+    });
+    const hashPrima = await page.evaluate(() => location.hash);
+    await page.click('#p-guida .indice a[href="#g-carne"]');
+    await page.waitForTimeout(150);
+    const salto = await page.evaluate(() => ({ hash: location.hash, focus: document.activeElement && document.activeElement.id, top: document.getElementById('g-carne').getBoundingClientRect().top }));
+    await page.click('#g-carne details summary');
+    await page.screenshot({ path: `${dir}/${tag}-guida-carne.png` });
+    await page.evaluate(() => import('./js/guida.js').then(m => m.renderAcquisti({ voci: [
+      { azienda: 'Marchio <b>Uno</b>', segnalata_da: 'Campagna A', motivo: 'deforestazione', fonte_titolo: 'Rapporto 2026', fonte_url: 'https://esempio.invalid/r', verificata_il: '2026-09-01' },
+      { azienda: 'Marchio Due', segnalata_da: 'Ente B', motivo: 'condizioni di lavoro', fonte_titolo: 'Scheda', fonte_url: 'javascript:alert(1)', verificata_il: '2025-06-01' },
+      { azienda: 'Senza fonte', segnalata_da: 'X', motivo: 'Y', verificata_il: '2026-01-01' }
+    ] }, Date.UTC(2026, 9, 28))));
+    await page.locator('#g-acquisti').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${dir}/${tag}-guida-acquisti.png` });
+    const acq = await page.evaluate(() => {
+      const v = document.querySelectorAll('#acq .acq-v');
+      return { n: v.length, b: document.querySelectorAll('#acq b').length, testoB: /<b>Uno<\/b>/.test(document.getElementById('acq').textContent),
+        link: Array.prototype.map.call(document.querySelectorAll('#acq a'), a => a.getAttribute('href')),
+        ricontrolla: Array.prototype.filter.call(v, x => !!x.querySelector('.ricontrolla')).map(x => x.querySelector('.nome').textContent) };
+    });
+    const guidaOk = guida.sezioni === 6 && guida.inBreve && guida.fonti === 5 && guida.voci === 6 && guida.vuota && !guida.vegano &&
+      salto.hash === hashPrima && salto.focus === 'g-carne-t' && salto.top >= 0 && salto.top < 120 &&
+      acq.n === 2 && acq.testoB && acq.link.length === 1 && acq.link[0] === 'https://esempio.invalid/r' && acq.ricontrolla.join() === 'Marchio Due';
+    if (!guidaOk) console.log('guida', guida, salto, acq);
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.click('#t-stagione'); await page.waitForSelector('#seas .seas-g');
     await page.click('#disp .addp');
     await page.click('#t-ricette'); await page.waitForSelector('.rcard');
@@ -465,12 +497,12 @@ async function imitaSupabase(ctx, db) {
     const esito = {
       nascosta, errVuoto: !!errVuoto, errSbagliata, mostrata, errRiservato: !!errRiservato, errDiverse, benvenutoOk,
       nCards, nErr, nVoci, scrollW, scrollWImp, font, email: email === EMAIL, nomeCampo, errPwdAtt, pwdOk, evitOk, temaOk, filtroOk,
-      ricercaOk, errCat, errCarne, salvataOk, avviso, cestinoOk, avvioOk, aggiungiOk, settOk, sostOk, commOk, gruppoOk, spesaOk, msgScrittura, persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
+      ricercaOk, errCat, errCarne, salvataOk, avviso, cestinoOk, avvioOk, aggiungiOk, settOk, sostOk, commOk, gruppoOk, guidaOk, spesaOk, msgScrittura, persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
     };
     console.log(tag, esito);
     const ok = db.uscite === 2 && !errs.length && scrollW <= w && scrollWImp <= w && nCards && nascosta && esito.errVuoto && /non corretti/.test(errSbagliata) &&
       mostrata === 'text' && esito.errRiservato && /non coincidono/.test(errDiverse) && benvenutoOk && nomeCampo === 'Prova' &&
-      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && ricercaOk && /Vegetariana/.test(errCat) && /carne/.test(errCarne) && salvataOk && cestinoOk && avvioOk && aggiungiOk && settOk && sostOk && commOk && gruppoOk && spesaOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
+      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && ricercaOk && /Vegetariana/.test(errCat) && /carne/.test(errCarne) && salvataOk && cestinoOk && avvioOk && aggiungiOk && settOk && sostOk && commOk && gruppoOk && guidaOk && spesaOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
     if (!ok) fail++;
     await ctx.close();
   }
