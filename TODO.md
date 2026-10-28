@@ -54,8 +54,16 @@ Lettura, ricerca, filtri (categoria, autore), inserimento e modifica con categor
 - [x] Verifica: migrazione verde; con la sola chiave publishable anche `rpc/ingredienti_di_carne` risponde 401 (controllo del workflow corretto: ora chiama le funzioni con i loro argomenti); prove locali del database superate; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita e CSP attiva (ricerca, categoria, autore, ricetta altrui non modificabile, categoria incoerente, carne rifiutata, salvataggio, avviso sulle settimane, cestino e ripristino); Pubblica verde.
 - [x] Revisione di fine passo.
 
-### [~] 5. Settimana e spesa personali (iniziato il 28/10/2026 alle 11:03 UTC)
+### [x] 5. Settimana e spesa personali (fatto il 28/10/2026)
 Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, sostituti per ricette eliminate, spesa sincronizzata.
+- [x] Migrazione `20261028110000_settimana_avviata.sql`: colonna `profili.settimana_avviata` (la settimana d'esempio si copia una sola volta), modificabile solo sul proprio profilo; prove locali su settimana e spesa ampliate.
+- [x] Modulo dati: settimana e spesa lette e scritte da `dati.js`; `personali.js` legge, copia la settimana d'esempio al primo accesso, porta sul database i dati delle versioni precedenti (spesa e sostituti salvati sul browser) e poi li toglie; scritture in fila, con messaggio e rilettura se una fallisce; rilettura tornando su Settimana o Spesa dopo 30 secondi o riaprendo l'app.
+- [x] Settimana: «Cambia» e «Togli» per ogni pasto (scelta della ricetta, doppia dose), pasti vuoti con «Scegli»; gli avanzi seguono il piatto da cui derivano; «Ricetta eliminata» con sostituto (la ricetta ripristinata dal cestino ricompare da sola); «Riparti dal piano d'esempio» con conferma; avviso che gli altri vedono la settimana, note comprese.
+- [x] «Aggiungi alla settimana» nel dettaglio della ricetta: giorno, pasto, doppia dose, conferma se il pasto è occupato, «Già nella tua settimana: …».
+- [x] Spesa sincronizzata (ricette con porzioni, voci a mano anche dalla dispensa, spunte); una ricetta nel cestino esce dalla spesa (lo fa il database). Corretto un difetto: le voci con reparto sconosciuto (per esempio «altro», il predefinito del database) non comparivano: ora vanno in Dispensa.
+- [x] Uscita: settimana e spesa tolte dalla memoria; eventuali dati delle versioni precedenti tolti dal browser.
+- [x] Verifica: migrazione verde; con la sola chiave publishable `profili`, `settimana` e le tre tabelle della spesa rispondono 401 sul progetto vero; prove locali del database superate; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita (copia della settimana d'esempio, passaggio dei dati del browser, aggiungi alla settimana con conferma, cambia/togli/scegli, avanzo che segue il piatto, sostituto di una ricetta nel cestino, spunte e voci sincronizzate, scrittura fallita); Pubblica verde.
+- [x] Revisione di fine passo.
 
 ### [ ] 6. Commenti, settimane del gruppo, copia di un giorno
 
@@ -124,6 +132,21 @@ Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare
    - ogni lettura scarica tutte le ricette (decine): va bene per il gruppo; oltre qualche centinaio servirebbe la paginazione;
    - le dipendenze circolari tra moduli sono aumentate (`ricette` ↔ `modulo`, `dati` → `accesso`); funzionano perché nessun modulo chiama gli altri durante il caricamento. Azione (passo 5): quando settimana e spesa passano al database, spostare in `dati.js` anche il loro accesso ai dati;
    - durante il passo un commit intermedio ha pubblicato per pochi minuti un'app che cercava `data/ricette.json` già spostato (il controllo di «Pubblica» l'ha segnalato; corretto dal commit successivo). Lezione: con `git mv` già in sospeso, un commit di file scelti porta con sé anche lo spostamento: controllare `git status` prima di ogni commit parziale.
+
+### Passo 5 (28/10/2026)
+1. **Malintenzionato.** Settimana e spesa passano solo per le tabelle con RLS già provate al passo 2: ogni lettura e scrittura dell'app filtra anche per `utente`, ma è il database a impedire di toccare i dati altrui (prove locali ampliate: C non cambia porzioni né spunte di B, B non sposta la propria settimana a C, non cambia la ricetta di una riga di spesa). La nuova colonna `settimana_avviata` si cambia solo sul proprio profilo e non rivela nulla. Nessuna funzione con privilegi elevati nuova. I dati portati dal browser passano dagli stessi vincoli del database; ogni testo mostrato (titoli, note, voci) passa da `esc()`. Nessun problema grave trovato. Da sapere:
+   - le **note dei pasti** sono leggibili da tutti gli utenti (come deciso in §3): l'app lo dice sotto la settimana. Oggi le note vengono solo dal piano d'esempio; se al passo 6 si permette di scriverle, ripeterlo vicino al campo.
+2. **Utente.** Settimana e spesa si usano da telefono e da computer nei due temi; le modifiche si vedono subito e arrivano sugli altri dispositivi. Limiti e azioni:
+   - senza rete le scritture falliscono con un messaggio e lo schermo può mostrare per un po' una modifica non salvata (alla rilettura successiva torna giusto). Azione (passo 8): con il service worker, avviso chiaro «sei senza rete: le modifiche non si salvano» e pulsanti disattivati;
+   - «Metti tutta la settimana nella spesa» manda una richiesta per ricetta (circa 20, in fila): un paio di secondi con rete lenta. Azione (passo 9, se dà fastidio): una sola richiesta;
+   - gli avanzi si creano solo copiando il piano d'esempio: non c'è un comando «questo pasto è l'avanzo di…». Azione (passo 6 o 9, da proporre ad Angelo);
+   - il numero di persone resta per dispositivo (come prima);
+   - il piano d'esempio parla ancora di B12 e alimentazione vegana: azione (passo 7) adeguarlo insieme alla Guida.
+3. **Revisore esterno.**
+   - Prove con Supabase imitato e PostgreSQL locale, non sul progetto vero con un account reale. Azione (passo 9, prova con Angelo): aggiungere un pasto, cambiare una cena con avanzo, spuntare la spesa dal telefono e controllarla dal computer;
+   - l'avanzo si riconosce dalla ricetta uguale nel giorno indicato: se in quel giorno la stessa ricetta compare due volte la scelta è ambigua (innocuo: entrambe uguali). Uno schema con riferimento al pasto d'origine sarebbe più solido, ma non vale una migrazione adesso;
+   - `pruneSpunte` toglie dal database le spunte di voci non più in lista calcolandole sullo schermo: se le ricette fossero lette solo in parte potrebbe togliere spunte valide (perdita minima: una spunta). Accettato;
+   - le dipendenze circolari restano (`settimana` ↔ `ricette`, `spesa` → `personali` → `dati`), ma l'accesso ai dati di settimana e spesa ora sta tutto in `dati.js` come previsto al passo 4.
 
 ## Richieste per Angelo
 
