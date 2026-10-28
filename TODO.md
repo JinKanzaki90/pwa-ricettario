@@ -96,7 +96,7 @@ Manifest, icone, service worker per la lettura offline, «Aggiungi a schermata H
 - [x] **«Aggiungi a schermata Home»**: in Impostazioni un pulsante «Installa l'app» dove il browser lo permette (Android, Chrome) e le istruzioni per iPhone (Safari → Condividi → «Aggiungi alla schermata Home»); nascosto se l'app è già installata.
 - [x] Prova automatica estesa (manifest, service worker, avvio senza rete), controllo del workflow «Pubblica» sui nuovi file, verifica funzionale e revisione di fine passo.
 
-### [ ] 9. Pubblicazione e prova completa
+### [~] 9. Pubblicazione e prova completa (iniziato il 28/10/2026 alle 20:58 UTC)
 Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare gli utenti degli amici.
 - [ ] Prove rimaste dal passo 3, da fare con Angelo: (a) password sbagliata → messaggio «Email o password non corretti»; (b) «Esci da questo dispositivo» e rientro con la nuova password; (c) con l'utente di prova, Impostazioni → «Cancella il mio account…» (password + casella): l'utente deve sparire dall'elenco della dashboard Supabase.
 
