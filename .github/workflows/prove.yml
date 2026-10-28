@@ -1,0 +1,64 @@
+# Prove automatiche a ogni push su main (e a richiesta): regole di accesso del database su un PostgreSQL
+# locale con l'imitazione di Supabase, e l'app in Chromium (Supabase imitato, 360 px e desktop, chiaro e scuro).
+# Non usa segreti e non tocca il database vero (l'unica chiamata al progetto è un accesso con credenziali
+# inventate, che deve essere rifiutato). Le schermate restano sulla macchina del workflow: non si pubblicano.
+name: Prove
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'supabase/migrations/**'
+      - 'supabase/strumenti/**'
+      - 'test/**'
+      - '.github/workflows/prove.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prove-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: solo-per-la-prova
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: solo-per-la-prova
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prove del database
+        run: sh test/db/prova-db.sh
+
+  app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Playwright e Chromium
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: Prova dell'app
+        env:
+          CARTELLA_SCHERMATE: ${{ runner.temp }}
+        run: |
+          python3 -m http.server 8123 --bind 127.0.0.1 -d app >/dev/null 2>&1 &
+          sleep 2
+          node test/prova-app.js
