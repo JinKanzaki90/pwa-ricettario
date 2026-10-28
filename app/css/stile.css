@@ -361,3 +361,5 @@ a.back { text-decoration: none; }
 .badge.cat { background: transparent; color: var(--fg); border: 1px solid var(--line); }
 .chi { margin: 0; }
 .panel .warnline { font-size: 0.86rem; color: var(--beet); margin: 0; }
+.d-head { display: grid; gap: 8px; }
+#seas-fonte a { color: var(--accent); }

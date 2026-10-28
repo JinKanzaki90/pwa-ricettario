@@ -174,7 +174,7 @@ export function renderDetail() {
     (puo ? '' : ' Solo chi l\'ha inserita può modificarla o eliminarla: tu puoi crearne una tua versione.') + '</p></div>';
   $('r-detail').innerHTML =
     '<button type="button" class="back" id="back">‹ ' + (S.backTo === 'settimana' ? 'Torna alla settimana' : S.backTo === 'archivio' ? 'Torna all\'archivio' : 'Tutte le ricette') + '</button>' +
-    '<div style="display:grid;gap:8px"><h2>' + esc(r.titolo) + '</h2>' +
+    '<div class="d-head"><h2>' + esc(r.titolo) + '</h2>' +
     '<div class="meta"><span>' + esc(NOME_PASTO[r.pasto]) + '</span>' + tempi + '<span>' + esc(r.difficolta) + '</span>' + (r.riposo ? '<span>Riposo: ' + esc(r.riposo) + '</span>' : '') + '</div>' +
     '<div class="chips">' + badges(r, true) + '</div>' + chi(r) + '</div>' +
     '<div class="panel"><div class="portions"><span class="eyebrow">Porzioni</span><div class="stepper">' +

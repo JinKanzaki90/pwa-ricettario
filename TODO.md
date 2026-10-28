@@ -41,7 +41,7 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 - [x] Revisione di fine passo.
 - [x] **Punto di controllo**: prova congiunta con Angelo il 28/10/2026. Superati: creazione degli utenti, accesso, primo accesso (nome, password, sessione che resta), impostazioni (nome, password, tema, ingredienti da evitare con segnalazione e filtro). Rimandati al passo 9, per decisione di Angelo: password sbagliata, uscita e rientro, cancellazione dell'account di prova.
 
-### [~] 4. Ricettario collegato al database (iniziato il 28/10/2026 alle 08:59 UTC)
+### [x] 4. Ricettario collegato al database (fatto il 28/10/2026)
 Lettura, ricerca, filtri (categoria, autore), inserimento e modifica con categoria e blocco della carne, eliminazione con avviso sulle settimane coinvolte, cestino, archivio personale.
 - [x] Migrazione: elenco della carne ampliato (kebab, chorizo, pastrami, foie gras, colla di pesce, …) e funzione `ingredienti_di_carne()` per il modulo, con prove locali (`20261028090000_carne_ampliata.sql`).
 - [x] Modulo dati `dati.js`: ricette, nomi degli autori e archivio letti da Supabase; conversione al confine (`{tutto_anno}` ↔ `'tutto_anno'`); `app/data/ricette.json` spostato in `supabase/strumenti/` (serve solo al generatore delle ricette di partenza).
@@ -51,7 +51,8 @@ Lettura, ricerca, filtri (categoria, autore), inserimento e modifica con categor
 - [x] Eliminazione = cestino, con avviso sulle settimane coinvolte; vista Cestino (chi e quando, ripristino a chi può); archivio personale sul database.
 - [x] Content Security Policy in `index.html`; Guida: tolti i chip «Escluso dalle ricette».
 - [x] Prove: `test/prova-app.js` con il ricettario imitato; prove locali del database.
-- [ ] Verifica e revisione di fine passo.
+- [x] Verifica: migrazione verde; con la sola chiave publishable anche `rpc/ingredienti_di_carne` risponde 401 (controllo del workflow corretto: ora chiama le funzioni con i loro argomenti); prove locali del database superate; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita e CSP attiva (ricerca, categoria, autore, ricetta altrui non modificabile, categoria incoerente, carne rifiutata, salvataggio, avviso sulle settimane, cestino e ripristino); Pubblica verde.
+- [x] Revisione di fine passo.
 
 ### [ ] 5. Settimana e spesa personali
 Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, sostituti per ricette eliminate, spesa sincronizzata.
@@ -105,6 +106,24 @@ Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare
    - azione (passo 4): togliere dal modulo l'esclusione fissa di fave, piselli e tartufo e dalla Guida i chip «Escluso dalle ricette», ora sostituiti dagli ingredienti da evitare personali;
    - azione (passo 5): all'uscita i dati locali (ricette personali, spesa) restano sul browser; quando passeranno al database, svuotare i dati dell'utente all'uscita.
 3. **Revisore esterno.** La prova automatica usa un Supabase imitato: il flusso vero con un utente reale non è ancora stato provato (serve la prova congiunta). supabase-js (circa 220 KB) ora si carica all'avvio, perché senza sessione non si vede nulla: l'azione del passo 1 di caricarlo dopo l'accesso decade; resta da metterlo in cache col service worker (passo 8). Il confronto degli ingredienti da evitare è per sottostringa («ceci» trova anche «farina di ceci», ma «pera» troverebbe «peperoni»): azione (passo 4) confrontare per parola intera. Rimosse dal repository le schermate di prova finite lì per errore al passo 1 (ora in `schermate/`, esclusa da git).
+
+### Passo 4 (28/10/2026)
+1. **Malintenzionato.** Le regole vere restano nel database: l'app nasconde «Modifica» ed «Elimina» a chi non può, ma anche chiamando le API a mano le policy limitano modifica, cestino e ripristino a ricette generiche o proprie (prove locali del passo 2). Ogni testo che arriva dal database (titoli, ingredienti, passi, note, nomi) passa da `esc()`; in più ora c'è una **Content Security Policy** (`index.html` e `privacy.html`): script solo dal sito più l'unico script in linea con impronta, stili solo dal file CSS (tolti gli `style=` in linea), connessioni solo verso il progetto Supabase, niente `<object>`, `<base>`, invii di moduli. La nuova funzione `ingredienti_di_carne` è pura, senza privilegi elevati, chiusa ad anon (401, verificato sul progetto vero). Nessun problema grave trovato. Rischi accettati, già noti:
+   - chiunque può modificare o mandare nel cestino le ricette generiche; il cestino le salva 30 giorni, una **modifica** invece sovrascrive senza storico (si vede almeno «Ultima modifica il … di X» nel dettaglio). Azione (passo 9, da decidere con Angelo): tabella delle versioni precedenti se il gruppo la ritiene utile;
+   - la CSP sta in un `<meta>` (GitHub Pages non permette intestazioni): niente `frame-ancestors`, quindi la pagina si può incorniciare in un altro sito. Rischio basso (nessuna azione con un solo clic senza conferma). Da rivalutare se si passa a Cloudflare Pages.
+2. **Utente.** Ricerca, filtri, dettaglio con autore e date, modulo con categoria e messaggi chiari, cestino con chi e quando: provati da telefono e da computer nei due temi. Difetti e limiti:
+   - a 360 px i filtri a chip occupano circa sei righe prima delle ricette. Azione (passo 9): raccogliere «Tempo, stagione, Calabria, alcol…» sotto un pulsante «Altri filtri»;
+   - le modifiche degli altri compaiono quando si torna sulla scheda Ricette dopo 2 minuti, aprendo il cestino o ricaricando: niente aggiornamento in tempo reale (accettabile per un gruppo di amici);
+   - l'avviso prima dell'eliminazione conta le settimane degli altri dal database, ma le settimane passano sul database solo al passo 5: fino ad allora conta solo la propria (sul browser). Azione (passo 5): verificare il conteggio con la settimana sul database;
+   - le ricette personali create con la versione dell'artifact (salvate solo sul browser) non vengono più mostrate né caricate: nessuno le usava fuori dalle prove. Se Angelo ne avesse di importanti, si recuperano dalla chiave `rv-ricettario` del browser;
+   - rimandata al passo 9 l'azione del passo 3 sul ritorno dalle Impostazioni (la scheda Ricette riapre la vista in cui era, per esempio il modulo con la bozza: utile, ma da valutare con Angelo).
+   - senza rete le ricette non si leggono. Azione (passo 8): tenere una copia dell'ultima lettura per la consultazione offline.
+3. **Revisore esterno.**
+   - Il flusso vero con RLS (inserire, modificare, cestino, ripristino, archivio) è provato su PostgreSQL locale e con un Supabase imitato, non sul progetto vero con un account reale. Azione (passo 9, prova con Angelo): creare una ricetta, modificarla, eliminarla e ripristinarla; controllare da un secondo account che non si possa modificarla;
+   - la coerenza della categoria usa parole chiave nel browser (uova, latticini, miele, pesce): ha falsi allarmi possibili (si risolvono scrivendo «vegetale» nel nome) e non è ripetuta nel database, per scelta: è una segnalazione, non una regola di sicurezza;
+   - ogni lettura scarica tutte le ricette (decine): va bene per il gruppo; oltre qualche centinaio servirebbe la paginazione;
+   - le dipendenze circolari tra moduli sono aumentate (`ricette` ↔ `modulo`, `dati` → `accesso`); funzionano perché nessun modulo chiama gli altri durante il caricamento. Azione (passo 5): quando settimana e spesa passano al database, spostare in `dati.js` anche il loro accesso ai dati;
+   - durante il passo un commit intermedio ha pubblicato per pochi minuti un'app che cercava `data/ricette.json` già spostato (il controllo di «Pubblica» l'ha segnalato; corretto dal commit successivo). Lezione: con `git mv` già in sospeso, un commit di file scelti porta con sé anche lo spostamento: controllare `git status` prima di ogni commit parziale.
 
 ## Richieste per Angelo
 

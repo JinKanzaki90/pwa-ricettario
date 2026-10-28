@@ -31,7 +31,7 @@ export function renderSeas() {
 }
 export function renderFonte(d) {
   if (d.fonte) {
-    $('seas-fonte').innerHTML = 'Fonte: <a href="' + esc(d.fonte.url) + '" target="_blank" rel="noopener" style="color:var(--accent)">' + esc(d.fonte.titolo) + '</a>. ' +
+    $('seas-fonte').innerHTML = 'Fonte: <a href="' + esc(d.fonte.url) + '" target="_blank" rel="noopener">' + esc(d.fonte.titolo) + '</a>. ' +
       esc(d.nota_integrazioni || '') + (d.nota_stagionalita ? ' ' + esc(d.nota_stagionalita) : '');
   }
 }
