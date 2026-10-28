@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DOmhYfFZPtu0CyNJvb+hIbJLlPB66SlO3YtVySg2Lmw='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://wtwmjwpmovttalkxzhvm.supabase.co wss://wtwmjwpmovttalkxzhvm.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ricettario di famiglia</title>
 <meta name="description" content="Guida alimentare, ricettario condiviso, settimana e lista della spesa per un gruppo di amici.">
@@ -93,17 +94,14 @@
           <span class="chip">Transizione graduale</span>
           <span class="chip">2 porzioni, regolabili</span>
         </div>
-        <div class="eyebrow">Escluso dalle ricette</div>
-        <div class="chips">
-          <span class="chip no">Fave</span>
-          <span class="chip no">Piselli</span>
-          <span class="chip no">Tartufo</span>
-        </div>
       </div>
       <div class="panel">
         <div class="eyebrow">Come leggere le ricette</div>
         <div class="legend">
-          <span class="badge stag"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Di stagione</span><span>Più di metà della frutta e verdura stagionale della ricetta è di stagione questo mese, secondo il calendario della scheda <button type="button" class="linkbtn" data-goto="stagione">Stagione</button>; non contano i prodotti che si trovano tutto l'anno e gli aromi (aglio, limone, sedano).</span>
+          <span class="badge veg"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Vegana</span><span>Nessun ingrediente di origine animale: niente uova, latte e derivati, miele o pesce. Le altre ricette sono segnate «Vegetariana» o «Con pesce»; la carne non è ammessa.</span>
+        </div>
+        <div class="legend">
+          <span class="badge stag"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="13" height="13" rx="2"/><path d="M3 12h13M7 6v4M12 6v4"/><circle cx="19" cy="5" r="2.2"/><path d="M19 1v.6M19 8.4V9M23 5h-.6M15.6 5H15M21.8 2.2l-.4.4M21.8 7.8l-.4-.4"/></svg>Di stagione</span><span>Più di metà della frutta e verdura stagionale della ricetta è di stagione questo mese, secondo il calendario della scheda <button type="button" class="linkbtn" data-goto="stagione">Stagione</button>; non contano i prodotti che si trovano tutto l'anno e gli aromi (aglio, limone, sedano).</span>
         </div>
         <div class="legend">
           <span class="badge cal"><svg viewBox="0 0 24 24"><path d="M16.2 8.2c1.9.9 2.6 3 1.6 5.6-1.5 3.9-5.9 6.8-12.3 7.2 3.3-1.6 5.7-4.1 6.8-7.6.8-2.7 2.1-4.6 3.9-5.2z"/><path d="M13.6 8.6c.9-1.3 2.9-1.8 4.4-.8"/><path d="M16.2 7.4c0-2 .9-3.4 2.8-4.1"/></svg>Calabria</span><span>C'è un prodotto calabrese consigliato, con marca e dove trovarlo.</span>
@@ -241,7 +239,7 @@
         <h3>La dispensa di base</h3>
         <p class="lead">Con questi prodotti in casa un pasto vegano completo è sempre a portata di mano. Tocca «Aggiungi» per metterli nella lista della spesa.</p>
         <div class="nutr" id="disp"><div class="empty">Caricamento della dispensa…</div></div>
-        <p class="fine">Escluse dalla lista fave, piselli e tartufo. Le marche calabresi sono esempi, non sponsorizzazioni.</p>
+        <p class="fine">Le marche calabresi sono esempi, non sponsorizzazioni.</p>
       </div>
     </section>
 
@@ -252,20 +250,30 @@
           <h2>Ricette</h2>
           <button type="button" class="btn small" id="new-recipe">+ Nuova ricetta</button>
         </div>
-        <p class="lead">Colazioni, pranzi, cene, spuntini e preparazioni di base, per 2 persone: nel dettaglio puoi cambiare le porzioni.</p>
+        <p class="lead">Il ricettario del gruppo: colazioni, pranzi, cene, spuntini e preparazioni di base, senza carne. Nel dettaglio puoi cambiare le porzioni.</p>
+        <div class="r-search">
+          <div class="fld"><label for="r-cerca">Cerca per titolo o ingrediente</label><input type="search" id="r-cerca" maxlength="60" placeholder="es. ceci, zucca, risotto" autocomplete="off"></div>
+          <div class="fld"><label for="r-autore">Inserite da…</label><select id="r-autore"><option value="">Tutti</option></select></div>
+        </div>
         <div class="filters" role="group" aria-label="Filtri">
           <div class="filter-row" id="flt-pasto"></div>
+          <div class="filter-row" id="flt-cat"></div>
           <div class="filter-row" id="flt-altro"></div>
         </div>
+        <p class="fine" id="r-conta" aria-live="polite"></p>
         <div class="cards" id="cards"></div>
         <div class="r-foot">
-          <button type="button" class="btn line small" id="open-arch">Archivio</button>
+          <div class="r-actions">
+            <button type="button" class="btn line small" id="open-arch">Archivio</button>
+            <button type="button" class="btn line small" id="open-cest">Cestino</button>
+          </div>
           <p class="fine sync" id="usr-sync"></p>
         </div>
       </div>
       <div id="r-detail" class="detail" hidden></div>
       <div id="r-form" class="detail" hidden></div>
       <div id="r-arch" class="detail" hidden></div>
+      <div id="r-cest" class="detail" hidden></div>
       <datalist id="ing-names"></datalist>
     </section>
 
@@ -386,7 +394,7 @@
     <button role="tab" id="t-guida" aria-controls="p-guida" data-tab="guida" aria-selected="true">
       <svg viewBox="0 0 24 24"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5z"/><path d="M12 6v13.5"/></svg>Guida</button>
     <button role="tab" id="t-stagione" aria-controls="p-stagione" data-tab="stagione" aria-selected="false">
-      <svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>Stagione</button>
+      <svg viewBox="0 0 24 24"><rect x="3" y="8" width="13" height="13" rx="2"/><path d="M3 12h13M7 6v4M12 6v4"/><circle cx="19" cy="5" r="2.2"/><path d="M19 1v.6M19 8.4V9M23 5h-.6M15.6 5H15M21.8 2.2l-.4.4M21.8 7.8l-.4-.4"/></svg>Stagione</button>
     <button role="tab" id="t-ricette" aria-controls="p-ricette" data-tab="ricette" aria-selected="false">
       <svg viewBox="0 0 24 24"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M9 7c0-1.5 1-2 1-3M14 7c0-1.5 1-2 1-3"/></svg>Ricette</button>
     <button role="tab" id="t-settimana" aria-controls="p-settimana" data-tab="settimana" aria-selected="false">

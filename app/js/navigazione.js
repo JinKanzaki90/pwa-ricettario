@@ -14,6 +14,7 @@ export function show(name) {
   chiudiImpostazioni();
   store('rv-tab', name);
   window.scrollTo(0, 0);
+  document.dispatchEvent(new CustomEvent('rv-scheda', { detail: name }));
 }
 
 /* Impostazioni: pagina a parte, aperta dall'ingranaggio; le schede restano visibili e la chiudono */
@@ -35,7 +36,7 @@ function chiudiImpostazioni() {
 }
 export function tornaDaImpostazioni() { show(ultima); }
 
-const VISTE = { list: 'r-list', detail: 'r-detail', form: 'r-form', arch: 'r-arch' };
+const VISTE = { list: 'r-list', detail: 'r-detail', form: 'r-form', arch: 'r-arch', cest: 'r-cest' };
 export function vista(v) {
   Object.keys(VISTE).forEach(function (k) { $(VISTE[k]).hidden = k !== v; });
   window.scrollTo(0, 0);

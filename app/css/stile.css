@@ -349,3 +349,15 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
 .badge.evit { background: var(--beet-soft); color: var(--beet); white-space: normal; }
 .ok { color: var(--accent); font-weight: 700; font-size: 0.86rem; margin: 0; }
 a.back { text-decoration: none; }
+
+/* passo 4: ricerca, categorie, autore, cestino */
+.r-search { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 10px; }
+@media (max-width: 560px) { .r-search { grid-template-columns: minmax(0, 1fr); } }
+.r-search input, .r-search select {
+  font: inherit; font-size: 1rem; color: var(--fg); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 10px; padding: 9px 12px; min-height: 44px; width: 100%; min-width: 0;
+}
+.badge.veg { background: var(--accent-soft); color: var(--accent); }
+.badge.cat { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+.chi { margin: 0; }
+.panel .warnline { font-size: 0.86rem; color: var(--beet); margin: 0; }

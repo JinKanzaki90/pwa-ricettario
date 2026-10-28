@@ -1,11 +1,11 @@
 /* Avvio dell'app: collega le schede, carica i dati statici da app/data/ e chiede l'accesso.
-   Le schede si mostrano solo con una sessione valida (vedi accesso.js). */
+   Le schede si mostrano solo con una sessione valida (vedi accesso.js); le ricette si leggono dal database dopo l'accesso. */
 import { $, carica, store } from './util.js';
 import { S, updUsrSync } from './stato.js';
 import { impostaCalendario } from './dominio.js';
 import { initTema } from './tema.js';
-import { initSchede, show } from './navigazione.js';
-import { initRicette, renderFilters, renderCards, renderDetail, updArchBtn, aggiorna } from './ricette.js';
+import { initSchede, show, vista } from './navigazione.js';
+import { initRicette, renderFilters, renderCards, renderDetail, updArchBtn, primaLettura } from './ricette.js';
 import { initModulo, aggNomi } from './modulo.js';
 import { initSpesa, renderShop } from './spesa.js';
 import { initStagione, renderMesi, renderSeas, renderFonte, renderDisp } from './stagione.js';
@@ -21,10 +21,6 @@ initStagione();
 initSettimana();
 
 renderFilters(); renderCards(); renderShop(); updUsrSync(); updArchBtn(); renderMesi();
-
-carica('ricette.json')
-  .then(function (d) { S.BASE = d.ricette || []; S.caricate = true; aggiorna(); })
-  .catch(function () { $('cards').innerHTML = '<div class="empty err">Non riesco a caricare le ricette. Ricarica la pagina tra poco.</div>'; });
 
 carica('stagioni.json')
   .then(function (d) {
@@ -50,6 +46,7 @@ document.addEventListener('rv-evitare', function () {
 });
 
 initAccesso(function () {
+  vista('list'); primaLettura();
   renderFilters(); renderCards();
   let start = (location.hash || '').slice(1);
   if (!start) start = store('rv-tab') || '';

@@ -5,11 +5,40 @@
    Uso: servire app/ (es. python3 -m http.server 8123 --bind 127.0.0.1 -d app) e poi: node test/prova-app.js [indirizzo]
    Schermate in CARTELLA_SCHERMATE (predefinita /tmp). */
 const { chromium } = require('playwright');
+const path = require('path');
+const PARTENZA = require(path.join(__dirname, '../supabase/strumenti/ricette_partenza.json')).ricette;
 const base = process.argv[2] || 'http://127.0.0.1:8123/';
 const dir = process.env.CARTELLA_SCHERMATE || '/tmp';
 const SB = 'https://wtwmjwpmovttalkxzhvm.supabase.co';
 const UID = '00000000-0000-4000-8000-000000000001';
 const EMAIL = 'prova@esempio.invalid';
+const ALTRO = '00000000-0000-4000-8000-000000000002';
+const ORA = '2026-10-20T10:00:00.000Z';
+
+/* ricettario finto: le 23 ricette di partenza (generiche) + una di Marta con pesce + una di Marta nel cestino */
+function ricettario() {
+  const righe = PARTENZA.map(function (r) {
+    return Object.assign({}, r, { categoria: 'vegana', stagioni: r.stagioni === 'tutto_anno' ? ['tutto_anno'] : r.stagioni, autore: null,
+      alcolici: !!r.alcolici, versione_di: null, creata_il: ORA, modificata_il: ORA, modificata_da: null, eliminata_il: null, eliminata_da: null });
+  });
+  const marta = { pasto: 'cena', difficolta: 'facile', tempo_min: 20, tempo_prep: 10, tempo_cottura: 10, porzioni_base: 2, stagioni: ['tutto_anno'],
+    passi: ['Cuoci tutto.'], alcolici: false, versione_di: null, autore: ALTRO, creata_il: ORA, modificata_il: ORA, modificata_da: ALTRO };
+  righe.push(Object.assign({}, marta, { id: 'orata-marta', titolo: 'Orata al forno di Marta', categoria: 'pesce',
+    ingredienti: [{ nome: 'Orata', qta: 2, unita: 'pz', reparto: 'frigo' }, { nome: 'Patate', qta: 400, unita: 'g', reparto: 'ortofrutta' }], eliminata_il: null, eliminata_da: null }));
+  righe.push(Object.assign({}, marta, { id: 'frittata-marta', titolo: 'Frittata di zucchine', categoria: 'vegetariana',
+    ingredienti: [{ nome: 'Uova', qta: 4, unita: 'pz', reparto: 'frigo' }, { nome: 'Zucchine', qta: 300, unita: 'g', reparto: 'ortofrutta' }],
+    eliminata_il: '2026-10-27T10:00:00.000Z', eliminata_da: ALTRO }));
+  return righe;
+}
+const RE_CARNE = /\b(chorizo|pancetta|salsiccia)\b(?! vegetale)/i;
+function filtra(righe, u) {
+  const salta = { select: 1, order: 1, on_conflict: 1, limit: 1, columns: 1 };
+  u.searchParams.forEach(function (v, k) {
+    if (salta[k] || v.indexOf('eq.') !== 0) return;
+    righe = righe.filter(function (r) { return String(r[k]) === v.slice(3); });
+  });
+  return righe;
+}
 
 function b64(o) { return Buffer.from(JSON.stringify(o)).toString('base64url'); }
 function jwt() {
@@ -34,6 +63,34 @@ async function imitaSupabase(ctx, db) {
     if (p === '/auth/v1/user' && m === 'PUT') { db.password = corpo.password; return json(200, utente()); }
     if (p === '/auth/v1/user') return json(200, utente());
     if (p === '/auth/v1/logout') { db.uscite = (db.uscite || 0) + 1; return route.fulfill({ status: 204 }); }
+    if (p === '/rest/v1/profili' && m === 'GET' && !oggetto) {
+      return json(200, [{ id: UID, nome: db.profilo.nome }, { id: ALTRO, nome: 'Marta' }]);
+    }
+    if (p === '/rest/v1/ricette') {
+      if (m === 'GET') return json(200, db.ricette);
+      if (m === 'POST') {
+        if (corpo.ingredienti.some(function (i) { return RE_CARNE.test(i.nome); })) return json(400, { code: '23514', message: 'new row violates check constraint "ricette_senza_carne"' });
+        const r = Object.assign({}, corpo, { id: 'nuova-' + (db.ricette.length + 1), autore: UID, creata_il: ORA, modificata_il: ORA, modificata_da: UID, eliminata_il: null, eliminata_da: null });
+        db.ricette.push(r); return json(201, [r]);
+      }
+      if (m === 'PATCH') {
+        const toccate = filtra(db.ricette, u).filter(function (r) { return !r.autore || r.autore === UID; });
+        toccate.forEach(function (r) {
+          if ('eliminata_il' in corpo) { r.eliminata_il = corpo.eliminata_il ? new Date().toISOString() : null; r.eliminata_da = corpo.eliminata_il ? UID : null; }
+          else Object.assign(r, corpo, { modificata_il: new Date().toISOString(), modificata_da: UID });
+        });
+        return json(200, toccate);
+      }
+    }
+    if (p === '/rest/v1/archivio') {
+      if (m === 'GET') return json(200, db.archivio.map(function (x) { return { ricetta: x }; }));
+      if (m === 'POST') { if (db.archivio.indexOf(corpo.ricetta) < 0) db.archivio.push(corpo.ricetta); return json(201); }
+      if (m === 'DELETE') { const id = (u.searchParams.get('ricetta') || '').slice(3); db.archivio = db.archivio.filter(function (x) { return x !== id; }); return route.fulfill({ status: 204, body: '' }); }
+    }
+    if (p === '/rest/v1/settimana') return json(200, [{ utente: ALTRO }, { utente: UID }]);
+    if (p === '/rest/v1/rpc/ingredienti_di_carne') {
+      return json(200, corpo.ing.filter(function (i) { return RE_CARNE.test(i.nome); }).map(function (i) { return i.nome; }));
+    }
     if (p === '/rest/v1/profili') {
       if (m === 'PATCH') {
         if (corpo.nome.toLowerCase() === 'anonimo') return json(400, { code: '23514', message: 'violates check constraint "profili_nome_non_riservato"' });
@@ -56,7 +113,7 @@ async function imitaSupabase(ctx, db) {
   let fail = 0;
   for (const [w, h] of [[360, 760], [1280, 900]]) for (const scheme of ['light', 'dark']) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, colorScheme: scheme });
-    const db = { esiste: true, password: 'iniziale-123', profilo: { nome: 'Anonimo', nome_scelto: false }, preferenze: null, chiamate: [] };
+    const db = { esiste: true, password: 'iniziale-123', profilo: { nome: 'Anonimo', nome_scelto: false }, preferenze: null, chiamate: [], ricette: ricettario(), archivio: [] };
     await imitaSupabase(ctx, db);
     const page = await ctx.newPage(); const errs = []; let attesi = 0;
     /* i 400 del token sono voluti (password sbagliata): contati a parte */
@@ -148,6 +205,54 @@ async function imitaSupabase(ctx, db) {
     await page.click('[data-k="noevit"]');
     const senzaCeci = await page.$$eval('.rcard', a => a.length);
     const filtroOk = conCeci > 0 && senzaCeci === nCards - conCeci && (await page.$$eval('.badge.evit', a => a.length)) === 0;
+    await page.click('[data-k="noevit"]');
+
+    /* passo 4: ricerca, categoria, autore, permessi */
+    await page.fill('#r-cerca', 'ceci');
+    const titoliCeci = await page.$$eval('.rcard', a => a.length);
+    await page.screenshot({ path: `${dir}/${tag}-elenco.png` });
+    await page.fill('#r-cerca', '');
+    await page.click('[data-g="cat"][data-k="pesce"]');
+    const soloPesce = await page.$$eval('.rcard h3', a => a.map(e => e.textContent));
+    await page.click('[data-g="cat"][data-k="tutte"]');
+    await page.selectOption('#r-autore', ALTRO);
+    const diMarta = await page.$$eval('.rcard', a => a.length);
+    await page.click('.rcard'); await page.waitForSelector('#d-copy');
+    const altruiBloccata = !(await page.$('#d-edit')) && !(await page.$('#d-del')) && /Marta/.test(await testo('.chi'));
+    await page.click('#back'); await page.selectOption('#r-autore', '');
+    const ricercaOk = titoliCeci > 0 && titoliCeci < nCards && soloPesce.join() === 'Orata al forno di Marta' && diMarta === 1 && altruiBloccata;
+
+    /* nuova ricetta: categoria incoerente, carne rifiutata dal database, poi salvata */
+    await page.click('#new-recipe'); await page.waitForSelector('#rform');
+    await page.fill('#f-titolo', 'Pasta prova del gruppo'); await page.selectOption('#f-pasto', 'pranzo');
+    await page.check('#f-cat'); await page.check('#f-diff'); await page.fill('#f-tp', '10'); await page.fill('#f-tc', '10'); await page.check('#f-tutto');
+    await page.fill('#f-i0-nome', 'Pasta corta'); await page.fill('#f-i0-qta', '160'); await page.selectOption('#f-i0-rep', 'cereali');
+    await page.fill('#f-i1-nome', 'Uova'); await page.fill('#f-i1-qta', '2'); await page.selectOption('#f-i1-rep', 'frigo');
+    await page.fill('#f-p0', 'Cuoci la pasta e condisci.');
+    await page.click('#rform button[type=submit]'); await page.waitForSelector('#e-f-cat');
+    const errCat = await testo('#e-f-cat');
+    await page.check('#f-cat-vegetariana');
+    await page.fill('#f-i1-nome', 'Chorizo');
+    await page.click('#rform button[type=submit]'); await page.waitForSelector('#e-f-i1-nome');
+    const errCarne = await testo('#e-f-i1-nome');
+    await page.screenshot({ path: `${dir}/${tag}-modulo-errori.png` });
+    await page.fill('#f-i1-nome', 'Zucchine'); await page.selectOption('#f-i1-rep', 'ortofrutta');
+    await page.click('#rform button[type=submit]'); await page.waitForSelector('#d-del');
+    const salvata = db.ricette.filter(r => r.titolo === 'Pasta prova del gruppo')[0];
+    const salvataOk = !!salvata && salvata.categoria === 'vegetariana' && salvata.stagioni.join() === 'tutto_anno' && /Inserita da/.test(await testo('.chi'));
+    await page.screenshot({ path: `${dir}/${tag}-nuova.png`, fullPage: true });
+
+    /* eliminazione: avviso sulle settimane degli altri, cestino, ripristino */
+    await page.click('#d-del'); await page.waitForFunction(() => /altra persona/.test((document.querySelector('.warnline') || {}).textContent || ''));
+    const avviso = await testo('.warnline');
+    await page.click('#d-del'); await page.waitForSelector('#r-list:not([hidden])');
+    const nelCestino = !!salvata.eliminata_il;
+    await page.click('#open-cest'); await page.waitForSelector('[data-crest]');
+    const cestino = await testo('#r-cest');
+    await page.screenshot({ path: `${dir}/${tag}-cestino.png`, fullPage: true });
+    await page.click('[data-crest]'); await page.waitForFunction(() => !document.querySelector('[data-crest]'));
+    const cestinoOk = nelCestino && !salvata.eliminata_il && /solo Marta/.test(cestino) && /Frittata di zucchine/.test(cestino) && /1 altra persona/.test(avviso);
+    await page.click('#cest-back');
 
     /* la sessione resta dopo il ricaricamento */
     await page.reload({ waitUntil: 'networkidle' });
@@ -179,12 +284,12 @@ async function imitaSupabase(ctx, db) {
     const esito = {
       nascosta, errVuoto: !!errVuoto, errSbagliata, mostrata, errRiservato: !!errRiservato, errDiverse, benvenutoOk,
       nCards, nErr, nVoci, scrollW, scrollWImp, font, email: email === EMAIL, nomeCampo, errPwdAtt, pwdOk, evitOk, temaOk, filtroOk,
-      persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
+      ricercaOk, errCat, errCarne, salvataOk, avviso, cestinoOk, persist, reteOk, uscitoOk, errCasella: !!errCasella, cancOk, attesi, errs
     };
     console.log(tag, esito);
     const ok = db.uscite === 2 && !errs.length && scrollW <= w && scrollWImp <= w && nCards && nascosta && esito.errVuoto && /non corretti/.test(errSbagliata) &&
       mostrata === 'text' && esito.errRiservato && /non coincidono/.test(errDiverse) && benvenutoOk && nomeCampo === 'Prova' &&
-      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
+      /non è corretta/.test(errPwdAtt) && pwdOk && evitOk && temaOk && filtroOk && ricercaOk && /Vegetariana/.test(errCat) && /carne/.test(errCarne) && salvataOk && cestinoOk && persist && reteOk && uscitoOk && esito.errCasella && cancOk && esito.email;
     if (!ok) fail++;
     await ctx.close();
   }

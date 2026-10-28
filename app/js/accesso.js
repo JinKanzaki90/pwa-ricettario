@@ -60,6 +60,8 @@ function stato(s) {
 
 function fuori(avviso) {
   U.utente = null; U.profilo = null; S.evitare = []; entrato = false;
+  /* i dati del ricettario letti con questo account non restano in memoria */
+  S.RICETTE = []; S.CESTINO = []; S.ARCH = []; S.AUTORI = {}; S.caricate = false; S.cur = null;
   $('f-accesso').reset(); mostraErr('a-err', '');
   stato('fuori');
   if (avviso) toast(avviso);
@@ -131,6 +133,7 @@ async function salvaNome(nome) {
   const r = await sb.from('profili').update({ nome: nome, nome_scelto: true }).eq('id', U.utente.id).select('nome, nome_scelto').single();
   if (r.error) throw r.error;
   U.profilo = r.data;
+  S.AUTORI[U.utente.id] = r.data.nome;
 }
 async function inviaBenvenuto(ev) {
   ev.preventDefault();

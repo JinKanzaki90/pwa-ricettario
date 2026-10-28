@@ -44,13 +44,13 @@ Regola per le attività pianificate: si lavora **sul primo passo non completato*
 ### [~] 4. Ricettario collegato al database (iniziato il 28/10/2026 alle 08:59 UTC)
 Lettura, ricerca, filtri (categoria, autore), inserimento e modifica con categoria e blocco della carne, eliminazione con avviso sulle settimane coinvolte, cestino, archivio personale.
 - [x] Migrazione: elenco della carne ampliato (kebab, chorizo, pastrami, foie gras, colla di pesce, …) e funzione `ingredienti_di_carne()` per il modulo, con prove locali (`20261028090000_carne_ampliata.sql`).
-- [ ] Modulo dati `dati.js`: ricette, nomi degli autori e archivio letti da Supabase; conversione al confine (`{tutto_anno}` ↔ `'tutto_anno'`); `app/data/ricette.json` spostato in `supabase/strumenti/` (serve solo al generatore delle ricette di partenza).
-- [ ] Elenco: ricerca per titolo e ingrediente, filtri categoria e «Inserite da…», icone Vegana (foglia) e Di stagione (calendario con sole, anche nella scheda Stagione); confronto per parola intera degli ingredienti da evitare.
-- [ ] Dettaglio: autore, ultima modifica e chi l'ha fatta; «Modifica» solo a chi può.
-- [ ] Modulo: categoria obbligatoria, blocco della carne con lo stesso elenco del database, coerenza della categoria, niente più esclusione fissa di fave/piselli/tartufo; salvataggio su Supabase con errori del database tradotti.
-- [ ] Eliminazione = cestino, con avviso sulle settimane coinvolte; vista Cestino (chi e quando, ripristino a chi può); archivio personale sul database.
-- [ ] Content Security Policy in `index.html`; Guida: tolti i chip «Escluso dalle ricette».
-- [ ] Prove: `test/prova-app.js` con il ricettario imitato; prove locali del database.
+- [x] Modulo dati `dati.js`: ricette, nomi degli autori e archivio letti da Supabase; conversione al confine (`{tutto_anno}` ↔ `'tutto_anno'`); `app/data/ricette.json` spostato in `supabase/strumenti/` (serve solo al generatore delle ricette di partenza).
+- [x] Elenco: ricerca per titolo e ingrediente, filtri categoria e «Inserite da…», icone Vegana (foglia) e Di stagione (calendario con sole, anche nella scheda Stagione); confronto per parola intera degli ingredienti da evitare.
+- [x] Dettaglio: autore, ultima modifica e chi l'ha fatta; «Modifica» solo a chi può.
+- [x] Modulo: categoria obbligatoria, blocco della carne con lo stesso elenco del database, coerenza della categoria, niente più esclusione fissa di fave/piselli/tartufo; salvataggio su Supabase con errori del database tradotti.
+- [x] Eliminazione = cestino, con avviso sulle settimane coinvolte; vista Cestino (chi e quando, ripristino a chi può); archivio personale sul database.
+- [x] Content Security Policy in `index.html`; Guida: tolti i chip «Escluso dalle ricette».
+- [x] Prove: `test/prova-app.js` con il ricettario imitato; prove locali del database.
 - [ ] Verifica e revisione di fine passo.
 
 ### [ ] 5. Settimana e spesa personali

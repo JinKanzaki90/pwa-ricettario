@@ -1,25 +1,27 @@
-/* Modulo ricetta (nuova, modifica, tua versione).
+/* Modulo ricetta (nuova, modifica, tua versione), salvata nel ricettario condiviso.
    La bozza di una nuova ricetta resta su questo browser (rv-bozza) finché non la salvi o la svuoti. */
 import { $, esc, store, toast } from './util.js';
-import { S, saveUsr } from './stato.js';
-import { M, MESI, diStagione, hasAlc, hasCal, nomeAlc, NOME_PASTO, REPARTI, ICON_STAG, ICON_CAL, ICON_ALC, byId } from './dominio.js';
+import { S } from './stato.js';
+import { M, MESI, diStagione, hasAlc, hasCal, nomeAlc, NOME_PASTO, REPARTI, CATEGORIE, ICON_STAG, ICON_VEG, ICON_CAL, ICON_ALC, byId } from './dominio.js';
 import { vista } from './navigazione.js';
-import { aggiorna, openRecipe } from './ricette.js';
+import { ricarica, openRecipe } from './ricette.js';
+import { salvaRicetta, ingredientiDiCarne, msgDb, puoModificare } from './dati.js';
 
 const UNITA = [['g', 'g'], ['ml', 'ml'], ['pz', 'pezzi'], ['cucchiaio', 'cucchiai'], ['cucchiaino', 'cucchiaini'], ['pizzico', 'pizzichi'], ['fetta', 'fette'], ['rametto', 'rametti'], ['spicchio', 'spicchi'], ['costa', 'coste'], ['q.b.', 'q.b.']];
 const DIFF = ['facile', 'media', 'impegnativa'];
 const STAG = [['primavera', 'Primavera'], ['estate', 'Estate'], ['autunno', 'Autunno'], ['inverno', 'Inverno']];
 const LS_BOZZA = 'rv-bozza';
-/* parole che indicano ingredienti non vegani, salvo versioni vegetali; esclusioni del profilo
-   (regole dell'artifact: categorie e blocco della carne arrivano con il passo 4) */
-const RE_ANIM = /\b(carne|manzo|maiale|pollo|tacchino|vitello|agnello|prosciutto|pancetta|guanciale|salame|salsiccia|speck|bresaola|wurstel|pesce|tonno|salmone|acciughe|acciuga|alici|gamberi|uova|uovo|albume|tuorlo|miele|formaggio|parmigiano|grana|pecorino|mozzarella|ricotta|burrata|stracchino|gorgonzola|panna|burro|latte|yogurt|strutto|gelatina|colla di pesce)\b/i;
-const RE_VEG = /(vegetal|vegan|di soia|d'avena|di avena|di riso|di mandorl|di cocco|di arachid|di cacao|di nocciol|di anacard|di girasole|di sesamo|di ceci)/i;
-const RE_ESCL = /\b(fave|fava|piselli|pisello|tartufo|tartufi|tartufato)\b/i;
+/* coerenza della categoria (REQUISITI.md §5.1): uova, latticini e miele non sono vegani; il pesce non è vegetariano.
+   Le versioni vegetali dichiarate nel nome non contano. La carne la riconosce il database (ingredienti_di_carne). */
+const RE_NONVEG = /\b(uova|uovo|albume|albumi|tuorlo|tuorli|miele|formaggio|formaggi|parmigiano|grana padano|pecorino|mozzarella|mozzarelle|ricotta|burrata|stracchino|crescenza|gorgonzola|mascarpone|scamorza|provola|caciocavallo|fontina|emmental|feta|caprino|taleggio|asiago|panna|burro|latte|yogurt|besciamella)\b/i;
+const RE_PESCE = /\b(pesce|pesci|tonno|salmone|acciughe|acciuga|alici|gamberi|gambero|gamberetti|baccala|stoccafisso|merluzzo|orata|branzino|spigola|sgombro|sarde|sardine|cozze|vongole|calamari|calamaro|seppie|seppia|polpo|totani|scampi|aragosta|astice|granchio|surimi|bottarga|pesce spada|trota|nasello|platessa)\b/i;
+const RE_VEG = /(vegetal|vegan|di soia|d'avena|di avena|di riso|di mandorl|di cocco|di arachid|di cacao|di nocciol|di anacard|di girasole|di sesamo|di ceci|di lievito)/i;
+function senzaAccenti(t) { return String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
 
 function ingVuoto() { return { nome: '', qta: '', unita: 'g', reparto: '', cal: false, prodotto: '', marca: '', dove: '' }; }
 function nuovaBozza() {
   return { id: null, base: null, titolo: '', pasto: '', difficolta: '', tempo_prep: '', tempo_cottura: '', riposo: '', porzioni_base: '2',
-    stagioni: [], tutto_anno: false, alcolici: false, calabria: false, vegana: false,
+    stagioni: [], tutto_anno: false, alcolici: false, calabria: false, categoria: '',
     ingredienti: [ingVuoto(), ingVuoto(), ingVuoto()], passi: ['', ''], note: '' };
 }
 export function daRicetta(r, copia) {
@@ -27,7 +29,7 @@ export function daRicetta(r, copia) {
   return { id: copia ? null : r.id, base: copia ? r.id : null, titolo: copia ? r.titolo + ' (la mia versione)' : r.titolo, pasto: r.pasto, difficolta: r.difficolta,
     tempo_prep: String(tp), tempo_cottura: String(tc), riposo: r.riposo || '', porzioni_base: String(r.porzioni_base || 2),
     stagioni: Array.isArray(r.stagioni) ? r.stagioni.slice() : [], tutto_anno: r.stagioni === 'tutto_anno',
-    alcolici: hasAlc(r), calabria: hasCal(r), vegana: !copia && !!r.personale,
+    alcolici: hasAlc(r), calabria: hasCal(r), categoria: r.categoria || '',
     ingredienti: r.ingredienti.map(function (i) {
       return { nome: i.nome, qta: i.qta == null ? '' : String(i.qta), unita: i.unita, reparto: i.reparto || '',
         cal: !!i.calabrese, prodotto: i.calabrese ? i.calabrese.prodotto || '' : '', marca: i.calabrese ? i.calabrese.marca || '' : '', dove: i.calabrese ? i.calabrese.dove || '' : '' };
@@ -60,7 +62,7 @@ function txt(k, v, extra) { return '<input type="text" id="' + k + '" value="' +
 function num(k, v, min, max, extra) { return '<input type="number" inputmode="numeric" id="' + k + '" min="' + min + '" max="' + max + '" value="' + esc(v) + '"' + errAttr(k) + (extra || '') + '>'; }
 function suf(ctl, u) { return '<div class="suf">' + ctl + '<span aria-hidden="true">' + u + '</span></div>'; }
 function ck(k, label, on, cls) { return '<label class="ck' + (cls ? ' ' + cls : '') + '"' + (ferr[k] ? ' aria-invalid="true"' : '') + '><input type="checkbox" id="' + k + '"' + (on ? ' checked' : '') + '><span>' + label + '</span></label>'; }
-const ETICHETTE = { 'f-titolo': 'Titolo', 'f-pasto': 'Pasto', 'f-diff': 'Difficoltà', 'f-tp': 'Tempo di preparazione', 'f-tc': 'Tempo di cottura', 'f-porz': 'Porzioni', 'f-stag': 'Stagioni', 'f-veg': 'Conferma ricetta vegana', 'f-alc': 'Contiene alcolici', 'f-cal': 'Prodotti calabresi', 'f-ing': 'Ingredienti', 'f-passi': 'Procedimento' };
+const ETICHETTE = { 'f-titolo': 'Titolo', 'f-pasto': 'Pasto', 'f-cat': 'Categoria', 'f-diff': 'Difficoltà', 'f-tp': 'Tempo di preparazione', 'f-tc': 'Tempo di cottura', 'f-porz': 'Porzioni', 'f-stag': 'Stagioni', 'f-salva': 'Salvataggio', 'f-alc': 'Contiene alcolici', 'f-cal': 'Prodotti calabresi', 'f-ing': 'Ingredienti', 'f-passi': 'Procedimento' };
 
 function renderForm() {
   const b = bozza, nuovo = !b.id;
@@ -79,6 +81,9 @@ function renderForm() {
   h += '<fieldset class="fs"><legend>Dati principali</legend>' +
     fld('f-titolo', 'Titolo', txt('f-titolo', b.titolo, ' maxlength="80" placeholder="es. Pasta e ceci al rosmarino"'), '', true) +
     fld('f-pasto', 'Pasto', '<select id="f-pasto"' + errAttr('f-pasto') + '>' + opt('', 'Scegli…', b.pasto) + ['colazione', 'pranzo', 'cena', 'spuntino', 'base'].map(function (p) { return opt(p, NOME_PASTO[p], b.pasto); }).join('') + '</select>', '', true) +
+    '<div class="fld" role="radiogroup" aria-labelledby="l-cat"' + (ferr['f-cat'] ? ' aria-describedby="e-f-cat"' : '') + '><span class="lbl" id="l-cat">Categoria <span class="req">*</span></span><div class="checks">' +
+      CATEGORIE.map(function (c, i) { return '<label class="ck"' + (ferr['f-cat'] ? ' aria-invalid="true"' : '') + '><input type="radio" name="f-cat" id="' + (i === 0 ? 'f-cat' : 'f-cat-' + c[0]) + '" value="' + c[0] + '"' + (b.categoria === c[0] ? ' checked' : '') + '><span>' + c[1] + '</span></label>'; }).join('') +
+      '</div><p class="hint">Vegana: nessun ingrediente animale. Vegetariana: anche uova, latte e derivati, miele. Con pesce: anche pesce e frutti di mare. La carne non è ammessa.</p>' + errMsg('f-cat') + '</div>' +
     '<div class="fld" role="radiogroup" aria-labelledby="l-diff"' + (ferr['f-diff'] ? ' aria-describedby="e-f-diff"' : '') + '><span class="lbl" id="l-diff">Difficoltà <span class="req">*</span></span><div class="checks">' +
       DIFF.map(function (d, i) { return '<label class="ck"' + (ferr['f-diff'] ? ' aria-invalid="true"' : '') + '><input type="radio" name="f-diff" id="' + (i === 0 ? 'f-diff' : 'f-diff-' + d) + '" value="' + d + '"' + (b.difficolta === d ? ' checked' : '') + '><span>' + d.charAt(0).toUpperCase() + d.slice(1) + '</span></label>'; }).join('') +
       '</div>' + errMsg('f-diff') + '</div>' +
@@ -95,7 +100,6 @@ function renderForm() {
     '<div class="prev" id="f-prev"></div>' +
     '<div class="fld">' + ck('f-alc', '<b>Contiene alcolici</b> (vino, birra, superalcolici; non contano aceto e salsa di soia)', b.alcolici, 'block') + errMsg('f-alc') + '</div>' +
     '<div class="fld">' + ck('f-cal', '<b>Usa prodotti calabresi</b>: per ogni ingrediente calabrese indicherai prodotto, marca e dove trovarlo', b.calabria, 'block') + errMsg('f-cal') + '</div>' +
-    '<div class="fld">' + ck('f-veg', '<b>Confermo che la ricetta è vegana</b> e non contiene fave, piselli o tartufo <span class="req">*</span>', b.vegana, 'block') + errMsg('f-veg') + '</div>' +
     '</fieldset>';
   /* ingredienti */
   h += '<fieldset class="fs" id="f-ing" tabindex="-1"><legend>Ingredienti <span class="req">*</span></legend><p class="hint">Almeno due. Scegli i nomi già suggeriti quando puoi: così nella spesa le stesse voci si sommano.</p>' + errMsg('f-ing') +
@@ -127,7 +131,7 @@ function renderForm() {
   h += '<fieldset class="fs"><legend>Note</legend>' + fld('f-note', 'Note nutrizionali o consigli', '<textarea id="f-note" maxlength="600" placeholder="es. Il limone porta vitamina C, utile per il ferro dei legumi.">' + esc(b.note) + '</textarea>', '', false) + '</fieldset>';
   h += '<div class="form-end"><button type="submit" class="btn">Salva ricetta</button>' +
     (nuovo ? '<button type="button" class="btn line warn small' + (svuotaArmed ? ' armed' : '') + '" id="f-svuota">' + (svuotaArmed ? 'Tocca ancora per svuotare il modulo' : 'Svuota il modulo') + '</button>' : '') +
-    '<p class="fine">' + (nuovo ? 'Finché non salvi, la bozza resta su questo browser.' : 'Le modifiche si applicano anche alla settimana e alla spesa.') + '</p></div>';
+    '<p class="fine">' + (nuovo ? 'Salvata, la ricetta la vedono tutti. Finché non salvi, la bozza resta su questo browser.' : 'Le modifiche le vedono tutti e valgono anche per settimana e spesa.') + '</p></div>';
   h += '</form>';
   $('r-form').innerHTML = h;
   aggPrev();
@@ -148,7 +152,8 @@ function leggi() {
   b.tempo_prep = v('f-tp'); b.tempo_cottura = v('f-tc'); b.riposo = v('f-riposo'); b.porzioni_base = v('f-porz');
   b.tutto_anno = c('f-tutto');
   b.stagioni = STAG.filter(function (s, i) { return c(i === 0 ? 'f-stag' : 'f-st-' + s[0]); }).map(function (s) { return s[0]; });
-  b.alcolici = c('f-alc'); b.calabria = c('f-cal'); b.vegana = c('f-veg');
+  b.alcolici = c('f-alc'); b.calabria = c('f-cal');
+  const cat = document.querySelector('input[name="f-cat"]:checked'); b.categoria = cat ? cat.value : '';
   b.ingredienti.forEach(function (i, n) {
     const k = 'f-i' + n;
     i.nome = v(k + '-nome'); i.unita = v(k + '-un') || i.unita; i.reparto = v(k + '-rep');
@@ -164,7 +169,7 @@ function aggPrev() {
   const finta = { stagioni: bozza.tutto_anno ? 'tutto_anno' : bozza.stagioni, ingredienti: bozza.ingredienti.filter(function (i) { return i.nome.trim(); }) };
   const t = $('f-tot'); if (t) t.textContent = 'Tempo totale: ' + ((parseInt(bozza.tempo_prep, 10) || 0) + (parseInt(bozza.tempo_cottura, 10) || 0)) + ' min. Metti 0 nella cottura se il piatto non si cuoce.';
   const si = diStagione(finta);
-  el.innerHTML = 'Anteprima per ' + MESI[M].toLowerCase() + ': ' + (si ? '<span class="badge stag">' + ICON_STAG + 'Di stagione</span>' : '<span>senza simbolo di stagione</span>') +
+  el.innerHTML = 'Anteprima per ' + MESI[M].toLowerCase() + ': ' + (bozza.categoria === 'vegana' ? '<span class="badge veg">' + ICON_VEG + 'Vegana</span>' : '') + (si ? '<span class="badge stag">' + ICON_STAG + 'Di stagione</span>' : '<span>senza simbolo di stagione</span>') +
     (bozza.calabria && bozza.ingredienti.some(function (i) { return i.cal; }) ? '<span class="badge cal">' + ICON_CAL + 'Calabria</span>' : '') +
     (bozza.alcolici ? '<span class="badge alc">' + ICON_ALC + 'Con alcol</span>' : '');
 }
@@ -181,22 +186,27 @@ function valida() {
   if (!(tc >= 0 && tc <= 600)) e['f-tc'] = 'minuti interi da 0 a 600';
   if (!(pz >= 1 && pz <= 12)) e['f-porz'] = 'un numero intero da 1 a 12';
   if (!b.tutto_anno && !b.stagioni.length) e['f-stag'] = 'scegli almeno una stagione o «Tutto l\'anno»';
-  if (!b.vegana) e['f-veg'] = 'conferma che la ricetta è vegana';
-  let piene = 0, alcNome = '', calOk = false;
+  if (!b.categoria) e['f-cat'] = 'scegli vegana, vegetariana o con pesce';
+  let piene = 0, alcNome = '', calOk = false, nonVeg = '', pesce = '';
   b.ingredienti.forEach(function (i, n) {
     const k = 'f-i' + n, nome = i.nome.replace(/\s+/g, ' ').trim();
     const vuota = !nome && !String(i.qta).trim() && !i.reparto;
     if (vuota) return;
     piene++;
     if (!nome) e[k + '-nome'] = 'scrivi il nome';
-    else if (RE_ESCL.test(nome)) e[k + '-nome'] = '«' + nome + '» è tra gli alimenti esclusi';
-    else if (RE_ANIM.test(nome) && !RE_VEG.test(nome)) e[k + '-nome'] = '«' + nome + '» non sembra vegano: se è una versione vegetale scrivilo nel nome (es. «burro vegetale»)';
+    else if (!RE_VEG.test(nome)) {
+      const sn = senzaAccenti(nome);
+      if (!pesce && RE_PESCE.test(sn)) pesce = nome;
+      else if (!nonVeg && RE_NONVEG.test(sn)) nonVeg = nome;
+    }
     if (i.unita !== 'q.b.') { const q = parseFloat(String(i.qta).replace(',', '.')); if (!(q > 0 && q < 100000)) e[k + '-qta'] = 'inserisci una quantità maggiore di zero, o scegli q.b.'; }
     if (!i.reparto) e[k + '-rep'] = 'scegli il reparto';
     if (nomeAlc(nome) && !alcNome) alcNome = nome;
     if (b.calabria && i.cal) { if (!i.prodotto.trim()) e[k + '-prod'] = 'indica il prodotto calabrese'; else calOk = true; }
   });
   if (piene < 2) e['f-ing'] = 'inserisci almeno due ingredienti';
+  if (b.categoria === 'vegana' && (pesce || nonVeg)) e['f-cat'] = 'tra gli ingredienti c\'è «' + (pesce || nonVeg) + '»: scegli «' + (pesce ? 'Con pesce' : 'Vegetariana') + '», oppure, se è una versione vegetale, scrivilo nel nome (es. «burro vegetale»)';
+  else if (b.categoria === 'vegetariana' && pesce) e['f-cat'] = 'tra gli ingredienti c\'è «' + pesce + '»: scegli «Con pesce»';
   if (alcNome && !b.alcolici) e['f-alc'] = 'tra gli ingredienti c\'è «' + alcNome + '»: spunta «Contiene alcolici»';
   if (b.calabria && !calOk && !Object.keys(e).some(function (k) { return /-prod$/.test(k); })) e['f-cal'] = 'segna almeno un ingrediente come prodotto calabrese, oppure togli la spunta';
   let passi = 0;
@@ -204,11 +214,9 @@ function valida() {
   if (!passi) e['f-passi'] = 'scrivi almeno un passaggio';
   return e;
 }
-function slug(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40); }
 function costruisci() {
   const b = bozza, tp = intero(b.tempo_prep), tc = intero(b.tempo_cottura);
   const r = {
-    id: b.id || ('mia-' + slug(b.titolo) + '-' + Date.now().toString(36)),
     titolo: b.titolo.replace(/\s+/g, ' ').trim(), pasto: b.pasto, tempo_min: tp + tc, tempo_prep: tp, tempo_cottura: tc,
     difficolta: b.difficolta, porzioni_base: intero(b.porzioni_base),
     stagioni: b.tutto_anno ? 'tutto_anno' : b.stagioni.slice(),
@@ -218,11 +226,10 @@ function costruisci() {
       return o;
     }),
     passi: b.passi.map(function (p) { return p.trim(); }).filter(Boolean),
-    alcolici: !!b.alcolici, aggiornata: new Date().toISOString()
+    categoria: b.categoria, alcolici: !!b.alcolici
   };
-  if (b.riposo.trim()) r.riposo = b.riposo.trim();
-  if (b.note.trim()) r.note_nutrizionali = b.note.trim();
-  if (b.base) r.versione_di = b.base;
+  r.riposo = b.riposo.trim() || null; r.note_nutrizionali = b.note.trim() || null;
+  r.versione_di = b.base && byId(b.base) ? b.base : null;
   return r;
 }
 
@@ -276,15 +283,39 @@ export function initModulo() {
     if (b.dataset.rmi) { bozza.ingredienti.splice(+b.dataset.rmi, 1); ferr = {}; renderForm(); salvaBozza(); return; }
     if (b.dataset.rmp) { bozza.passi.splice(+b.dataset.rmp, 1); ferr = {}; renderForm(); salvaBozza(); }
   });
-  form.addEventListener('submit', function (e) {
-    e.preventDefault(); if (!bozza) return;
+  let salvando = false;
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault(); if (!bozza || salvando) return;
     leggi(); ferr = valida(); svuotaArmed = false;
-    if (Object.keys(ferr).length) { renderForm(); const s = $('f-errsum'); if (s) { s.focus(); s.scrollIntoView({ block: 'start' }); } return; }
-    const r = costruisci(), modifica = !!bozza.id;
-    if (modifica) S.usr.personali = S.usr.personali.map(function (x) { return x.id === r.id ? r : x; });
-    else { S.usr.personali.push(r); store(LS_BOZZA, ''); }
-    saveUsr(); bozza = null; ferr = {}; aggiorna();
-    S.backTo = null; openRecipe(r.id);
-    toast(modifica ? 'Modifiche salvate' : 'Ricetta salvata nella tua raccolta');
+    if (Object.keys(ferr).length) { mostraErrori(); return; }
+    const r = costruisci(), id = bozza.id, btn = form.querySelector('button[type=submit]');
+    if (id && !puoModificare(byId(id))) { ferr['f-salva'] = msgDb({ code: 'non_permesso' }); mostraErrori(); return; }
+    salvando = true; btn.disabled = true; btn.textContent = 'Salvataggio…';
+    try {
+      /* la carne la riconosce il database, con lo stesso elenco del vincolo: il messaggio indica l'ingrediente */
+      const carne = await ingredientiDiCarne(r.ingredienti);
+      if (carne.length) {
+        bozza.ingredienti.forEach(function (i, n) {
+          if (carne.indexOf(i.nome.replace(/\s+/g, ' ').trim()) > -1) ferr['f-i' + n + '-nome'] = '«' + i.nome.trim() + '» risulta carne, che il ricettario non ammette. Se è una versione vegetale scrivilo nel nome (es. «salsiccia vegetale»)';
+        });
+        if (!Object.keys(ferr).length) ferr['f-ing'] = 'un ingrediente risulta carne: ' + carne.join(', ');
+        mostraErrori(); return;
+      }
+      const salvata = await salvaRicetta(r, id);
+      if (!id) store(LS_BOZZA, '');
+      bozza = null; ferr = {};
+      await ricarica().catch(function () { /* la ricetta è salvata: si vedrà alla prossima lettura */ });
+      if (!byId(salvata.id)) S.RICETTE.push(salvata);
+      S.backTo = null; openRecipe(salvata.id);
+      toast(id ? 'Modifiche salvate' : 'Ricetta salvata nel ricettario');
+    } catch (err) {
+      ferr = { 'f-salva': msgDb(err) }; mostraErrori();
+    } finally {
+      salvando = false;
+    }
   });
+}
+function mostraErrori() {
+  renderForm();
+  const s = $('f-errsum'); if (s) { s.focus(); s.scrollIntoView({ block: 'start' }); }
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Genera la migrazione con le ricette di partenza (generiche, categoria «vegana») da app/data/ricette.json.
+"""Genera la migrazione con le ricette di partenza (generiche, categoria «vegana») da supabase/strumenti/ricette_partenza.json
+(fino al passo 3 era app/data/ricette.json: la riga di commento scritta nella migrazione resta quella originale).
 
 Uso, dalla radice del repository:
     python3 supabase/strumenti/genera_ricette_partenza.py > supabase/migrations/20261025170100_ricette_di_partenza.sql
@@ -12,7 +13,7 @@ import pathlib
 import sys
 
 RADICE = pathlib.Path(__file__).resolve().parents[2]
-dati = json.loads((RADICE / 'app/data/ricette.json').read_text(encoding='utf-8'))
+dati = json.loads((RADICE / 'supabase/strumenti/ricette_partenza.json').read_text(encoding='utf-8'))
 
 
 def testo(v):

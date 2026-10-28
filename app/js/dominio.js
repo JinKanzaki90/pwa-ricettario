@@ -60,36 +60,47 @@ export function fmtQ(v, unita) {
   return n + ' ' + unita;
 }
 
-export const ICON_STAG = '<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>';
+/* Di stagione: piccolo calendario con sole; Vegana: foglia (REQUISITI.md §5.1) */
+export const ICON_STAG = '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="13" height="13" rx="2"/><path d="M3 12h13M7 6v4M12 6v4"/><circle cx="19" cy="5" r="2.2"/><path d="M19 1v.6M19 8.4V9M23 5h-.6M15.6 5H15M21.8 2.2l-.4.4M21.8 7.8l-.4-.4"/></svg>';
+export const ICON_VEG = '<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>';
 export const ICON_CAL = '<svg viewBox="0 0 24 24"><path d="M16.2 8.2c1.9.9 2.6 3 1.6 5.6-1.5 3.9-5.9 6.8-12.3 7.2 3.3-1.6 5.7-4.1 6.8-7.6.8-2.7 2.1-4.6 3.9-5.2z"/><path d="M13.6 8.6c.9-1.3 2.9-1.8 4.4-.8"/><path d="M16.2 7.4c0-2 .9-3.4 2.8-4.1"/></svg>';
 export const ICON_ALC = '<svg viewBox="0 0 24 24"><path d="M7 3h10l-1 6.5a4 4 0 0 1-8 0z"/><path d="M12 13.5V20M8.5 21h7"/></svg>';
 export const PASTI = [['tutti', 'Tutti'], ['colazione', 'Colazione'], ['pranzo', 'Pranzo'], ['cena', 'Cena'], ['spuntino', 'Spuntino'], ['base', 'Basi']];
 export const ALTRI = [['t15', 'Fino a 15 min'], ['t30', 'Fino a 30 min'], ['stag', 'Di stagione'], ['cal', 'Prodotti calabresi'], ['noalc', 'Senza alcol'], ['mie', 'Le mie ricette'], ['noevit', 'Senza ingredienti da evitare']];
+export const CATEGORIE = [['vegana', 'Vegana'], ['vegetariana', 'Vegetariana'], ['pesce', 'Con pesce']];
+export const NOME_CAT = { vegana: 'Vegana', vegetariana: 'Vegetariana', pesce: 'Con pesce' };
 export const NOME_PASTO = { colazione: 'Colazione', pranzo: 'Pranzo', cena: 'Cena', spuntino: 'Spuntino', base: 'Base' };
 export const REPARTI = [['ortofrutta', 'Ortofrutta'], ['legumi', 'Legumi'], ['cereali', 'Pasta, riso e cereali'], ['frigo', 'Frigo'], ['surgelati', 'Surgelati'], ['dispensa', 'Dispensa'], ['spezie', 'Spezie ed erbe']];
 
-/* ---------- raccolta: ricette di partenza + personali, meno le eliminate ---------- */
-export function ricompila() {
-  const el = {}; S.usr.eliminate.forEach(function (i) { el[i] = true; });
-  S.RICETTE = S.BASE.filter(function (r) { return !el[r.id]; })
-    .concat(S.usr.personali.map(function (r) { r.personale = true; return r; }));
-}
+/* ---------- raccolta: S.RICETTE arriva dal database già senza il cestino (dati.js) ---------- */
 export function byId(id) {
   for (let i = 0; i < S.RICETTE.length; i++) if (S.RICETTE[i].id === id) return S.RICETTE[i];
   return null;
 }
-export function archiviata(id) { return S.usr.archiviate.indexOf(id) > -1; }
+export function archiviata(id) { return S.ARCH.indexOf(id) > -1; }
 export function attive() { return S.RICETTE.filter(function (r) { return !archiviata(r.id); }); }
 
-/* ingredienti della ricetta che compaiono nell'elenco personale «da evitare» (confronto senza accenti né maiuscole) */
-function semplice(t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+/* testo per i confronti: minuscole, senza accenti, solo lettere e cifre separate da uno spazio */
+export function semplice(t) {
+  return ' ' + String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim() + ' ';
+}
+/* ingredienti della ricetta che compaiono nell'elenco personale «da evitare»: confronto per parole intere
+   («ceci» trova «farina di ceci», «pera» non trova «peperoni») */
 export function daEvitare(r) {
   const l = (S.evitare || []).map(semplice);
   if (!l.length) return [];
   const trovati = [];
   (r.ingredienti || []).forEach(function (i) {
     const n = semplice(i.nome);
-    l.forEach(function (x, k) { if (n.indexOf(x) > -1 && trovati.indexOf(S.evitare[k]) < 0) trovati.push(S.evitare[k]); });
+    l.forEach(function (x, k) { if (x.trim() && n.indexOf(x) > -1 && trovati.indexOf(S.evitare[k]) < 0) trovati.push(S.evitare[k]); });
   });
   return trovati;
+}
+
+/* ricerca per titolo e ingrediente: tutte le parole cercate devono comparire */
+export function trova(r, q) {
+  const parole = semplice(q).trim().split(' ').filter(Boolean);
+  if (!parole.length) return true;
+  const t = semplice(r.titolo + ' ' + (r.ingredienti || []).map(function (i) { return i.nome; }).join(' '));
+  return parole.every(function (p) { return t.indexOf(' ' + p) > -1; });
 }
