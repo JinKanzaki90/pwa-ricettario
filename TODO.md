@@ -96,10 +96,10 @@ Manifest, icone, service worker per la lettura offline, «Aggiungi a schermata H
 - [x] **«Aggiungi a schermata Home»**: in Impostazioni un pulsante «Installa l'app» dove il browser lo permette (Android, Chrome) e le istruzioni per iPhone (Safari → Condividi → «Aggiungi alla schermata Home»); nascosto se l'app è già installata.
 - [x] Prova automatica estesa (manifest, service worker, avvio senza rete), controllo del workflow «Pubblica» sui nuovi file, verifica funzionale e revisione di fine passo.
 
-### [~] 9. Pubblicazione e prova completa (iniziato il 28/10/2026 alle 20:58 UTC)
+### [!] 9. Pubblicazione e prova completa (in attesa della prova completa con Angelo, 28/10/2026)
 Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare gli utenti degli amici.
 - [x] **Prove automatiche a ogni push**: workflow `prove.yml` che esegue le prove del database (`test/db/prova-db.sh` su PostgreSQL) e dell'app (`test/prova-app.js` in Chromium), così un errore si vede prima di arrivare agli amici.
-- [ ] **Prova sul sito pubblicato**: `test/prova-app.js` contro l'indirizzo di GitHub Pages (versione pubblicata uguale a `main`, service worker e manifest serviti), controllo «nessuna tabella leggibile senza accesso» contro il progetto vero.
+- [x] **Prova sul sito pubblicato**: `test/prova-app.js` contro l'indirizzo di GitHub Pages (versione pubblicata uguale a `main`, service worker e manifest serviti), controllo «nessuna tabella leggibile senza accesso» contro il progetto vero.
 - [x] **Pagina privacy**: rilettura finale rispetto a ciò che l'app fa davvero (Acquisti consapevoli, cestino, copia sul dispositivo), data della versione.
 - [x] **Istruzioni per Angelo** (`AMMINISTRAZIONE.md`): creare l'utente di un amico, cosa mandargli, reimpostare una password, bloccare o eliminare un utente, Site URL, backup, cosa controllare se qualcosa non va.
 - [ ] **Prova completa con Angelo** (elenco in «Richieste per Angelo»). Prove rimaste dal passo 3: (a) password sbagliata → messaggio «Email o password non corretti»; (b) «Esci da questo dispositivo» e rientro con la nuova password; (c) con l'utente di prova, Impostazioni → «Cancella il mio account…» (password + casella): l'utente deve sparire dall'elenco della dashboard Supabase.
@@ -230,7 +230,23 @@ Verifica: `test/prova-app.js` verde a 360 px e 1280 px, chiaro e scuro, console 
    - Tolto il blocco dell'orientamento verticale dal manifest (avrebbe limitato tablet e computer).
    - L'informativa sulla privacy ora dice cosa resta sul dispositivo per la lettura senza rete e consiglia di uscire dai dispositivi condivisi.
 
+### Passo 9 (28/10/2026, parte automatica; manca la prova con Angelo)
+Verifica: prove del database (PostgreSQL locale) e dell'app (`test/prova-app.js`, 360 px e desktop, chiaro e scuro, console pulita) superate in locale e nel nuovo workflow «Prove»; «Pubblica l'app» verde con il nuovo controllo `prova-sito` (file pubblicati uguali al commit, stessa prova funzionale sul sito vero); dalla sessione, con la sola chiave publishable, nessuna tabella né funzione risponde (401). Pagina privacy controllata a 360 px e desktop, chiaro e scuro.
+1. **Malintenzionato.** «Prove» non usa segreti e parte solo su push a `main` (nessuna esecuzione da richieste esterne); le schermate restano sulla macchina del workflow. `AMMINISTRAZIONE.md` non contiene dati personali; la procedura SQL per reimpostare una password avverte di non salvare la query con la password. Il blocco di un utente non chiude subito le sessioni già aperte (fino a un'ora): scritto nelle istruzioni. Nulla di grave da correggere.
+2. **Utente.** La privacy indicava un nome di pulsante diverso da quello dell'app: corretto («Cancella il mio account…»). Per gli amici c'è un messaggio pronto da inoltrare con accesso e installazione. Resta da vedere con Angelo se i nomi delle voci della dashboard Supabase citati in `AMMINISTRAZIONE.md` corrispondono a ciò che vede.
+3. **Revisore esterno.** (a) La prova dell'app è un unico script lungo: un errore si legge solo dall'elenco finale delle verifiche; *azione*: se diventa difficile da mantenere, dividerla per scheda. (b) Ogni push su `app/` fa due accessi sbagliati al progetto vero (Prove e prova-sito): trascurabile, ma se compaiono blocchi per troppi tentativi si spegne con `SENZA_RETE=1` in uno dei due. (c) Quando si attiverà il backup cifrato, la privacy dovrà dire per quanto restano i dati nelle copie: *azione* legata a `BACKUP_PASSPHRASE`. (d) La procedura SQL per la password usa `extensions.crypt` (pgcrypto nello schema `extensions`, come nei progetti Supabase): da confermare alla prima volta che serve.
+
 ## Richieste per Angelo
+
+- **Prova completa del passo 9 (pronta, blocca la chiusura del passo):** apri https://jinkanzaki90.github.io/pwa-ricettario/ dal telefono e, seguendo `AMMINISTRAZIONE.md`:
+  1. imposta il **Site URL** (Authentication → URL Configuration) e la lunghezza minima della password a 8;
+  2. crea un **utente di prova** (email inventata va bene, «Auto Confirm User» attivo) ed entra con lui da un altro browser o in finestra anonima: nome visualizzato, cambio password, una ricetta, un commento, un piatto in settimana, la spesa;
+  3. dal tuo utente controlla di vedere la ricetta, il commento e la settimana dell'utente di prova (in sola lettura);
+  4. **password sbagliata** → deve comparire «Email o password non corretti»;
+  5. **«Esci da questo dispositivo»** con l'utente di prova e rientro con la nuova password;
+  6. reimposta la password dell'utente di prova come scritto in `AMMINISTRAZIONE.md` e verifica che entri con quella nuova (dimmi se le voci della dashboard hanno nomi diversi);
+  7. con l'utente di prova: Impostazioni → «Cancella il mio account…» (password + casella): deve sparire dall'elenco Users; la sua ricetta resta firmata «Anonimo».
+  Scrivi qui l'esito (o cosa non è andato): poi il passo 9 si chiude e si passa al 10.
 
 - **Acquisti consapevoli, altri temi (passo 7, non bloccante):** criteri e fonti per Israele e Palestina sono fissati (§5.8). Per aggiungere altri temi (ambiente, deforestazione, lavoro, benessere animale…) servono, per ciascuno, le campagne o gli enti che consideri fonti valide: li cerco e li verifico io, ma la scelta è tua.
 - **Acquisti consapevoli, disinvestimenti (da confermare, non bloccante):** ho aggiunto anche l'elenco del BDS delle imprese da cui banche, fondi ed enti dovrebbero disinvestire (132 voci, con il tipo «Obiettivo di disinvestimento», distinto dai boicottaggi). Se preferisci tenere solo i boicottaggi dei consumatori, basta togliere quel file dal generatore; in alternativa si può aggiungere un filtro per tipo.
@@ -238,7 +254,6 @@ Verifica: `test/prova-app.js` verde a 360 px e 1280 px, chiaro e scuro, console 
 
 - **Backup cifrato (passo 1, non bloccante):** per attivare il backup settimanale serve un segreto `BACKUP_PASSPHRASE` (una frase lunga e casuale, da conservare anche fuori da GitHub: senza di essa il backup non si apre) in GitHub → Settings → Secrets and variables → Actions. Finché manca, «Continuità» fa solo la chiamata giornaliera.
 
-- **Prove rimaste del passo 3 (non bloccanti, da fare al passo 9):** password sbagliata, uscita e rientro, cancellazione dell'account di prova (dettagli nel passo 9).
 - **Spunte della spesa senza rete (da decidere, non bloccante):** ora, senza connessione, la spesa si legge ma non si spunta. Se vuoi, aggiungo una coda sul telefono solo per le spunte, che parte quando torna la rete.
 - **Altri siti su GitHub Pages (da sapere):** tutti i siti Pages del tuo account condividono l'indirizzo `jinkanzaki90.github.io` e quindi i dati salvati nel browser (sessione e copia per la lettura senza rete). Non pubblicare lì codice di altri o non controllato; in alternativa il ricettario può passare a un dominio tuo o a Cloudflare Pages.
 - **Password minima (consigliato, non bloccante):** dashboard Supabase → Authentication → Sign In / Providers → Email → «Minimum password length» a 8, così il server chiede lo stesso minimo dell'app.
