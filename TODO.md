@@ -90,6 +90,11 @@ Prima di scrivere i contenuti di «Acquisti consapevoli» chiedere ad Angelo cri
 
 ### [~] 8. PWA (iniziato il 28/10/2026 alle 18:58 UTC)
 Manifest, icone, service worker per la lettura offline, «Aggiungi a schermata Home».
+- [ ] **Manifest e icone**: `manifest.webmanifest` (nome, colori, avvio in `./`, schermo intero senza barra del browser), icona SVG disegnata qui e PNG 192, 512, «maskable» e 180 per iPhone, collegamenti in `index.html` e `privacy.html`.
+- [ ] **Service worker** (`sw.js`): all'installazione salva il guscio dell'app (pagine, stile, moduli, librerie, caratteri, dati statici, icone); per i file del sito prima la rete e, senza rete, la copia salvata (così non resta mai una versione vecchia); non tocca le chiamate a Supabase. Elenco dei file controllato dalla prova automatica.
+- [ ] **Lettura senza rete dei dati del database**: copia sul dispositivo di ricette, autori, archivio, settimana, spesa, nome e ingredienti da evitare dopo ogni lettura riuscita; avvio senza rete con la copia, avviso «Senza connessione: dati del …», scritture bloccate con un messaggio chiaro, nuova lettura quando torna la rete; copia cancellata all'uscita e alla cancellazione dell'account.
+- [ ] **«Aggiungi a schermata Home»**: in Impostazioni un pulsante «Installa l'app» dove il browser lo permette (Android, Chrome) e le istruzioni per iPhone (Safari → Condividi → «Aggiungi alla schermata Home»); nascosto se l'app è già installata.
+- [ ] Prova automatica estesa (manifest, service worker, avvio senza rete), controllo del workflow «Pubblica» sui nuovi file, verifica funzionale e revisione di fine passo.
 
 ### [ ] 9. Pubblicazione e prova completa
 Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare gli utenti degli amici.
