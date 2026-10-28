@@ -1,5 +1,3208 @@
 {
- "versione_schema": 1,
- "nota": "Voci di «Acquisti consapevoli» (REQUISITI.md §5.8). Ogni voce: azienda, segnalata_da (ente o campagna), motivo (scritto per completare «Segnalata da X per …»), fonte_titolo, fonte_url (https), verificata_il (AAAA-MM-GG). Vuoto finché Angelo non fissa criteri e fonti.",
- "voci": []
+ "versione_schema": 2,
+ "nota": "Generato da strumenti/acquisti/genera_acquisti.py: non modificare a mano. REQUISITI.md §5.8.",
+ "temi": {
+  "israele-palestina": "Israele e Palestina"
+ },
+ "settori": [
+  {
+   "id": "cibo",
+   "nome": "Cibo e bevande"
+  },
+  {
+   "id": "supermercati",
+   "nome": "Supermercati"
+  },
+  {
+   "id": "ristorazione",
+   "nome": "Ristorazione"
+  },
+  {
+   "id": "agricoltura",
+   "nome": "Agricoltura (sementi, fertilizzanti, irrigazione)"
+  },
+  {
+   "id": "cosmetici",
+   "nome": "Cosmetici e farmaci"
+  },
+  {
+   "id": "abbigliamento",
+   "nome": "Abbigliamento e sport"
+  },
+  {
+   "id": "tecnologia",
+   "nome": "Tecnologia e informatica"
+  },
+  {
+   "id": "telecomunicazioni",
+   "nome": "Telefonia, televisione e intrattenimento"
+  },
+  {
+   "id": "finanza",
+   "nome": "Banche, assicurazioni e investimenti"
+  },
+  {
+   "id": "turismo",
+   "nome": "Viaggi e turismo"
+  },
+  {
+   "id": "immobiliare",
+   "nome": "Immobiliare"
+  },
+  {
+   "id": "edilizia",
+   "nome": "Edilizia, materiali e ingegneria"
+  },
+  {
+   "id": "trasporti",
+   "nome": "Trasporti e logistica"
+  },
+  {
+   "id": "energia",
+   "nome": "Energia e carburanti"
+  },
+  {
+   "id": "acqua-rifiuti",
+   "nome": "Acqua, rifiuti e riciclo"
+  },
+  {
+   "id": "sicurezza",
+   "nome": "Sicurezza"
+  },
+  {
+   "id": "altro",
+   "nome": "Altre imprese"
+  }
+ ],
+ "tipi": {
+  "prioritario": "Boicottaggio prioritario",
+  "spontaneo": "Boicottaggio spontaneo sostenuto dal BDS",
+  "pressione": "Campagna di pressione",
+  "onu": "Banca dati ONU"
+ },
+ "fonti": {
+  "bds-2024": {
+   "da": "dal movimento BDS",
+   "titolo": "BDS movement, «Guide to BDS Boycott» (pubblicata il 6/12/2024)",
+   "url": "https://bdsmovement.net/Guide-to-BDS-Boycott",
+   "verificata_il": "2026-10-28",
+   "nota": "Il BDS sceglie i bersagli per grado di complicità documentata, rilevanza per altri movimenti, notorietà del marchio e possibilità di successo. Distingue il boicottaggio prioritario, i boicottaggi spontanei che sostiene senza averli lanciati e le campagne di pressione (boicottare se c'è un'alternativa, chiedere di cambiare)."
+  },
+  "onu-2026": {
+   "da": "dall'ONU (Alto commissariato per i diritti umani)",
+   "titolo": "ONU, banca dati delle imprese coinvolte negli insediamenti israeliani, A/HRC/63/20 (25/09/2026)",
+   "url": "https://www.ohchr.org/sites/default/files/documents/hrbodies/hrcouncil/sessions-regular/session63/advance-versions/a-hrc-63-20-aev.pdf",
+   "verificata_il": "2026-10-28",
+   "nota": "Per l'ONU l'inserimento non è un giudizio di illecito: indica fondati motivi per ritenere che l'impresa abbia svolto almeno una delle attività elencate tra agosto 2019 e aprile 2026. Il settore lo indichiamo noi in base al nome e all'attività nota dell'impresa: il rapporto non lo riporta."
+  }
+ },
+ "voci": [
+  {
+   "azienda": "A. Barkan and Partners Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Absoluteskin Cosmetics (Pty) Ltd.",
+   "paese": "Sudafrica",
+   "settore": "cosmetici",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Ackerstein Industries Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro"
+    }
+   ]
+  },
+  {
+   "azienda": "Adama Agricultural Solutions Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Adama Ltd.",
+   "paese": "Cina",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Africa Israel Investment Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Agrifood Marketing Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Ahava – Dead Sea Laboratories Ltd.",
+   "paese": "Israele",
+   "settore": "cosmetici",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Airbnb",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "pressione",
+     "per": "gli alloggi offerti negli insediamenti israeliani (impresa presente nella banca dati ONU)"
+    },
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ],
+   "marchi": [
+    "Airbnb Inc."
+   ],
+   "paese": "Stati Uniti"
+  },
+  {
+   "azienda": "All-In Trade Israel Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Alon Blue Square Israel Ltd.",
+   "paese": "Israele",
+   "settore": "supermercati",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Alony-Hetz Properties and Investments Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Altice International Ltd.",
+   "paese": "Lussemburgo",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Amazon",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "pressione",
+     "per": "il progetto Nimbus: servizi cloud e di intelligenza artificiale al governo e all'esercito israeliani"
+    }
+   ],
+   "marchi": [
+    "Ring"
+   ]
+  },
+  {
+   "azienda": "Amir Marketing and Investments in Agriculture Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Amos Hadar Properties and Investments Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Amot Investments Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Anglo Saxon Real Estate Agency (Israel 1992) Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Archivists Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Arza Winery T.R.Z. Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Ashtrom Group Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Ashtrom Industries Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Ashtrom Residential Development Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "AXA",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "gli investimenti in aziende che forniscono armi a Israele"
+    }
+   ]
+  },
+  {
+   "azienda": "B. Gaon Holdings Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro"
+    }
+   ]
+  },
+  {
+   "azienda": "Bank Hapoalim Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Bank Leumi Le-Israel Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Bank of Jerusalem Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Bar-Amana Buildings Construction and Development Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Barad Earthworks, Development and Roadworks Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Baran Group Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Bardarian Brothers Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Beit Haarchiv Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Bezeq, the Israeli Telecommunications Corp. Ltd.",
+   "paese": "Israele",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Boneich Construction Development & Investments Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Booking Holdings",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "pressione",
+     "per": "gli alloggi offerti negli insediamenti israeliani (impresa presente nella banca dati ONU)"
+    },
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ],
+   "marchi": [
+    "Booking.com",
+    "Booking Holdings Inc."
+   ],
+   "paese": "Stati Uniti"
+  },
+  {
+   "azienda": "Booking.com B.V.",
+   "paese": "Paesi Bassi",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Brothers Hasid Construction Contracting Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Burger King",
+   "settore": "ristorazione",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "spontaneo",
+     "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano da parte della società o del franchising in Israele durante la guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "C. Mer Industries Ltd.",
+   "paese": "Israele",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di sistemi di sorveglianza e identificazione; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Café Café Israel Ltd.",
+   "paese": "Israele",
+   "settore": "ristorazione",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Caliber 3 Ltd.",
+   "paese": "Israele",
+   "settore": "sicurezza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi di sicurezza a imprese degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Carmel Corp. Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Carrefour",
+   "settore": "supermercati",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "il contratto di franchising con imprese attive negli insediamenti, i doni ai soldati israeliani e un punto vendita in un insediamento"
+    }
+   ]
+  },
+  {
+   "azienda": "Cellcom Israel Ltd.",
+   "paese": "Israele",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Cherriessa Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Chevron",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "l'estrazione del gas rivendicato da Israele nel Mediterraneo orientale, che finanzia le casse dello Stato israeliano"
+    }
+   ],
+   "marchi": [
+    "Caltex",
+    "Texaco"
+   ]
+  },
+  {
+   "azienda": "CityBook Services Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Coca-Cola",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "spontaneo",
+     "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano da parte della società o del franchising in Israele durante la guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Comasco Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; forniture di mezzi usati per demolizioni e per distruggere coltivazioni"
+    }
+   ]
+  },
+  {
+   "azienda": "Compost Or Ltd.",
+   "paese": "Israele",
+   "settore": "acqua-rifiuti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Construcciones y Auxiliar de Ferrocarriles S.A. (CAF)",
+   "paese": "Spagna",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "D.N. Kol-Gader Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Dalia Elispur Construction Contracting Company 1972 Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Dan Public Transportation Company Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Danya Cebus Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Davidov Garages Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Db Billiards Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; reinvestimento negli insediamenti dei profitti di imprese di coloni"
+    }
+   ]
+  },
+  {
+   "azienda": "Delek Group Ltd.",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Dell Technologies",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "la fornitura di server e servizi all'esercito israeliano (contratto del 2023)"
+    }
+   ]
+  },
+  {
+   "azienda": "Delta Galil Industries Ltd.",
+   "paese": "Israele",
+   "settore": "abbigliamento",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Delta Israel Brands Ltd.",
+   "paese": "Israele",
+   "settore": "abbigliamento",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Deshen Hatzafon - Agricultural Cooperative Association Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Disney+",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "contenuti e testimonial che, secondo il BDS, celebrano il governo israeliano e disumanizzano i palestinesi"
+    }
+   ],
+   "marchi": [
+    "Disney",
+    "Marvel"
+   ]
+  },
+  {
+   "azienda": "Domino's Pizza",
+   "settore": "ristorazione",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "spontaneo",
+     "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano da parte della società o del franchising in Israele durante la guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Dor Alon Energy in Israel 1988 Ltd.",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "E.L.A.D. – to the City of David",
+   "paese": "Israele",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "E.T. Legal Services Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi usati per demolizioni e per distruggere coltivazioni; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Egged Transportation Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Egis",
+   "paese": "Francia",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Egis Rail",
+   "paese": "Francia",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Einav Hahetz 1965 Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Elco Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Electra Afikim Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Electra Group Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Elyakim Ben-Ari Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Energix-Renewable Energies Ltd.",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "English Cake Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "EPR Systems Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Euro-Israel (Y.S.) Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Expedia",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "pressione",
+     "per": "gli alloggi offerti negli insediamenti israeliani (impresa presente nella banca dati ONU)"
+    },
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ],
+   "marchi": [
+    "Expedia Group",
+    "Expedia Group Inc."
+   ],
+   "paese": "Stati Uniti"
+  },
+  {
+   "azienda": "Export Investment Company Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Extal Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Extra Retail Group Ltd.",
+   "paese": "Israele",
+   "settore": "supermercati",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Field Produce Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Field Produce Marketing Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "First International Bank of Israel Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Fosun International Ltd.",
+   "paese": "Cina",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Friends of Ir David",
+   "paese": "Stati Uniti",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Gadish Engineering Company Ltd. (Gadish Group)",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Gadot Agro Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Galnor Construction and Development Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Galshan Markets Human Resources (1997) Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Gat Fertilizers Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Gat Shomron Winery Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Geo-Da – Lands & Property Management & Information Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Givot Olam Chicken Farm Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Google",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "pressione",
+     "per": "il progetto Nimbus: servizi cloud e di intelligenza artificiale al governo e all'esercito israeliani"
+    }
+   ]
+  },
+  {
+   "azienda": "Green-Oil Energy",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Greenkote P.L.C.",
+   "paese": "Regno Unito",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Greenmix, of Benny and Tzvika Group Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Greennet Recycling and Waste Treatment",
+   "paese": "Israele",
+   "settore": "acqua-rifiuti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Gush Etzion Wineries Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Hadiklaim – Israel Date Growers Cooperative Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Hagihon Company Ltd.",
+   "paese": "Israele",
+   "settore": "acqua-rifiuti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Haifa Fertilizing Technologies Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Haim Zaken Construction & Investments Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Hamashbir For Agricultural Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Hamat Group Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Hanson Israel Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Harsa Studio – Sanitaryware Manufacturers Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Hayovel Inc.",
+   "paese": "Stati Uniti",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Heidelberg Materials AG",
+   "paese": "Germania",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Hishtil Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Hot Mobile Ltd.",
+   "paese": "Israele",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Hot Telecommunication Systems Ltd.",
+   "paese": "Israele",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "HP",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "tecnologia e supporto logistico a governo, esercito, carceri e polizia israeliani"
+    }
+   ],
+   "marchi": [
+    "HP Inc.",
+    "Hewlett Packard Enterprise (HPE)"
+   ]
+  },
+  {
+   "azienda": "Impact Property Development Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Ingeniería y Economía del Transporte S.M.E. M.P, S.A. (Ineco)",
+   "paese": "Spagna",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Intel",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "lo stabilimento di Kiryat Gat, su terre di un villaggio palestinese spopolato, e il contributo all'economia di guerra israeliana"
+    }
+   ]
+  },
+  {
+   "azienda": "Israel Discount Bank Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti"
+    }
+   ]
+  },
+  {
+   "azienda": "Israel Railways Corporation Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Italek Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "J.C. Bamford Excavators Ltd.",
+   "paese": "Regno Unito",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; forniture di mezzi usati per demolizioni e per distruggere coltivazioni"
+    }
+   ]
+  },
+  {
+   "azienda": "Jerusalem Wineries – Cooperative Agricultural Association Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Joe Gourmet Coffee Ltd.",
+   "paese": "Israele",
+   "settore": "ristorazione",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Jordan River Herbs Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Kass – C Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Kavim Public Transportation Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Kerur Habika Holdings Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Kfar Giladi Quarries Agricultural Cooperative Association Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Kiriat Sefer (Diur Modyin) Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Kotler Adika Building Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Land of Olive Premium Oil – Achiya Farm Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Lapidoth Capital Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Lesico Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Magen – Construction Engineering Works Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Maman Cargo Terminals and Handling",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Margolin Bros. Engineering & Consulting Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Marom Tuval – Consulting, Management & Investments Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Matrix IT Ltd.",
+   "paese": "Israele",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mayer’s Cars and Trucks Co. Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "McDonald's",
+   "settore": "ristorazione",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "spontaneo",
+     "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano da parte della società o del franchising in Israele durante la guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Medan – Roads and Quarries (1964) Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mega Or Holdings Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mekorot Water Company Ltd.",
+   "paese": "Israele",
+   "settore": "acqua-rifiuti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mercantile Discount Bank Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; operazioni bancarie e finanziarie a favore degli insediamenti"
+    }
+   ]
+  },
+  {
+   "azienda": "Merkavim Transportation Technologies Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Mery Building Works Contracting Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Meshek Energy – Renewable Energies Ltd.",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Microsoft",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "i servizi cloud Azure e di intelligenza artificiale forniti all'esercito israeliano"
+    }
+   ]
+  },
+  {
+   "azienda": "Minrav Group Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mishab Housing Construction & Development Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mishkan Eliyahu – Construction and Investment Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mivne Real Estate KD Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mizrachi & Sons Investments Group Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mizrahi Tefahot Bank Ltd.",
+   "paese": "Israele",
+   "settore": "finanza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Modi’in Ezrachi Group Ltd.",
+   "paese": "Israele",
+   "settore": "sicurezza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi di sicurezza a imprese degli insediamenti; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Mordechai Aviv Construction Industries (1973) Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Motorola Solutions Israel Ltd.",
+   "paese": "Israele",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi di sicurezza a imprese degli insediamenti; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Motorola Solutions, Inc.",
+   "paese": "Stati Uniti",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi di sicurezza a imprese degli insediamenti; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "N.O.H. Management and Consulting Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "N.S. Water and Maintenance Services Ltd.",
+   "paese": "Israele",
+   "settore": "acqua-rifiuti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Natoon – Nof Yam Security Ltd.",
+   "paese": "Israele",
+   "settore": "sicurezza",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi di sicurezza a imprese degli insediamenti; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Netafim Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "New Way Traffic Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Ofertex Industries 1997 Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Olenik Transportation Earth Work and Road Constructions Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Orbia Advance Corp Sab de CV",
+   "paese": "Messico",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Orgad H.S.N. Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Oron Group Investments & Holdings Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Papa John's",
+   "settore": "ristorazione",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "spontaneo",
+     "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano da parte della società o del franchising in Israele durante la guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Partner Communications Company Ltd.",
+   "paese": "Israele",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Paz Retail and Energy Ltd.",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Pelephone Communications Ltd.",
+   "paese": "Israele",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Pizza Hut",
+   "settore": "ristorazione",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "spontaneo",
+     "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano da parte della società o del franchising in Israele durante la guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Powergen Solar A Ltd.",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Prodotti israeliani al supermercato",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "il sostegno all'economia israeliana e perché tra questi ci possono essere prodotti degli insediamenti etichettati «Prodotto in Israele»"
+    }
+   ],
+   "marchi": [
+    "frutta e verdura israeliana",
+    "Product of Israel"
+   ]
+  },
+  {
+   "azienda": "Proffimat S.R Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Psagot Winery Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Rami Levi Chain Stores Hashikma Marketing 2006 Ltd.",
+   "paese": "Israele",
+   "settore": "supermercati",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Rami Levy Hashikma Marketing Communication Ltd.",
+   "paese": "Israele",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "RE/MAX",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "la vendita di immobili negli insediamenti israeliani"
+    },
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ],
+   "marchi": [
+    "Re/Max Holdings",
+    "Re/Max Holdings, Inc."
+   ],
+   "paese": "Stati Uniti"
+  },
+  {
+   "azienda": "Reebok",
+   "settore": "abbigliamento",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "la sponsorizzazione della Federazione calcistica israeliana, che comprende squadre degli insediamenti"
+    }
+   ]
+  },
+  {
+   "azienda": "Rotshtein Real Estate Ltd.",
+   "paese": "Israele",
+   "settore": "immobiliare",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Rustic Bakery Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "S.A.G. (Velvel) Building & Development Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "S.M. Vallay Fruits and Vegetables Export Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Salomon A. Angel Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Salvat Logistica S.A.",
+   "paese": "Spagna",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Sarfati Shimon Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Shahar Co. – Civil Engineering, Construction and Infrastructure Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Shalgal Food Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Shapir Engineering and Industry Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Shefa Franchise Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Shikun & Binui Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Shikun & Binui – Solel Boneh – Infrastructure Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Shilo Winery Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato"
+    }
+   ]
+  },
+  {
+   "azienda": "Shlomo Cohen Construction Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Shoham Engineering and Development Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Shufersal Ltd.",
+   "paese": "Israele",
+   "settore": "supermercati",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Siemens",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "il ruolo di appaltatore principale del cavo elettrico Euro-Asia Interconnector, che collegherebbe gli insediamenti all'Europa"
+    }
+   ]
+  },
+  {
+   "azienda": "SodaStream",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "il ruolo nello spostamento dei beduini palestinesi del Naqab (Negev) e la discriminazione dei lavoratori palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Sonol Israel Ltd.",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Superbus Transportation and Tourism Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Supergum Industries 1969 Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Sussia Dairy Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "T.M.M. Integrated recycling Industries",
+   "paese": "Israele",
+   "settore": "acqua-rifiuti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Taavura Holdings Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Tanya Winery Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Tekoa Mushroom Farms Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Teperberg Winery 1870 Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Tera Light Ltd.",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Teva",
+   "settore": "cosmetici",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "prioritario",
+     "per": "il sostegno alla guerra di Israele e i profitti ricavati dall'occupazione, anche sul mercato palestinese"
+    }
+   ],
+   "marchi": [
+    "Teva Pharmaceutical Industries"
+   ]
+  },
+  {
+   "azienda": "The American Israeli Gas Corporation Ltd. (Amisragas)",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "The Baron Wineries Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "The Golden Date Farm Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Tnufa Transportation Solutions Ltd.",
+   "paese": "Israele",
+   "settore": "trasporti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Tnuva Central Co-operative for the Marketing of Agricultural Produce in Israel Ltd.",
+   "paese": "Israele",
+   "settore": "cibo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Top Greenhouses Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "TripAdvisor, Inc.",
+   "paese": "Stati Uniti",
+   "settore": "turismo",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Twitoplast Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Tyrec Ltd.",
+   "paese": "Israele",
+   "settore": "acqua-rifiuti",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra; inquinamento e smaltimento di rifiuti verso villaggi palestinesi"
+    }
+   ]
+  },
+  {
+   "azienda": "Unikowsky Maoz Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Villar International Ltd.",
+   "paese": "Israele",
+   "settore": "altro",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Wix",
+   "settore": "tecnologia",
+   "segnalazioni": [
+    {
+     "fonte": "bds-2024",
+     "tema": "israele-palestina",
+     "tipo": "spontaneo",
+     "per": "il sostegno aperto a Israele o le donazioni all'esercito israeliano durante la guerra a Gaza"
+    }
+   ]
+  },
+  {
+   "azienda": "Y.A.Z (Yaaz) – Construction and Development Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi usati per demolizioni e per distruggere coltivazioni"
+    }
+   ]
+  },
+  {
+   "azienda": "Y.D. Barazani Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Yacobi Brothers Group (YSB) Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Yes TV and Communications Services Ltd.",
+   "paese": "Israele",
+   "settore": "telecomunicazioni",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti"
+    }
+   ]
+  },
+  {
+   "azienda": "Z.F. Building Company Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Z.M.H. Hammerman Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Zabar Solar",
+   "paese": "Israele",
+   "settore": "energia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: forniture di mezzi e materiali per costruire o ampliare insediamenti e muro; servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Zakai Agricultural Know-how and Inputs Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Zorganika Ltd.",
+   "paese": "Israele",
+   "settore": "agricoltura",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: servizi che sostengono gli insediamenti, compresi i trasporti; uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  },
+  {
+   "azienda": "Zriha Hlavin Industries Ltd.",
+   "paese": "Israele",
+   "settore": "edilizia",
+   "segnalazioni": [
+    {
+     "fonte": "onu-2026",
+     "tema": "israele-palestina",
+     "tipo": "onu",
+     "per": "attività legate agli insediamenti israeliani nel Territorio palestinese occupato: uso di risorse naturali, in particolare acqua e terra"
+    }
+   ]
+  }
+ ]
 }

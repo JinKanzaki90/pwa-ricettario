@@ -216,6 +216,11 @@ p.su { margin: 0; font-size: 0.92rem; }
 .acq-v .meta { font-size: 0.84rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
 .acq-v .meta a { color: var(--accent); overflow-wrap: anywhere; }
 .badge.ricontrolla { background: var(--sun-soft); color: var(--sun); }
+.badge.tipo { background: var(--beet-soft); color: var(--beet); white-space: normal; }
+.acq-v .sotto { font-size: 0.84rem; color: var(--muted); overflow-wrap: anywhere; }
+.acq-s { display: grid; gap: 4px; justify-items: start; padding-top: 6px; min-width: 0; }
+.acq-ricerca input { font: inherit; font-size: 1rem; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; min-height: 44px; width: 100%; min-width: 0; }
+#acq { display: grid; gap: 12px; min-width: 0; }
 
 /* spesa: ricette in lista, voci a mano, stato salvataggio */
 .rsel { display: grid; gap: 6px; min-width: 0; }

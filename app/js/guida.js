@@ -1,4 +1,5 @@
-/* Guida: salti dall'indice alle sezioni e voci di «Acquisti consapevoli» (data/acquisti.json, REQUISITI.md §5.8). */
+/* Guida: salti dall'indice alle sezioni e «Acquisti consapevoli» (data/acquisti.json, REQUISITI.md §5.8).
+   Il file si genera con strumenti/acquisti/genera_acquisti.py: voci divise per settore, ognuna con una o più segnalazioni. */
 import { $, esc, carica } from './util.js';
 
 const GIORNO = 24 * 60 * 60 * 1000;
@@ -19,31 +20,93 @@ function data(d) {
   const t = Date.UTC(+m[1], +m[2] - 1, +m[3]);
   return isNaN(t) ? null : { t: t, testo: m[3] + '/' + m[2] + '/' + m[1] };
 }
+const httpsOk = function (u) { return /^https:\/\/[^\s"<>]+$/.test(u || ''); };
+function collegamento(url, testo) {
+  return httpsOk(url) ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(testo) + '</a>' : esc(testo);
+}
+/* confronto senza maiuscole né accenti */
+function piano(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
 
-/* una voce è mostrata solo se completa; un collegamento solo se https */
-export function voceValida(v) {
-  return !!(v && v.azienda && v.segnalata_da && v.motivo && v.fonte_titolo && data(v.verificata_il));
+/* una fonte vale solo se completa; una segnalazione solo se la sua fonte vale */
+function fontiValide(d) {
+  const f = {};
+  Object.keys((d && d.fonti) || {}).forEach(function (k) {
+    const x = d.fonti[k];
+    if (x && x.da && x.titolo && data(x.verificata_il)) f[k] = x;
+  });
+  return f;
+}
+export function vociValide(d) {
+  const fonti = fontiValide(d);
+  return ((d && d.voci) || []).map(function (v) {
+    if (!v || !v.azienda) return null;
+    const s = (v.segnalazioni || []).filter(function (x) { return x && x.per && fonti[x.fonte]; });
+    return s.length ? Object.assign({}, v, { segnalazioni: s }) : null;
+  }).filter(Boolean);
+}
+
+let DATI = null, ORA = null;
+
+function htmlVoce(v, fonti, tipi, ora) {
+  const sotto = [];
+  if (v.marchi && v.marchi.length) sotto.push('Anche: ' + v.marchi.map(esc).join(', '));
+  if (v.paese) sotto.push('Sede: ' + esc(v.paese));
+  return '<div class="acq-v"><span class="nome">' + esc(v.azienda) + '</span>' +
+    (sotto.length ? '<span class="sotto">' + sotto.join(' · ') + '</span>' : '') +
+    v.segnalazioni.map(function (s) {
+      const f = fonti[s.fonte], dv = data(f.verificata_il);
+      const vecchia = (ora - dv.t) / GIORNO > SCADENZA_GIORNI;
+      return '<div class="acq-s">' + (tipi[s.tipo] ? '<span class="badge tipo">' + esc(tipi[s.tipo]) + '</span>' : '') +
+        '<p>Segnalata ' + esc(f.da) + ' per ' + esc(s.per) + '.</p>' +
+        '<p class="meta"><span>Fonte: ' + collegamento(f.url, f.titolo) + '</span><span>Verificata il ' + dv.testo + '</span>' +
+        (vecchia ? '<span class="badge ricontrolla">Da ricontrollare</span>' : '') + '</p></div>';
+    }).join('') + '</div>';
+}
+
+function disegnaElenco() {
+  const box = $('acq-elenco'); if (!box || !DATI) return;
+  const d = DATI, fonti = fontiValide(d), tipi = d.tipi || {};
+  const q = piano(($('acq-cerca') || {}).value || '').trim();
+  const voci = vociValide(d).filter(function (v) {
+    return !q || piano(v.azienda + ' ' + (v.marchi || []).join(' ')).indexOf(q) > -1;
+  });
+  const settori = (d.settori || []).slice();
+  const noti = {}; settori.forEach(function (s) { noti[s.id] = 1; });
+  if (voci.some(function (v) { return !noti[v.settore]; })) settori.push({ id: '', nome: 'Senza settore' });
+  const gruppi = settori.map(function (s) {
+    const qui = voci.filter(function (v) { return s.id ? v.settore === s.id : !noti[v.settore]; })
+      .sort(function (a, b) { return String(a.azienda).localeCompare(String(b.azienda), 'it'); });
+    if (!qui.length) return '';
+    return '<details class="acq-g"' + (q ? ' open' : '') + '><summary><span class="nn">' + esc(s.nome) + '</span><span class="nk">' + qui.length + '</span></summary>' +
+      '<div class="nb acq">' + qui.map(function (v) { return htmlVoce(v, fonti, tipi, ORA); }).join('') + '</div></details>';
+  }).join('');
+  $('acq-conta').textContent = q ? (voci.length === 1 ? '1 voce trovata' : voci.length + ' voci trovate') : voci.length + ' voci, divise per settore';
+  box.innerHTML = gruppi ? '<div class="nutr">' + gruppi + '</div>' : '<p class="empty">Nessuna voce corrisponde alla ricerca.</p>';
 }
 
 export function renderAcquisti(d, oggi) {
   const box = $('acq'); if (!box) return;
-  const ora = oggi == null ? Date.now() : oggi;
-  const voci = ((d && d.voci) || []).filter(voceValida)
-    .sort(function (a, b) { return String(a.azienda).localeCompare(String(b.azienda), 'it'); });
-  if (!voci.length) {
+  DATI = d; ORA = oggi == null ? Date.now() : oggi;
+  const fonti = fontiValide(d);
+  if (!vociValide(d).length) {
     box.innerHTML = '<div class="panel"><p><b>Sezione in preparazione.</b> Le voci arriveranno quando saranno fissati i criteri e le fonti da usare.</p></div>';
     return;
   }
-  box.innerHTML = '<div class="panel acq">' + voci.map(function (v) {
-    const dv = data(v.verificata_il);
-    const vecchia = (ora - dv.t) / GIORNO > SCADENZA_GIORNI;
-    const url = /^https:\/\/[^\s"<>]+$/.test(v.fonte_url || '') ? v.fonte_url : '';
-    const fonte = url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(v.fonte_titolo) + '</a>' : esc(v.fonte_titolo);
-    return '<div class="acq-v"><span class="nome">' + esc(v.azienda) + '</span>' +
-      '<p>Segnalata da ' + esc(v.segnalata_da) + ' per ' + esc(v.motivo) + '.</p>' +
-      '<p class="meta"><span>Fonte: ' + fonte + '</span><span>Verificata il ' + dv.testo + '</span>' +
-      (vecchia ? '<span class="badge ricontrolla">Da ricontrollare</span>' : '') + '</p></div>';
-  }).join('') + '</div>';
+  const temi = d.temi || {};
+  const usate = Object.keys(fonti);
+  box.innerHTML =
+    '<p class="fine">Temi: ' + Object.keys(temi).map(function (k) { return esc(temi[k]); }).join(', ') + '. Puoi cercare un\'azienda o un marchio, oppure aprire un settore.</p>' +
+    '<div class="fld acq-ricerca"><label for="acq-cerca">Cerca un\'azienda o un marchio</label>' +
+    '<input type="search" id="acq-cerca" autocomplete="off" spellcheck="false" maxlength="60"></div>' +
+    '<p class="fine" id="acq-conta" role="status"></p>' +
+    '<div id="acq-elenco"></div>' +
+    '<div class="nutr"><details><summary><span class="nn">Da dove vengono le voci</span><span class="nk">fonti</span></summary><div class="nb">' +
+    usate.map(function (k) {
+      const f = fonti[k];
+      return '<p><b>' + collegamento(f.url, f.titolo) + '.</b> ' + esc(f.nota || '') + '</p>';
+    }).join('') + '</div></details></div>';
+  $('acq-cerca').addEventListener('input', disegnaElenco);
+  disegnaElenco();
 }
 
 export function initGuida() {

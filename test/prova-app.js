@@ -235,7 +235,7 @@ async function imitaSupabase(ctx, db) {
     const guida = await page.evaluate(() => {
       const sez = Array.prototype.slice.call(document.querySelectorAll('#p-guida .g-sez'));
       return { sezioni: sez.length, inBreve: sez.every(x => x.querySelector('.inbreve')), fonti: sez.filter(x => x.querySelector('.g-fonti a[href^="https://"]')).length,
-        voci: document.querySelectorAll('#p-guida .indice a[data-salta]').length, vuota: /in preparazione/.test(document.getElementById('acq').textContent),
+        voci: document.querySelectorAll('#p-guida .indice a[data-salta]').length, vere: document.querySelectorAll('#acq .acq-v').length, gruppi: document.querySelectorAll('#acq details.acq-g').length,
         vegano: /arrivare a un'alimentazione vegana completa|Solo vegano/.test(document.getElementById('p-guida').textContent) };
     });
     const hashPrima = await page.evaluate(() => location.hash);
@@ -244,23 +244,42 @@ async function imitaSupabase(ctx, db) {
     const salto = await page.evaluate(() => ({ hash: location.hash, focus: document.activeElement && document.activeElement.id, top: document.getElementById('g-carne').getBoundingClientRect().top }));
     await page.click('#g-carne details summary');
     await page.screenshot({ path: `${dir}/${tag}-guida-carne.png` });
-    await page.evaluate(() => import('./js/guida.js').then(m => m.renderAcquisti({ voci: [
-      { azienda: 'Marchio <b>Uno</b>', segnalata_da: 'Campagna A', motivo: 'deforestazione', fonte_titolo: 'Rapporto 2026', fonte_url: 'https://esempio.invalid/r', verificata_il: '2026-09-01' },
-      { azienda: 'Marchio Due', segnalata_da: 'Ente B', motivo: 'condizioni di lavoro', fonte_titolo: 'Scheda', fonte_url: 'javascript:alert(1)', verificata_il: '2025-06-01' },
-      { azienda: 'Senza fonte', segnalata_da: 'X', motivo: 'Y', verificata_il: '2026-01-01' }
-    ] }, Date.UTC(2026, 9, 28))));
+    /* voci vere: ricerca per nome e per marchio */
+    await page.locator('#g-acquisti').scrollIntoViewIfNeeded();
+    await page.fill('#acq-cerca', 'carrefour');
+    const cerca1 = await page.evaluate(() => ({ n: document.querySelectorAll('#acq .acq-v').length, tipo: (document.querySelector('#acq .acq-v .badge.tipo') || {}).textContent,
+      aperto: !!document.querySelector('#acq details.acq-g[open]'), conta: document.getElementById('acq-conta').textContent }));
+    await page.fill('#acq-cerca', 'booking.com');
+    const cerca2 = await page.evaluate(() => Array.prototype.map.call(document.querySelectorAll('#acq .acq-v'), v => v.querySelector('.nome').textContent + ':' + v.querySelectorAll('.acq-s').length));
+    await page.screenshot({ path: `${dir}/${tag}-guida-acquisti-vere.png` });
+    await page.fill('#acq-cerca', 'nessunamarcaesistente');
+    const cerca3 = await page.evaluate(() => /Nessuna voce/.test(document.getElementById('acq-elenco').textContent));
+    /* voci imitate: testo come testo, collegamenti solo https, fonte sconosciuta scartata, verifica vecchia */
+    await page.evaluate(() => import('./js/guida.js').then(m => m.renderAcquisti({
+      temi: { t: 'Tema di prova' }, settori: [{ id: 'cibo', nome: 'Cibo e bevande' }], tipi: { x: 'Tipo X' },
+      fonti: { a: { da: 'dalla Campagna A', titolo: 'Rapporto 2026', url: 'https://esempio.invalid/r', verificata_il: '2026-09-01' },
+        b: { da: 'dall\'Ente B', titolo: 'Scheda', url: 'javascript:alert(1)', verificata_il: '2025-06-01' }, c: { da: 'X' } },
+      voci: [
+        { azienda: 'Marchio <b>Uno</b>', settore: 'cibo', segnalazioni: [{ fonte: 'a', tipo: 'x', per: 'deforestazione' }] },
+        { azienda: 'Marchio Due', settore: 'nuovo', segnalazioni: [{ fonte: 'b', per: 'condizioni di lavoro' }] },
+        { azienda: 'Senza fonte', settore: 'cibo', segnalazioni: [{ fonte: 'c', per: 'Y' }] }
+      ] }, Date.UTC(2026, 9, 28))));
+    await page.evaluate(() => document.querySelectorAll('#acq details').forEach(d => { d.open = true; }));
     await page.locator('#g-acquisti').scrollIntoViewIfNeeded();
     await page.screenshot({ path: `${dir}/${tag}-guida-acquisti.png` });
     const acq = await page.evaluate(() => {
       const v = document.querySelectorAll('#acq .acq-v');
-      return { n: v.length, b: document.querySelectorAll('#acq b').length, testoB: /<b>Uno<\/b>/.test(document.getElementById('acq').textContent),
-        link: Array.prototype.map.call(document.querySelectorAll('#acq a'), a => a.getAttribute('href')),
-        ricontrolla: Array.prototype.filter.call(v, x => !!x.querySelector('.ricontrolla')).map(x => x.querySelector('.nome').textContent) };
+      return { n: v.length, b: document.querySelectorAll('#acq-elenco b').length, testoB: /<b>Uno<\/b>/.test(document.getElementById('acq').textContent),
+        link: Array.prototype.map.call(document.querySelectorAll('#acq-elenco a'), a => a.getAttribute('href')),
+        ricontrolla: Array.prototype.filter.call(v, x => !!x.querySelector('.ricontrolla')).map(x => x.querySelector('.nome').textContent),
+        frase: /Segnalata dalla Campagna A per deforestazione\./.test(document.getElementById('acq').textContent) };
     });
-    const guidaOk = guida.sezioni === 6 && guida.inBreve && guida.fonti === 5 && guida.voci === 6 && guida.vuota && !guida.vegano &&
+    const guidaOk = guida.sezioni === 6 && guida.inBreve && guida.fonti === 5 && guida.voci === 6 && guida.vere > 200 && guida.gruppi > 10 && !guida.vegano &&
       salto.hash === hashPrima && salto.focus === 'g-carne-t' && salto.top >= 0 && salto.top < 120 &&
-      acq.n === 2 && acq.testoB && acq.link.length === 1 && acq.link[0] === 'https://esempio.invalid/r' && acq.ricontrolla.join() === 'Marchio Due';
-    if (!guidaOk) console.log('guida', guida, salto, acq);
+      cerca1.n === 1 && cerca1.tipo === 'Boicottaggio prioritario' && cerca1.aperto && /1 voce trovata/.test(cerca1.conta) &&
+      cerca2.join() === 'Booking Holdings:2,Booking.com B.V.:1' && cerca3 &&
+      acq.n === 2 && acq.b === 0 && acq.testoB && acq.link.length === 1 && acq.link[0] === 'https://esempio.invalid/r' && acq.ricontrolla.join() === 'Marchio Due' && acq.frase;
+    if (!guidaOk) console.log('guida', guida, salto, cerca1, cerca2, cerca3, acq);
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.click('#t-stagione'); await page.waitForSelector('#seas .seas-g');
     await page.click('#disp .addp');

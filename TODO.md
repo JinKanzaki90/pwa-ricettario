@@ -73,7 +73,7 @@ Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, so
 - [x] Verifica: nessuna migrazione nuova (schema e policy dal passo 2); con la sola chiave publishable `commenti` e `settimana` (e tutte le altre tabelle e funzioni) rispondono 401 sul progetto vero; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita (commento altrui non modificabile e mostrato come testo, pubblica/modifica/elimina il proprio, contatore, testo vuoto rifiutato; settimana di Marta in sola lettura con avanzo, doppia dose, nota e piatto eliminato; copia di un giorno con conferma, dose singola, piatto eliminato escluso, avanzo proprio che diventa piatto normale; ritorno dalla ricetta alla settimana dell'altro); Pubblica verde.
 - [x] Revisione di fine passo.
 
-### [!] 7. Guida riscritta e «Acquisti consapevoli» (in attesa di Angelo dal 28/10/2026: criteri e fonti per «Acquisti consapevoli»)
+### [ ] 7. Guida riscritta e «Acquisti consapevoli» (riprendere dalla verifica delle voci spunto, ultimo sotto-punto)
 Prima di scrivere i contenuti di «Acquisti consapevoli» chiedere ad Angelo criteri e fonti (§5.8): segnare `[!]` se mancano.
 - [x] Struttura della Guida (§5.6): indice in alto con salto alle sezioni (senza cambiare l'indirizzo, che all'avvio sceglie la scheda), riassunto «In breve» all'inizio di ogni sezione, dettagli a scomparsa, fonti in fondo a ogni sezione, «Torna all'inizio della guida». Codice in `app/js/guida.js`; la Guida resta HTML statico in `index.html`.
 - [x] Testi per un'alimentazione senza carne (vegana, vegetariana, con pesce): piatto bilanciato con frequenze settimanali (Smartfood IEO), «non solo formaggio», nutrienti riscritti; indicazioni sull'integrazione vegana tolte, resta una **nota breve sulla B12** per chi mangia solo vegano; omega-3 e mercurio nel pesce (EFSA 2015); tappe per togliere la carne (prima i salumi). Tolti il riquadro «Il tuo profilo» («Solo vegano») e l'avviso B12 per tutti.
@@ -83,7 +83,9 @@ Prima di scrivere i contenuti di «Acquisti consapevoli» chiedere ad Angelo cri
 - [x] Prove: `test/prova-app.js` controlla sei sezioni con riassunto, fonti, salto dall'indice (fuoco sul titolo, indirizzo invariato) e voci imitate (testo con `<b>` mostrato come testo, collegamento `javascript:` scartato, voce incompleta nascosta, «Da ricontrollare»).
 - [x] Verifica: nessuna migrazione (Guida statica); `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita, CSP invariata; Pubblica verde (il controllo ora chiede anche `js/guida.js` e `data/acquisti.json`).
 - [x] Revisione di fine passo.
-- [ ] **Contenuti di «Acquisti consapevoli»**: in attesa di criteri e fonti da Angelo (vedi «Richieste per Angelo»). Quando arrivano: riempire `app/data/acquisti.json`, aggiornare §5.8 in `REQUISITI.md`, rifare la prova e chiudere il passo.
+- [x] **Criteri e fonti** decisi con Angelo il 28/10/2026 e scritti in §5.8 di `REQUISITI.md`: BDS più le fonti primarie (banca dati ONU, Who Profits, AFSC Investigate); tutte le aziende, divise per settore; boicottaggi spontanei inclusi e distinti; anche altri temi, con fonti da fissare.
+- [x] **Contenuti, tema Israele e Palestina**: 236 voci in `app/data/acquisti.json`, generate da `strumenti/acquisti/genera_acquisti.py`: tutte le 26 voci della guida BDS del 6/12/2024 (14 prioritarie, 7 spontanee, 5 di pressione) e le 214 imprese della banca dati ONU A/HRC/63/20 del 25/09/2026 (`strumenti/acquisti/onu_2026.tsv`, trascritta due volte e confrontata; 4 imprese unite alle voci BDS: Airbnb, Booking Holdings, Expedia, RE/MAX). Ogni segnalazione con tipo, motivo, fonte e data della verifica; per l'ONU, le attività del paragrafo 96 tradotte in breve e l'avvertenza che l'inserimento non è un giudizio di illecito. Nell'app: ricerca per azienda o marchio, settori a scomparsa con il numero di voci, «Da dove vengono le voci».
+- [ ] **Voci spunto da verificare** (riprendere da qui): le voci alimentari di boycott-israel.org entrano solo se confermate da una fonte ammessa. Da cercare su Who Profits (usare la ricerca del sito, non indovinare gli indirizzi) o nella banca dati ONU: Achva, Elite e Strauss Group, Sabra, Nestlé con Osem, PepsiCo (per SodaStream, già voce BDS), Prigat (Gan Shmuel), Tara, Tempo Beverages, Central Bottling Company (Coca-Cola Israele), Starbucks, Unilever (Ben & Jerry's), Tnuva (già nella banca dati ONU). Poi controllare l'elenco disinvestimenti del BDS (documento separato citato nella guida). Per ogni voce confermata: aggiungerla al generatore con la sua fonte, rigenerare, `test/prova-app.js`, chiudere il passo.
 
 ### [ ] 8. PWA
 Manifest, icone, service worker per la lettura offline, «Aggiungi a schermata Home».
@@ -91,6 +93,12 @@ Manifest, icone, service worker per la lettura offline, «Aggiungi a schermata H
 ### [ ] 9. Pubblicazione e prova completa
 Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare gli utenti degli amici.
 - [ ] Prove rimaste dal passo 3, da fare con Angelo: (a) password sbagliata → messaggio «Email o password non corretti»; (b) «Esci da questo dispositivo» e rientro con la nuova password; (c) con l'utente di prova, Impostazioni → «Cancella il mio account…» (password + casella): l'utente deve sparire dall'elenco della dashboard Supabase.
+
+### [ ] 10. Manutenzione periodica di «Acquisti consapevoli»
+Ultimo passo, dopo il 9 (richiesto da Angelo il 28/10/2026): programmare attività pianificate che tengano aggiornato l'elenco.
+- [ ] Scrivere il testo dell'attività pianificata (proposta: una volta al mese) che, senza toccare il resto dell'app: ricontrolla la guida BDS e i suoi aggiornamenti; controlla se l'ONU ha pubblicato un nuovo aggiornamento della banca dati (di solito a settembre) e, se sì, trascrive la nuova tabella in `strumenti/acquisti/` confrontandola due volte; aggiunge, toglie o aggiorna le voci con la data della verifica; segnala in `TODO.md` le voci «da ricontrollare» (oltre 12 mesi) e quelle da rimuovere; rigenera `app/data/acquisti.json`, esegue `test/prova-app.js`, fa commit e push.
+- [ ] Proporre il testo ad Angelo e farlo creare o approvare da lui (le attività pianificate si creano solo con il suo consenso); annotare qui il nome e la frequenza.
+- [ ] Prima esecuzione controllata: verificare che il commit prodotto sia corretto e i workflow verdi.
 
 ## Spunti dalle revisioni di fine passo
 
@@ -192,14 +200,12 @@ Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare
    - FAO: il 12% è riferito al 2015 ed è più basso del 14,5% del rapporto FAO 2013 per un cambio di metodo, non per un calo vero; non serve spiegarlo nella Guida, ma da sapere se qualcuno confronta le cifre;
    - collegamento FAO: usato l'indirizzo stabile di FAO Open Knowledge invece di un DOI non verificato;
    - il codice di `guida.js` non crea nuove dipendenze circolari.
+4. **Aggiornamento dopo l'elenco (28/10/2026).** Ogni voce dice chi la segnala e perché, con fonte e data; per le imprese ONU c'è l'avvertenza dell'ONU stessa. Il settore è assegnato da noi in base al nome e all'attività nota (27 imprese restano in «Altre imprese» perché dal nome non si capisce il settore): un errore di settore non cambia la segnalazione, ma va corretto se qualcuno lo nota. La banca dati ONU è trascritta da una lettura automatica del PDF, fatta due volte e confrontata (214 nomi, lettere delle attività uguali); azione (passo 10): a ogni aggiornamento ripetere il doppio confronto. Il file pesa circa 100 KB: va bene anche da telefono, e al passo 8 entra nella cache del service worker.
 
 ## Richieste per Angelo
 
-- **Acquisti consapevoli (passo 7, BLOCCANTE per chiudere il passo):** la Guida è riscritta e pubblicata; manca solo il contenuto di «Acquisti consapevoli» (§5.8). Servono:
-  1. i **criteri**: per quali motivi un'azienda entra nell'elenco (per esempio deforestazione, benessere animale, condizioni di lavoro, sfruttamento dell'acqua, legami con allevamenti intensivi…) e se riguarda solo il cibo o anche altro;
-  2. le **fonti** ammesse: quali enti o campagne consideri riconoscibili (per esempio ONG, autorità pubbliche, sentenze, rapporti di organizzazioni internazionali), ed eventualmente quali escludere;
-  3. se hai già delle voci in mente, azienda o marchio e la fonte.
-  Ogni voce verrà scritta come «Segnalata da X per Y», con fonte e data della verifica, senza giudizi propri. Finché non ci sono criteri, la sezione mostra «Sezione in preparazione». Puoi leggere la Guida aggiornata su https://jinkanzaki90.github.io/pwa-ricettario/ (scheda Guida): se qualcosa nei testi su carne e nutrienti non ti convince, scrivilo qui.
+- **Acquisti consapevoli, altri temi (passo 7, non bloccante):** criteri e fonti per Israele e Palestina sono fissati (§5.8). Per aggiungere altri temi (ambiente, deforestazione, lavoro, benessere animale…) servono, per ciascuno, le campagne o gli enti che consideri fonti valide: li cerco e li verifico io, ma la scelta è tua.
+- **Acquisti consapevoli, sezione solo cibo (da decidere):** dopo aver visto l'elenco nell'app, decidi se vuoi una sezione dedicata al cibo (per esempio vicino alla lista della spesa).
 
 - **Backup cifrato (passo 1, non bloccante):** per attivare il backup settimanale serve un segreto `BACKUP_PASSPHRASE` (una frase lunga e casuale, da conservare anche fuori da GitHub: senza di essa il backup non si apre) in GitHub → Settings → Secrets and variables → Actions. Finché manca, «Continuità» fa solo la chiamata giornaliera.
 

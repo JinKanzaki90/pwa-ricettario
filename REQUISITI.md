@@ -1,6 +1,6 @@
 # Requisiti — Ricettario di famiglia (PWA)
 
-Stato: **approvato**, revisione 5 · ultimo aggiornamento 25/10/2026 · resta da definire solo §5.8 (Acquisti consapevoli), da fissare quando si lavora a quei contenuti
+Stato: **approvato**, revisione 6 · ultimo aggiornamento 28/10/2026 · §5.8 (Acquisti consapevoli) definito per il tema Israele e Palestina; fonti degli altri temi da fissare
 
 Questo documento è il riferimento per lo sviluppo, anche per le attività pianificate: ogni esecuzione lo rilegge prima di lavorare. Le decisioni prese sono marcate **[deciso]**; quelle da confermare con Angelo sono marcate **[da decidere]**.
 
@@ -121,10 +121,16 @@ Ogni ricetta registra autore, data di creazione, **ultima modifica e chi l'ha fa
 - Chiunque può ripristinare una ricetta generica; una ricetta con autore la ripristina solo l'autore.
 - Eliminazione definitiva automatica dopo 30 giorni (operazione programmata nel database).
 
-### 5.8 Acquisti consapevoli [da definire quando si lavora ai contenuti: criteri e fonti]
+### 5.8 Acquisti consapevoli [deciso il 28/10/2026 per il tema Israele e Palestina; altri temi da definire]
 - Ogni voce: azienda o marchio, motivo, fonte, data della verifica.
 - Si riportano solo segnalazioni di enti o campagne riconoscibili, formulate come «segnalata da X per Y», senza giudizi propri.
 - Revisione periodica: le voci senza verifica da oltre 12 mesi vengono segnalate come da ricontrollare.
+- **Fonti ammesse** [deciso]: campagne riconoscibili con criteri scritti (oggi il movimento BDS, «Guide to BDS Boycott») e le fonti primarie che usano: banca dati ONU delle imprese coinvolte negli insediamenti israeliani (Alto commissariato per i diritti umani), Who Profits, AFSC Investigate. Elenchi senza autore dichiarato o senza fonte per ogni voce (per esempio boycott-israel.org, boikotisrael.com) servono solo come spunto: una voce entra solo se confermata da una fonte ammessa.
+- **Ambito** [deciso]: tutte le aziende segnalate, di ogni settore, divise per categoria (cibo e bevande, supermercati, ristorazione, tecnologia, banche…); il settore lo assegniamo noi e lo diciamo. Si valuterà più avanti una sezione dedicata solo al cibo.
+- **Tipo di segnalazione** [deciso]: per il BDS si distinguono boicottaggio prioritario, boicottaggi spontanei sostenuti dal BDS e campagne di pressione; per l'ONU si riporta che l'inserimento non è un giudizio di illecito.
+- **Temi** [deciso]: oltre a Israele e Palestina anche altri temi (per esempio ambiente, lavoro, benessere animale), ognuno con fonti da fissare con Angelo prima di scrivere le voci.
+- Le voci stanno in `app/data/acquisti.json`, generato da `strumenti/acquisti/genera_acquisti.py` a partire dalle fonti trascritte in `strumenti/acquisti/`.
+- **Manutenzione** [deciso]: attività pianificate periodiche tengono aggiornato l'elenco (vedi l'ultimo passo di `TODO.md`).
 
 ### 5.9 Impostazioni [deciso]
 - Raggiungibili dall'icona a ingranaggio in alto a destra, non come sesta scheda (la barra in basso resta a 5 voci).
