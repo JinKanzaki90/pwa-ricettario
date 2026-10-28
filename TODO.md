@@ -73,8 +73,17 @@ Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, so
 - [x] Verifica: nessuna migrazione nuova (schema e policy dal passo 2); con la sola chiave publishable `commenti` e `settimana` (e tutte le altre tabelle e funzioni) rispondono 401 sul progetto vero; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita (commento altrui non modificabile e mostrato come testo, pubblica/modifica/elimina il proprio, contatore, testo vuoto rifiutato; settimana di Marta in sola lettura con avanzo, doppia dose, nota e piatto eliminato; copia di un giorno con conferma, dose singola, piatto eliminato escluso, avanzo proprio che diventa piatto normale; ritorno dalla ricetta alla settimana dell'altro); Pubblica verde.
 - [x] Revisione di fine passo.
 
-### [~] 7. Guida riscritta e «Acquisti consapevoli» (iniziato il 28/10/2026 alle 15:00 UTC)
+### [!] 7. Guida riscritta e «Acquisti consapevoli» (in attesa di Angelo dal 28/10/2026: criteri e fonti per «Acquisti consapevoli»)
 Prima di scrivere i contenuti di «Acquisti consapevoli» chiedere ad Angelo criteri e fonti (§5.8): segnare `[!]` se mancano.
+- [x] Struttura della Guida (§5.6): indice in alto con salto alle sezioni (senza cambiare l'indirizzo, che all'avvio sceglie la scheda), riassunto «In breve» all'inizio di ogni sezione, dettagli a scomparsa, fonti in fondo a ogni sezione, «Torna all'inizio della guida». Codice in `app/js/guida.js`; la Guida resta HTML statico in `index.html`.
+- [x] Testi per un'alimentazione senza carne (vegana, vegetariana, con pesce): piatto bilanciato con frequenze settimanali (Smartfood IEO), «non solo formaggio», nutrienti riscritti; indicazioni sull'integrazione vegana tolte, resta una **nota breve sulla B12** per chi mangia solo vegano; omega-3 e mercurio nel pesce (EFSA 2015); tappe per togliere la carne (prima i salumi). Tolti il riquadro «Il tuo profilo» («Solo vegano») e l'avviso B12 per tutti.
+- [x] Sezione «Perché ridurre la carne rossa»: salute (IARC 2015, WCRF, Smartfood IEO) e ambiente (FAO 2023, Poore e Nemecek 2018 tramite Our World in Data, EAT-Lancet 2025), con fonti.
+- [x] «Acquisti consapevoli»: riassunto, criteri di §5.8, voci lette da `app/data/acquisti.json` (oggi vuoto: «Sezione in preparazione»); ogni voce «Segnalata da X per Y», fonte (collegamento solo se `https://`), data di verifica, «Da ricontrollare» dopo 12 mesi. Testi sempre tramite `esc()`.
+- [x] Piano d'esempio (`settimana.json`): il consiglio sulla B12 vale solo per chi mangia vegano (azione del passo 5).
+- [x] Prove: `test/prova-app.js` controlla sei sezioni con riassunto, fonti, salto dall'indice (fuoco sul titolo, indirizzo invariato) e voci imitate (testo con `<b>` mostrato come testo, collegamento `javascript:` scartato, voce incompleta nascosta, «Da ricontrollare»).
+- [x] Verifica: nessuna migrazione (Guida statica); `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita, CSP invariata; Pubblica verde (il controllo ora chiede anche `js/guida.js` e `data/acquisti.json`).
+- [x] Revisione di fine passo.
+- [ ] **Contenuti di «Acquisti consapevoli»**: in attesa di criteri e fonti da Angelo (vedi «Richieste per Angelo»). Quando arrivano: riempire `app/data/acquisti.json`, aggiornare §5.8 in `REQUISITI.md`, rifare la prova e chiudere il passo.
 
 ### [ ] 8. PWA
 Manifest, icone, service worker per la lettura offline, «Aggiungi a schermata Home».
@@ -169,7 +178,28 @@ Prova di tutte le funzioni, pagina privacy, istruzioni per Angelo su come creare
    - i nomi delle persone arrivano con le ricette; ora la lettura delle settimane del gruppo li aggiorna, così chi è entrato da poco non compare come «Anonimo»;
    - `commenti.js` tiene in memoria solo i commenti della ricetta aperta e li toglie all'uscita (evento `rv-fuori`), senza nuove dipendenze circolari con `accesso.js`.
 
+### Passo 7 (28/10/2026)
+1. **Malintenzionato.** Nessuna migrazione, nessuna tabella, nessuna funzione nuova: la Guida è statica. Le voci di «Acquisti consapevoli» vengono da un file del repository (solo chi ha accesso in scrittura a GitHub le cambia) e passano comunque da `esc()`; un collegamento compare solo se è `https://` (provato con `javascript:`), con `rel="noopener"`. La CSP del passo 4 resta invariata (anche l'import dinamico usato dalla prova è dal sito stesso). Nessun problema grave trovato. Da sapere:
+   - il rischio vero della sezione è **legale e di reputazione**, non tecnico: un'accusa a un'azienda in un repository pubblico. Per questo §5.8 chiede «segnalata da X per Y» con fonte e data; le voci si scrivono solo dopo i criteri di Angelo.
+2. **Utente.** Da telefono l'indice porta alla sezione con il titolo sotto l'intestazione fissa; ogni sezione si capisce dal riassunto senza aprire i dettagli; «Torna all'inizio della guida» in fondo. Limiti e azioni:
+   - la Guida è lunga (sei sezioni) e i dettagli sono chiusi: chi cerca un numero preciso deve aprire la voce. Accettato: era la struttura chiesta in §5.6;
+   - diverse fonti sono in inglese (IARC, FAO, Science, Lancet): il testo della Guida è in italiano, le fonti restano nella lingua originale;
+   - azione (passo 8): mettere `data/acquisti.json` e la Guida nella cache del service worker, così la Guida si legge anche senza rete;
+   - azione (passo 9, da proporre ad Angelo): la scheda Settimana mostra un piano d'esempio tutto vegano; valutare se aggiungere un piano vegetariano o con pesce.
+3. **Revisore esterno.**
+   - Alcuni numeri sono presi da fonti secondarie affidabili ma non dal testo originale, che la sessione non raggiunge: i valori per 100 g di proteine (Poore e Nemecek) dalla pagina di Our World in Data e da un articolo che li riporta; i 14 g al giorno di carne rossa e il 30% delle emissioni (EAT-Lancet 2025) da articoli sul rapporto; la raccomandazione WCRF dal sito del WCRF. Azione (passo 9): ricontrollarli sull'originale e aggiornare la data;
+   - le frequenze settimanali vengono dalla tabella Smartfood dell'IEO, che si basa su LARN 2024 e CREA 2018: sono indicative e non personalizzate; la Guida lo dice e rimanda al medico o al dietista;
+   - FAO: il 12% è riferito al 2015 ed è più basso del 14,5% del rapporto FAO 2013 per un cambio di metodo, non per un calo vero; non serve spiegarlo nella Guida, ma da sapere se qualcuno confronta le cifre;
+   - collegamento FAO: usato l'indirizzo stabile di FAO Open Knowledge invece di un DOI non verificato;
+   - il codice di `guida.js` non crea nuove dipendenze circolari.
+
 ## Richieste per Angelo
+
+- **Acquisti consapevoli (passo 7, BLOCCANTE per chiudere il passo):** la Guida è riscritta e pubblicata; manca solo il contenuto di «Acquisti consapevoli» (§5.8). Servono:
+  1. i **criteri**: per quali motivi un'azienda entra nell'elenco (per esempio deforestazione, benessere animale, condizioni di lavoro, sfruttamento dell'acqua, legami con allevamenti intensivi…) e se riguarda solo il cibo o anche altro;
+  2. le **fonti** ammesse: quali enti o campagne consideri riconoscibili (per esempio ONG, autorità pubbliche, sentenze, rapporti di organizzazioni internazionali), ed eventualmente quali escludere;
+  3. se hai già delle voci in mente, azienda o marchio e la fonte.
+  Ogni voce verrà scritta come «Segnalata da X per Y», con fonte e data della verifica, senza giudizi propri. Finché non ci sono criteri, la sezione mostra «Sezione in preparazione». Puoi leggere la Guida aggiornata su https://jinkanzaki90.github.io/pwa-ricettario/ (scheda Guida): se qualcosa nei testi su carne e nutrienti non ti convince, scrivilo qui.
 
 - **Backup cifrato (passo 1, non bloccante):** per attivare il backup settimanale serve un segreto `BACKUP_PASSPHRASE` (una frase lunga e casuale, da conservare anche fuori da GitHub: senza di essa il backup non si apre) in GitHub → Settings → Secrets and variables → Actions. Finché manca, «Continuità» fa solo la chiamata giornaliera.
 
