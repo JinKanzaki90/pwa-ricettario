@@ -54,7 +54,7 @@ Lettura, ricerca, filtri (categoria, autore), inserimento e modifica con categor
 - [x] Verifica: migrazione verde; con la sola chiave publishable anche `rpc/ingredienti_di_carne` risponde 401 (controllo del workflow corretto: ora chiama le funzioni con i loro argomenti); prove locali del database superate; `test/prova-app.js` superato a 360 px e desktop, chiaro e scuro, console pulita e CSP attiva (ricerca, categoria, autore, ricetta altrui non modificabile, categoria incoerente, carne rifiutata, salvataggio, avviso sulle settimane, cestino e ripristino); Pubblica verde.
 - [x] Revisione di fine passo.
 
-### [ ] 5. Settimana e spesa personali
+### [~] 5. Settimana e spesa personali (iniziato il 28/10/2026 alle 11:03 UTC)
 Settimana dal database con «Aggiungi alla settimana» dal dettaglio ricetta, sostituti per ricette eliminate, spesa sincronizzata.
 
 ### [ ] 6. Commenti, settimane del gruppo, copia di un giorno
